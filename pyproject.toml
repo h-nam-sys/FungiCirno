@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mushroom-growth-monitor"
+version = "0.1.0"
+description = "Local mushroom growth monitoring application"
+requires-python = ">=3.10"
+dependencies = [
+  "streamlit>=1.40,<2",
+  "numpy>=1.24,<3",
+  "Pillow>=10,<13",
+  "pandas>=2,<3",
+  "plotly>=5.20,<7",
+  "scipy>=1.11,<2",
+  "opencv-python-headless>=4.9,<5",
+]
+
+[project.optional-dependencies]
+ml = ["torch", "torchvision"]
+test = ["pytest>=8"]
+
+[tool.setuptools.packages.find]
+where = ["src"]

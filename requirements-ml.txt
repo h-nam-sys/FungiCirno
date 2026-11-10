@@ -1,0 +1,4 @@
+# Install a matching PyTorch/TorchVision pair separately using the official selector:
+# https://pytorch.org/get-started/locally/
+# Then install this file. The notebook models are TorchVision Mask R-CNN variants.
+-r requirements.txt
