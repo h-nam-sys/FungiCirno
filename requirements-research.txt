@@ -1,0 +1,2 @@
+# Optional utilities for research scripts that decode COCO RLE masks.
+pycocotools>=2.0.7

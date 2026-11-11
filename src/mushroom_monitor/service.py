@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import time
+import traceback
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -20,23 +21,23 @@ class ModelService:
     def __init__(self, db: Database, paths: AppPaths):
         self.db = db
         self.paths = paths
-        self._engines: dict[tuple[int, int, str], InferenceEngine] = {}
+        self._engines: dict[tuple[int, int, str, float | None], InferenceEngine] = {}
 
     def engine_for(self, model_id: int, inference_side: int = DEFAULT_INFERENCE_SIDE,
-                   device_preference: str = "auto") -> InferenceEngine:
+                   device_preference: str = "cpu", score_threshold: float | None = None) -> InferenceEngine:
         row = self.db.one("SELECT * FROM model_versions WHERE id=?", (model_id,))
         if not row:
             raise ValueError("Model version is not registered")
-        key = (model_id, inference_side, device_preference)
+        key = (model_id, inference_side, device_preference, score_threshold)
         if key not in self._engines:
-            self._engines[key] = InferenceEngine(row, inference_side, device_preference)
+            self._engines[key] = InferenceEngine(row, inference_side, device_preference, score_threshold)
         return self._engines[key]
 
     def clear_model_cache(self) -> None:
         self._engines.clear()
 
     def run_capture(self, capture_id: int, model_id: int, *, inference_side: int = DEFAULT_INFERENCE_SIDE,
-                    device_preference: str = "auto", final_threshold: float | None = None,
+                    device_preference: str = "cpu", final_threshold: float | None = None,
                     mask_threshold: float = 0.5, rebuild_derived: bool = True) -> dict[str, Any]:
         capture = self.db.one("SELECT * FROM captures WHERE id=?", (capture_id,))
         model_row = self.db.one("SELECT * FROM model_versions WHERE id=?", (model_id,))
@@ -54,7 +55,7 @@ class ModelService:
             (capture_id, model_id, utc_now()),
         )
         try:
-            engine = self.engine_for(model_id, inference_side, device_preference)
+            engine = self.engine_for(model_id, inference_side, device_preference, threshold)
             predictions, image, info = engine.predict_path(Path(capture["file_path"]))
             original_w, original_h = image.size
             scale_x = original_w / info["inference_width"]
@@ -95,9 +96,9 @@ class ModelService:
                 created += 1
             model_key = str(model_row["model_key"])
             downstream: dict[str, Any] = {}
-            if rebuild_derived and model_key == "mushr_maturity":
-                downstream["flush_groups"] = rebuild_flush_groups(self.db, capture_id)
-            elif rebuild_derived and model_key == "charisis_cluster_tracking":
+            if rebuild_derived:
+                downstream["spatial_groups"] = rebuild_flush_groups(self.db, capture_id, model_version_id=int(model_id))
+            if rebuild_derived and model_key in {"charisis_cluster_tracking", "m18k_yolo_seg"}:
                 downstream["tracking"] = rebuild_sequence_tracks(
                     self.db, int(capture["unit_id"]), int(capture["camera_id"]),
                     str(capture["series_key"]), int(model_id),
@@ -117,7 +118,7 @@ class ModelService:
         except Exception as exc:
             self.db.execute(
                 "UPDATE inference_runs SET finished_at=?,status='failed',error=? WHERE id=?",
-                (utc_now(), f"{type(exc).__name__}: {exc}", run_id),
+                (utc_now(), f"{type(exc).__name__}: {exc}\n{traceback.format_exc()}", run_id),
             )
             self.db.execute("UPDATE captures SET status='failed' WHERE id=?", (capture_id,))
             raise
@@ -129,11 +130,29 @@ def add_environment_rows(db: Database, unit_id: int, rows: list[dict[str, Any]],
         measured_at = str(row.get("measured_at") or row.get("timestamp") or "").strip()
         if not measured_at:
             continue
-        db.execute(
-            """INSERT INTO environmental_readings(unit_id,measured_at,temperature_c,humidity_pct,co2_ppm,notes,source)
-               VALUES(?,?,?,?,?,?,?)""",
-            (unit_id, measured_at, row.get("temperature_c"), row.get("humidity_pct"),
-             row.get("co2_ppm"), row.get("notes"), source),
-        )
-        inserted += 1
+        from datetime import datetime
+        try:
+            datetime.fromisoformat(measured_at.replace("Z", "+00:00"))
+        except ValueError as exc:
+            raise ValueError(f"Invalid environmental timestamp: {measured_at}") from exc
+        temp = row.get("temperature_c")
+        humidity = row.get("humidity_pct")
+        co2 = row.get("co2_ppm")
+        if temp is not None and not -10 <= float(temp) <= 60:
+            raise ValueError(f"Temperature outside accepted range (-10..60 C): {temp}")
+        if humidity is not None and not 0 <= float(humidity) <= 100:
+            raise ValueError(f"Humidity outside accepted range (0..100%): {humidity}")
+        if co2 is not None and not 0 <= float(co2) <= 100000:
+            raise ValueError(f"CO2 outside accepted range (0..100000 ppm): {co2}")
+        existing = db.one("SELECT id FROM environmental_readings WHERE unit_id=? AND measured_at=? AND source=?", (unit_id, measured_at, source))
+        if existing:
+            db.execute("""UPDATE environmental_readings SET temperature_c=?,humidity_pct=?,co2_ppm=?,notes=? WHERE id=?""",
+                       (temp, humidity, co2, row.get("notes"), existing["id"]))
+        else:
+            db.execute(
+                """INSERT INTO environmental_readings(unit_id,measured_at,temperature_c,humidity_pct,co2_ppm,notes,source)
+                   VALUES(?,?,?,?,?,?,?)""",
+                (unit_id, measured_at, temp, humidity, co2, row.get("notes"), source),
+            )
+            inserted += 1
     return inserted

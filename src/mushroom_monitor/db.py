@@ -64,6 +64,7 @@ CREATE TABLE IF NOT EXISTS predictions (
 CREATE INDEX IF NOT EXISTS idx_predictions_capture ON predictions(capture_id);
 CREATE TABLE IF NOT EXISTS flush_groups (
   id INTEGER PRIMARY KEY, capture_id INTEGER NOT NULL REFERENCES captures(id) ON DELETE CASCADE,
+  model_version_id INTEGER REFERENCES model_versions(id),
   group_key TEXT NOT NULL, fruitbody_count INTEGER NOT NULL, total_area_px2 REAL NOT NULL,
   dominant_class TEXT, ready_area_fraction REAL, class_area_json TEXT NOT NULL DEFAULT '{}'
 );
@@ -90,6 +91,17 @@ CREATE TABLE IF NOT EXISTS environmental_readings (
   notes TEXT, source TEXT NOT NULL DEFAULT 'manual'
 );
 CREATE INDEX IF NOT EXISTS idx_env_unit_time ON environmental_readings(unit_id,measured_at);
+CREATE TABLE IF NOT EXISTS learning_jobs (
+  id INTEGER PRIMARY KEY, model_key TEXT NOT NULL, base_model_version_id INTEGER REFERENCES model_versions(id),
+  created_at TEXT NOT NULL, finished_at TEXT, status TEXT NOT NULL DEFAULT 'prepared',
+  dataset_path TEXT, candidate_path TEXT, config_json TEXT NOT NULL DEFAULT '{}',
+  metrics_json TEXT NOT NULL DEFAULT '{}', error TEXT
+);
+CREATE TABLE IF NOT EXISTS model_evaluations (
+  id INTEGER PRIMARY KEY, model_version_id INTEGER NOT NULL REFERENCES model_versions(id) ON DELETE CASCADE,
+  dataset_name TEXT NOT NULL, created_at TEXT NOT NULL, metrics_json TEXT NOT NULL,
+  approved INTEGER NOT NULL DEFAULT 0, reviewer TEXT, notes TEXT
+);
 CREATE TABLE IF NOT EXISTS review_items (
   id INTEGER PRIMARY KEY, prediction_id INTEGER NOT NULL UNIQUE REFERENCES predictions(id) ON DELETE CASCADE,
   status TEXT NOT NULL DEFAULT 'pending', corrected_class TEXT, notes TEXT,
@@ -123,6 +135,9 @@ class Database:
         conn = self.connect()
         try:
             conn.executescript(SCHEMA)
+            columns = {r[1] for r in conn.execute("PRAGMA table_info(flush_groups)").fetchall()}
+            if "model_version_id" not in columns:
+                conn.execute("ALTER TABLE flush_groups ADD COLUMN model_version_id INTEGER REFERENCES model_versions(id)")
         finally:
             conn.close()
 
@@ -188,10 +203,14 @@ class Database:
             [row.get(c) for c in cols],
         )
 
-    def set_model_status(self, model_id: int, status: str) -> None:
-        model = self.one("SELECT model_key FROM model_versions WHERE id=?", (model_id,))
+    def set_model_status(self, model_id: int, status: str, force: bool = False) -> None:
+        model = self.one("SELECT model_key,metrics_json FROM model_versions WHERE id=?", (model_id,))
         if not model:
             raise ValueError("Unknown model version")
+        if status == "active":
+            metrics = json.loads(model.get("metrics_json") or "{}")
+            if metrics and metrics.get("promotion_ready") is False and not force:
+                raise ValueError("Candidate has not passed independent holdout promotion gates. Explicit override is required.")
         with self.transaction() as conn:
             if status == "active":
                 conn.execute("UPDATE model_versions SET status='candidate' WHERE model_key=? AND status='active'", (model["model_key"],))

@@ -17,3 +17,15 @@ __pycache__/
 /data/*.sqlite3
 /data/*.sqlite3-shm
 /data/*.sqlite3-wal
+
+# Model weights, datasets and generated bundles
+*.pt
+*.pth
+*.onnx
+*.engine
+*.zip
+!docs/**/*.zip
+
+# Local application state
+data/*.sqlite3
+data/*.sqlite3-*

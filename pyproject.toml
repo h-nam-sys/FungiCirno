@@ -15,11 +15,15 @@ dependencies = [
   "plotly>=5.20,<7",
   "scipy>=1.11,<2",
   "opencv-python-headless>=4.9,<5",
+  "PyYAML>=6,<7",
+  "ultralytics>=8.3,<9",
+  "psutil>=5.9,<7",
 ]
 
 [project.optional-dependencies]
 ml = ["torch", "torchvision"]
 test = ["pytest>=8"]
+research = ["pycocotools>=2.0.7"]
 
 [tool.setuptools.packages.find]
 where = ["src"]

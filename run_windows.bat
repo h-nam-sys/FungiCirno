@@ -2,10 +2,8 @@
 setlocal
 cd /d "%~dp0"
 if not exist .venv\Scripts\python.exe (
-  py -3.11 -m venv .venv
+  echo Create the environment first using setup_windows_amd.ps1 or setup_windows_cpu.ps1
+  exit /b 1
 )
 call .venv\Scripts\activate.bat
-python -m pip install --upgrade pip
-pip install -r requirements.txt
-pip install -e .
 python -m streamlit run app.py

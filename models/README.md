@@ -1,11 +1,6 @@
-# Model bundles
+# Model storage
 
-Import each Colab notebook's `model_bundle.zip` through **Models** in the dashboard. The bundle needs:
+- `incoming/`: uploaded model ZIPs staged before installation.
+- `registry/<model_key>/<version>/`: installed immutable model versions.
 
-- `model_checkpoint.pth`
-- `model_config.json`
-- `class_mapping.json`
-
-New imports are registered as candidates. Activate a version after checking its validation/test metrics. To roll back, activate the earlier version again.
-
-Keep checkpoints and raw datasets out of Git.
+Model weights are not committed to this repository. Use `tools/package_yolo_model.py` to create an M18K/Ultralytics model ZIP. See the main README for the bundle format and candidate promotion procedure.

@@ -2,10 +2,8 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 if [[ ! -x .venv/bin/python ]]; then
-  python3 -m venv .venv
+  echo "Create a CPU PyTorch environment first; see README.md."
+  exit 1
 fi
 source .venv/bin/activate
-python -m pip install --upgrade pip
-pip install -r requirements.txt
-pip install -e .
 python -m streamlit run app.py

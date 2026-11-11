@@ -60,6 +60,7 @@ def export_reviewed_samples(db: Database, destination: Path, model_key: str) -> 
            JOIN model_versions m ON m.id=p.model_version_id
            JOIN review_items r ON r.prediction_id=p.id
            WHERE m.model_key=? AND r.status IN ('accepted','corrected')
+             AND p.run_id=(SELECT MAX(r2.id) FROM inference_runs r2 WHERE r2.capture_id=p.capture_id AND r2.model_version_id=p.model_version_id)
            ORDER BY p.capture_id,p.id""", (model_key,)
     )
     if not rows:
@@ -114,3 +115,43 @@ def export_reviewed_samples(db: Database, destination: Path, model_key: str) -> 
     db.execute("INSERT INTO learning_exports(created_at,path,sample_count,model_key,notes) VALUES(?,?,?,?,?)",
                (utc_now(), str(destination), len(annotations), model_key, "Human-reviewed COCO polygon export"))
     return destination, len(annotations)
+
+
+def replace_prediction_mask(db: Database, prediction_id: int, mask_upload: bytes, mask_root: Path,
+                            reviewer: str = "local_user", notes: str = "Corrected segmentation mask") -> Path:
+    """Replace a prediction mask with a human-provided binary mask at source-image resolution."""
+    import io
+    row = db.one("""SELECT p.*,c.width,c.height FROM predictions p JOIN captures c ON c.id=p.capture_id
+                    WHERE p.id=?""", (prediction_id,))
+    if not row:
+        raise ValueError("Prediction not found")
+    try:
+        with Image.open(io.BytesIO(mask_upload)) as im:
+            mask = np.asarray(im.convert("L"), dtype=np.uint8)
+    except Exception as exc:
+        raise ValueError(f"Uploaded mask is not a readable image: {exc}") from exc
+    if mask.size == 0:
+        raise ValueError("Uploaded mask is empty")
+    mask = cv2.resize(mask, (int(row["width"]), int(row["height"])), interpolation=cv2.INTER_NEAREST)
+    binary = (mask > 0).astype(np.uint8)
+    ys, xs = np.where(binary > 0)
+    if len(xs) == 0:
+        raise ValueError("Corrected mask contains no foreground pixels")
+    x1, x2 = float(xs.min()), float(xs.max() + 1)
+    y1, y2 = float(ys.min()), float(ys.max() + 1)
+    area = float(binary.sum())
+    cx, cy = float(xs.mean()), float(ys.mean())
+    destination = mask_root / f"prediction_{prediction_id}_human_corrected.png"
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    Image.fromarray(binary * 255, mode="L").save(destination, optimize=True)
+    db.execute("""UPDATE predictions SET x1=?,y1=?,x2=?,y2=?,area_px2=?,centroid_x=?,centroid_y=?,
+                  mask_path=?,mask_width=?,mask_height=?,review_status='corrected',final_for_analysis=1
+                  WHERE id=?""", (x1,y1,x2,y2,area,cx,cy,str(destination),binary.shape[1],binary.shape[0],prediction_id))
+    existing = db.one("SELECT id FROM review_items WHERE prediction_id=?", (prediction_id,))
+    if existing:
+        db.execute("UPDATE review_items SET status='corrected',notes=?,reviewer=?,updated_at=? WHERE id=?",
+                   (notes,reviewer,utc_now(),existing["id"]))
+    else:
+        db.execute("INSERT INTO review_items(prediction_id,status,notes,reviewer,updated_at) VALUES(?,?,?,?,?)",
+                   (prediction_id,"corrected",notes,reviewer,utc_now()))
+    return destination
