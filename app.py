@@ -263,7 +263,7 @@ elif page == "Capture images":
             manual_dt = datetime.combine(manual_date, manual_time).astimezone().isoformat()
         else:
             manual_dt = None
-        uploads = st.file_uploader("Image files", type=["jpg","jpeg","png","tif","tiff","webp","bmp"], accept_multiple_files=True)
+        uploads = st.file_uploader("Image files", type=["jpg","jpeg","png","tif","tiff","webp","bmp"], accept_multiple_files=True, key=f"uploader_{series.strip() or 'default'}")
         if st.button("Import images", disabled=not uploads):
             added, skipped, errors = 0, 0, []
             for upload in uploads:
