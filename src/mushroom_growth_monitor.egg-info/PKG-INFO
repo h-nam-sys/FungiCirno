@@ -3,6 +3,7 @@ Name: mushroom-growth-monitor
 Version: 0.1.0
 Summary: Local mushroom growth monitoring application
 Requires-Python: >=3.10
+License-File: LICENSE
 Requires-Dist: streamlit<2,>=1.40
 Requires-Dist: numpy<3,>=1.24
 Requires-Dist: Pillow<13,>=10
@@ -10,8 +11,14 @@ Requires-Dist: pandas<3,>=2
 Requires-Dist: plotly<7,>=5.20
 Requires-Dist: scipy<2,>=1.11
 Requires-Dist: opencv-python-headless<5,>=4.9
+Requires-Dist: PyYAML<7,>=6
+Requires-Dist: ultralytics<9,>=8.3
+Requires-Dist: psutil<7,>=5.9
 Provides-Extra: ml
 Requires-Dist: torch; extra == "ml"
 Requires-Dist: torchvision; extra == "ml"
 Provides-Extra: test
 Requires-Dist: pytest>=8; extra == "test"
+Provides-Extra: research
+Requires-Dist: pycocotools>=2.0.7; extra == "research"
+Dynamic: license-file

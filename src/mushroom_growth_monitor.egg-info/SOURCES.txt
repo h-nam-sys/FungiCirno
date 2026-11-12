@@ -1,4 +1,6 @@
+LICENSE
 README.md
+README.txt
 pyproject.toml
 src/mushroom_growth_monitor.egg-info/PKG-INFO
 src/mushroom_growth_monitor.egg-info/SOURCES.txt
@@ -10,6 +12,7 @@ src/mushroom_monitor/config.py
 src/mushroom_monitor/db.py
 src/mushroom_monitor/environment.py
 src/mushroom_monitor/image_io.py
+src/mushroom_monitor/learning.py
 src/mushroom_monitor/maturity.py
 src/mushroom_monitor/model_registry.py
 src/mushroom_monitor/review.py
