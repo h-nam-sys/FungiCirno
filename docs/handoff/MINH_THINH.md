@@ -1,8 +1,28 @@
-# Workstream A — Nguyen Minh Thinh
+# Workstream A — Minh Thinh: model/data/runtime verification
 
 ## Ownership
 
-**M18K model lifecycle: checkpoint, transfer learning, inference adapter, human-reviewed learning, candidate evaluation and rollback.** You are the subsystem validator and bug-fix owner. The integrated implementation already exists in this release; do not start a new model registry or rewrite the whole app.
+Validate and repair the existing YOLO-seg model lifecycle. Do not design a new model registry, new inference backend, or separate application.
+
+## Fixed tasks and taxonomies
+
+- `charisis_cluster_tracking`: whole oyster cluster segmentation, classes in this exact order: `immature`, `well-defined`, `overstayed`. This is the primary model for growth-stage history and persistent tracking.
+- `mushr_maturity`: individual oyster fruitbody segmentation, classes: `not-ready`, `ready`, `overdue`. This is a separate maturity task.
+- `m18k_source_wb`: WB-only source model, class `WB`. It is not a target oyster classifier.
+
+Both production models use the same `ultralytics_yolo_seg` runtime and normalized Prediction record. Do not merge class maps or compare metrics across task taxonomies.
+
+## What to verify and deliver
+
+1. Download/inspect the public Charisis oyster cluster dataset (DOI `10.5281/zenodo.15041243`) and the annotated MushR dataset linked from `https://github.com/ETCE-LAB/MushR`. Record licences/terms, annotation format, class names, sequence/camera metadata, counts and hashes. Do not redistribute raw data without permission.
+2. Convert Charisis COCO masks using `tools/prepare_coco_yolo_dataset.py` if the source annotations match the converter's supported COCO format. Inspect random exported labels, all three classes and any fragmented masks. If MushR is not COCO-compatible, make a small dataset-specific converter and document the annotation semantics; do not force an incompatible format through the generic converter.
+3. Establish train/validation/test splits by complete trial/sequence/farm group. Never split adjacent time-lapse frames randomly. Preserve the final test set untouched.
+4. Train Model A twice on identical splits: once initialized from the team's M18K WB `best.pt`, once from COCO-pretrained `yolov8n-seg.pt`. The M18K head must adapt to the three target classes; inspect training logs for transferred/reinitialized layers. Evaluate both on the same Charisis holdout and select by target-domain results, not M18K metrics.
+5. Train Model B as a separate MushR maturity checkpoint. Do not use the Charisis model as its baseline.
+6. Package each candidate with `tools/train_candidate.py` or `tools/package_yolo_model.py`. Verify `model_key`, `prediction_role`, `taxonomy`, zero-based class mapping, checkpoint hash and evaluation metadata.
+7. Verify reviewed-data export is separated by model family/taxonomy. Run one complete review -> export -> Colab fine-tune -> holdout evaluate -> candidate install -> activation gate -> rollback cycle when target-labelled data are available.
+8. Run the actual installed checkpoints through the local app on CPU. Then test AMD DirectML on the RX 5500 XT. Record unsupported operators/errors precisely; never call a smoke test full inference.
+9. Record peak process RSS, GPU memory if available, per-image latency, masks visually inspected, package versions and checkpoint hashes.
 
 ## Files you own
 
@@ -11,36 +31,22 @@
 - `src/mushroom_monitor/learning.py`
 - `tools/train_candidate.py`
 - `tools/prepare_reviewed_dataset.py`
+- `tools/prepare_coco_yolo_dataset.py` (dataset conversion fixes)
 - `tools/package_yolo_model.py`
-- model/training docs and Colab notebook updates
-
-## Required work
-
-1. Locate the team's existing M18K WB-only `best.pt` checkpoint. The weight file is intentionally not committed in this repository.
-2. Package it with `python tools/package_yolo_model.py --weights <best.pt> --out m18k_bundle.zip` and install through **Models**.
-3. Run a representative image on CPU and AMD DirectML. Confirm source-image mask dimensions, boxes, zero-based class mapping, confidence, count and saved mask areas. DirectML failure must be recorded; CPU must still work.
-4. Check the side-view transfer-learning path. Preserve the M18K source baseline; use the target-domain annotation set for fine-tuning and a sequence-/farm-separated holdout for evaluation.
-5. Verify reviewed mask/class exports from **Learning lab**. Inspect the actual ZIP contents and several labels before training.
-6. Run `tools/train_candidate.py` from Colab using the previous checkpoint and an independent holdout. Confirm the script's base and candidate metrics are measured on the same holdout.
-7. Import the candidate bundle. Confirm that a bundle with `promotion_ready=false` cannot be activated unless an explicit override is selected. Confirm the old active model is still available for rollback.
-8. Fix bugs only within your subsystem. If you need a schema/interface change, submit the change request to Hai Nam before implementing it.
+- model/training documentation and Colab notebook updates
 
 ## Definition of done
 
-- A reproducible M18K bundle installs into the model registry.
-- CPU inference works end-to-end.
-- AMD DirectML result is either successful with evidence or a documented reproducible blocker.
-- Side-view fine-tuning/evaluation artifacts are delivered, or the unavailable dataset/annotation dependency is explicitly reported.
-- Reviewed data export, candidate training, holdout comparison, bundle packaging and rollback workflow have been exercised.
+- Both target-domain model bundles are reproducibly packaged with the correct independent taxonomies, or a specific public-data/annotation blocker is returned.
+- CPU end-to-end inference succeeds for each available real checkpoint.
+- AMD DirectML end-to-end inference succeeds with evidence or has a reproducible documented blocker.
+- The M18K-vs-COCO initialization comparison for Model A is completed on the same untouched target holdout.
+- The model-specific human-review and candidate promotion/rollback workflow is exercised.
+
+## Guardrails
+
+Do not change SQLite schema, app navigation or shared prediction contracts without Hai Nam's approval. Never use WB source metrics as oyster evidence. Do not use adjacent time-lapse frames across splits. Do not promote without an independent target holdout.
 
 ## Return package
 
-Provide: source changes on `member/minh-thinh-ml`, checkpoint SHA-256, class mapping, dependency versions, notebook/script, target holdout metrics, sample overlay images, inference logs and a short list of known issues. Do not commit large weights or raw datasets; provide authorized download locations and hashes.
-
-## Do not
-
-- Change SQLite schema or app navigation independently.
-- Rename M18K class IDs without updating bundle metadata.
-- claim WB-only model output is maturity classification.
-- use adjacent time-lapse frames in both train and final test.
-- activate a candidate based on training loss alone.
+Branch `member/minh-thinh-ml`; changed files and commit hash; source/dataset URLs and terms; split manifest; class maps; checkpoint SHA-256; training commands/configs; holdout metrics; sample overlays; CPU/AMD logs; package versions; known issues.

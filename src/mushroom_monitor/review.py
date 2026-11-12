@@ -55,7 +55,8 @@ def review_prediction(db: Database, prediction_id: int, decision: str, *,
 def export_reviewed_samples(db: Database, destination: Path, model_key: str) -> tuple[Path, int]:
     """Export accepted/relabelled masks as a small COCO polygon dataset for Colab review/retraining."""
     rows = db.query(
-        """SELECT p.*,c.file_path,c.original_name,c.width,c.height,c.captured_at,m.model_key
+        """SELECT p.*,c.file_path,c.original_name,c.width,c.height,c.captured_at,
+                  c.series_key,c.unit_id,c.camera_id,m.model_key,m.classes_json,m.taxonomy
            FROM predictions p JOIN captures c ON c.id=p.capture_id
            JOIN model_versions m ON m.id=p.model_version_id
            JOIN review_items r ON r.prediction_id=p.id
@@ -65,6 +66,13 @@ def export_reviewed_samples(db: Database, destination: Path, model_key: str) -> 
     )
     if not rows:
         raise ValueError("No human-accepted samples are available for export")
+    class_map = {int(k): str(v) for k, v in json.loads(rows[0]["classes_json"]).items()}
+    taxonomy = str(rows[0]["taxonomy"])
+    for row in rows[1:]:
+        if {int(k): str(v) for k, v in json.loads(row["classes_json"]).items()} != class_map:
+            raise ValueError("Model versions under this model_key use different class mappings; export them separately")
+        if str(row["taxonomy"]) != taxonomy:
+            raise ValueError("Model versions under this model_key use different taxonomies; export them separately")
     destination.parent.mkdir(parents=True, exist_ok=True)
     images: dict[int, dict[str, Any]] = {}
     annotations: list[dict[str, Any]] = []
@@ -77,7 +85,8 @@ def export_reviewed_samples(db: Database, destination: Path, model_key: str) -> 
                 zf.write(row["file_path"], image_rel)
                 images[capture_id] = {"id": capture_id, "file_name": image_rel,
                                       "width": int(row["width"]), "height": int(row["height"]),
-                                      "date_captured": row["captured_at"] or ""}
+                                      "date_captured": row["captured_at"] or "",
+                                      "split_group": f"{row['unit_id']}|{row['camera_id']}|{row['series_key']}"}
             with Image.open(row["mask_path"]) as im:
                 mask = (np.asarray(im.convert("L")) > 0).astype(np.uint8)
             if mask.shape != (int(row["height"]), int(row["width"])):
@@ -100,18 +109,14 @@ def export_reviewed_samples(db: Database, destination: Path, model_key: str) -> 
                 "iscrowd": 0, "source_prediction_id": int(row["id"]),
             })
             next_ann += 1
-        categories = db.query(
-            """SELECT DISTINCT p.class_id,p.class_name FROM predictions p
-               JOIN model_versions m ON m.id=p.model_version_id
-               WHERE m.model_key=? ORDER BY p.class_id""", (model_key,)
-        )
         coco = {"images": list(images.values()), "annotations": annotations,
-                "categories": [{"id": int(r["class_id"]), "name": r["class_name"]} for r in categories],
+                "categories": [{"id": class_id, "name": class_name}
+                               for class_id, class_name in sorted(class_map.items())],
                 "info": {"description": "Human-reviewed local mushroom monitoring samples",
                          "created_utc": datetime.now(timezone.utc).isoformat(),
-                         "model_key": model_key}}
+                         "model_key": model_key, "taxonomy": taxonomy}}
         zf.writestr("annotations.json", json.dumps(coco, indent=2))
-        zf.writestr("README.txt", "These are human-reviewed prediction masks exported for candidate retraining. Review polygon simplification and image IDs before training. Original model predictions are not ground truth until reviewed.")
+        zf.writestr("README.txt", "These are human-reviewed prediction masks exported for candidate retraining. The full registered class mapping is preserved and every image includes a split_group field identifying its complete unit/camera/series. Review polygon simplification and image IDs before training. Original model predictions are not ground truth until reviewed. This export does not include a final test holdout.\n")
     db.execute("INSERT INTO learning_exports(created_at,path,sample_count,model_key,notes) VALUES(?,?,?,?,?)",
                (utc_now(), str(destination), len(annotations), model_key, "Human-reviewed COCO polygon export"))
     return destination, len(annotations)

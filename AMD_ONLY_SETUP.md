@@ -35,7 +35,7 @@ python -m streamlit run app.py
 
 ```powershell
 python tools/system_check.py
-python tools/test_amd_directml.py
+python tools/test_amd_directml.py --weights models/registry/charisis_cluster_tracking/<version>/best.pt --image path/to/representative_oyster_frame.jpg
 ```
 
-The operator diagnostic checks selected operations only. Full trained-model inference is the acceptance criterion. If DirectML fails, select CPU explicitly and retain the exception in the inference run history.
+The YOLO diagnostic runs the actual segmentation checkpoint on DirectML and requires at least one instance mask. Use a target oyster checkpoint and representative oyster image for acceptance; an M18K run checks runtime compatibility only. It is still a smoke test, not an accuracy evaluation. If DirectML fails, use CPU explicitly and retain the error.

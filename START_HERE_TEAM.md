@@ -1,26 +1,25 @@
-# FungiCirno — team handoff
+# FungiCirno — team verification handoff
 
-This is the integrated implementation handoff for the three-person team. It gives each member a bounded subsystem to validate and repair. It is **not** a claim that every path has already run successfully on the target PC.
+This release contains the agreed application architecture, shared prediction contract, YOLO-seg model integration, tracking/grouping workflows, review/export lifecycle, training tools, and detailed acceptance tests. The two members are **validators and bounded fix owners**, not asked to redesign the system.
+
+## Fixed architecture
+
+- Production runtime: one Ultralytics YOLOv8-seg inference implementation.
+- Model A `charisis_cluster_tracking`: oyster cluster instances, `immature` / `well-defined` / `overstayed`; tracking enabled. This is the primary growth-stage/time-series model.
+- Model B `mushr_maturity`: individual oyster fruitbodies, `not-ready` / `ready` / `overdue`; tracking off by default, spatial flush aggregation enabled.
+- M18K WB-only `best.pt`: source initialization candidate/debug model only; not an oyster-stage model.
+- One normalized `Prediction` contract feeds SQLite, tracking, grouping, review and dashboard. No second application or separate tracker.
+- Colab handles training. The local app handles inference, data, review, model registry and rollback. CPU is mandatory; AMD DirectML is the primary optional accelerator and must be verified end-to-end.
+
+Read `docs/FINAL_SYSTEM_ARCHITECTURE.md` for the definitive decisions. Do not alter taxonomies or shared interfaces independently.
 
 ## Team ownership
 
-- **Nguyen Hai Nam (lead):** main branch, app, database/schema, shared contracts, integration, system acceptance, report and presentation. See `docs/handoff/HAI_NAM.md`.
-- **Nguyen Minh Thinh:** M18K model lifecycle, inference adapter, side-view transfer learning, human-reviewed learning, candidate evaluation and rollback. See `docs/handoff/MINH_THINH.md`.
-- **Le Thien Khang:** spatial grouping, temporal tracking, growth measurement, calibration and environmental analysis. See `docs/handoff/THIEN_KHANG.md`.
+- **Nguyen Hai Nam (lead):** main branch, app, DB/schema, shared contracts, release integration and final system acceptance. `docs/handoff/HAI_NAM.md`.
+- **Nguyen Minh Thinh:** model/data/training/runtime validation and fixes. `docs/handoff/MINH_THINH.md`.
+- **Le Thien Khang:** temporal tracking, maturity aggregation, growth/calibration/environment validation and fixes. `docs/handoff/THIEN_KHANG.md`.
 
-## Rules that prevent integration damage
-
-1. `main` is owned by Hai Nam. Protect it and do not let members push directly.
-2. Both members start from the same release commit and use separate branches:
-   - `member/minh-thinh-ml`
-   - `member/khang-growth-analytics`
-3. Do not change the shared database schema or public contracts without a request to Hai Nam.
-4. Do not independently rewrite `app.py`, the DB layer, or the other member's modules.
-5. Every submitted fix must include: changed files, exact run command, actual output/log, sample artifacts, known issues, and commit hash.
-6. Do not commit model weights, raw datasets, captures, masks, local SQLite databases, or exported review data.
-7. Do not call a subsystem complete merely because its code exists. Use the acceptance checklist and attach execution evidence.
-
-## First setup
+## Setup
 
 Use Python 3.12 on Windows.
 
@@ -32,7 +31,7 @@ Set-ExecutionPolicy -Scope Process Bypass
 .\run_windows.bat
 ```
 
-**CPU-only fallback / second machine:**
+**CPU-only machine:**
 
 ```powershell
 Set-ExecutionPolicy -Scope Process Bypass
@@ -40,30 +39,17 @@ Set-ExecutionPolicy -Scope Process Bypass
 .\run_windows.bat
 ```
 
-The app creates a new local SQLite database on first launch. This release intentionally does not include the lead's old local database or any personal capture/mask paths. The team checkpoint is not included either; it remains in the team's authorized Drive/Colab storage.
+The weights, raw datasets, captures, masks and local SQLite database are external/local assets and are intentionally not committed.
 
-## First model installation
+## What members need to return
 
-Obtain the team's M18K WB-only `best.pt`, then package it:
+1. A short report of what works and what does not.
+2. The exact commands, environment/package versions, model hashes, dataset/split IDs, logs and sample output artifacts.
+3. Focused bug-fix commits only within their ownership area.
+4. Any dependency that cannot be resolved from the public datasets or current hardware, stated explicitly.
 
-```powershell
-python tools/package_yolo_model.py --weights path\to\best.pt --out m18k_wb_bundle.zip
-```
+Do not change DB schema, `app.py`, or shared interfaces without Hai Nam's approval. Do not claim completion from code presence alone.
 
-Open **Models** in FungiCirno, upload the bundle, and activate it after reviewing the model metadata. WB-only predicts White Button instances; it does not predict oyster-mushroom maturity stages.
+## Final acceptance
 
-## Work order
-
-1. Both members read `docs/INTEGRATION_CONTRACTS.md` and their own handoff document.
-2. Minh Thinh validates the M18K bundle, CPU path, AMD path, target-domain fine-tuning and review-to-candidate workflow.
-3. Khang validates multi-capture IDs, missed-frame handling, growth measurements, calibration and environment imports.
-4. Hai Nam integrates approved branches and runs `docs/ACCEPTANCE_CHECKLIST.md` from a clean checkout.
-5. Only after the integrated workflow is populated with real captures and predictions should the team record the final demo video and screenshots.
-
-## What is implemented vs. what still requires evidence
-
-The code provides the application workflows, YOLO-seg and legacy TorchVision model adapters, SQLite persistence, review/export, an offline candidate-training script, model-version activation/rollback, spatial grouping, mask-based temporal association, growth-history views, and CSV environmental ingestion.
-
-The following remain **validation/deployment work**, not established results: full AMD DirectML YOLO inference; full CPU inference on the team's real checkpoint; side-view transfer-learning accuracy; tracking identity metrics on manually annotated sequences; physical calibration accuracy; and an actual incremental retraining + regression + rollback run. Live sensor hardware integration is not included; environmental data enter through CSV.
-
-The `m18k` weights and source/target datasets are external assets and are deliberately not inside this ZIP.
+Use `docs/ACCEPTANCE_CHECKLIST.md`. The release is not a scientifically validated production system until both oyster model families have target-domain weights and the CPU/AMD, sequence-tracking, review-learning, and rollback workflows have execution evidence.

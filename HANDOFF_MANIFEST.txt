@@ -1,25 +1,24 @@
-FungiCirno — Complete Implementation Handoff
-Release package: 2026-11-11
+FungiCirno — completed application architecture + verification handoff
+Release: 2026-11-12
 
 Included:
-- Full Streamlit application and Python source package
-- SQLite schema and additive migrations (database is created on first launch)
-- Ultralytics YOLO-seg model adapter and legacy TorchVision adapter
-- CPU and AMD DirectML selectable inference backends
-- Capture ingestion, model registry, prediction/mask persistence
-- Spatial grouping, mask-based temporal tracking and growth-history pipeline
-- Environmental CSV import and time-aligned summaries
-- Human review and reviewed-label export
-- Offline candidate fine-tuning/evaluation/package scripts
-- Model candidate activation controls and rollback path
-- Windows AMD/CPU setup scripts and Linux CPU run script
-- Three member runbooks, integration contracts, acceptance checklist and limitations
+- Modular Streamlit application and SQLite persistence.
+- Shared Ultralytics YOLOv8-seg runtime and normalized Prediction pipeline.
+- Legacy TorchVision bundle compatibility for old experiments only.
+- Separate model-family contracts for oyster cluster stages and individual fruitbody maturity.
+- Capture ingestion, hash deduplication, prediction/mask persistence.
+- Model registry, version activation, promotion gates and rollback path.
+- Hungarian mask/centroid/area temporal tracking with missed-capture tolerance.
+- Per-capture stage history and growth measurements.
+- Spatial grouping and area-weighted ready-class summaries.
+- Environmental CSV import and time alignment.
+- Human review, mask correction, reviewed dataset export.
+- COCO-to-YOLO-seg dataset conversion, candidate training and model packaging tools.
+- Final architecture, integration contract, acceptance checklist and focused member/AI handoffs.
 
-Intentionally excluded:
-- M18K best.pt weights and any other trained weights
-- M18K raw images/annotations and side-view datasets
-- Local SQLite databases, captures, masks and personal machine paths
-- Candidate checkpoints or exported model bundles
+Intentionally not included:
+- M18K checkpoint weights, Charisis/MushR model weights or other trained weights.
+- Raw datasets, local captures/masks, SQLite database or private machine data.
 
-Important:
-This is an integrated implementation handoff, not a claim of end-to-end validation. Members must run and repair their assigned subsystems. Full Ultralytics YOLO inference on AMD DirectML, 12 GB RAM behavior, side-view transfer performance, sequence-level tracking accuracy, physical calibration, and incremental retraining/rollback remain to be demonstrated with actual logs and evidence.
+Validation boundary:
+The application implementation and integration workflow are included. Trained oyster target checkpoints, target-domain evaluation, full-model CPU/AMD execution evidence, tracking ID evaluation, camera calibration validation and a complete review/fine-tune/rollback execution are not included and must not be claimed until run. Members are assigned to verify these external-data and target-hardware dependencies and submit bounded fixes only.

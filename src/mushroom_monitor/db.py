@@ -209,8 +209,11 @@ class Database:
             raise ValueError("Unknown model version")
         if status == "active":
             metrics = json.loads(model.get("metrics_json") or "{}")
-            if metrics and metrics.get("promotion_ready") is False and not force:
-                raise ValueError("Candidate has not passed independent holdout promotion gates. Explicit override is required.")
+            if metrics.get("promotion_ready") is not True and not force:
+                raise ValueError(
+                    "Candidate has no passing independent holdout report. Explicit override is required "
+                    "for a prototype/debug activation."
+                )
         with self.transaction() as conn:
             if status == "active":
                 conn.execute("UPDATE model_versions SET status='candidate' WHERE model_key=? AND status='active'", (model["model_key"],))

@@ -62,7 +62,7 @@ def model_options(key: str | None = None):
 def show_status():
     registered = db.query("SELECT model_key,version,architecture,source_species,status FROM model_versions ORDER BY model_key,installed_at DESC")
     if not registered:
-        st.warning("No model weights are installed. Import the M18K YOLO model bundle under Models before running inference.")
+        st.warning("No model weights are installed. Import a target oyster model bundle under Models before production inference. M18K WB-only is available only as a source-domain/debug model.")
     return registered
 
 
@@ -79,13 +79,20 @@ def image_with_mask(capture_path: str, mask_path: str, caption: str):
 
 
 def refresh_after_review(prediction_id: int):
-    row = db.one("""SELECT p.capture_id,p.model_version_id,m.model_key,c.unit_id,c.camera_id,c.series_key
+    row = db.one("""SELECT p.capture_id,p.model_version_id,m.model_key,m.config_json,m.architecture,
+                          c.unit_id,c.camera_id,c.series_key
                    FROM predictions p JOIN model_versions m ON m.id=p.model_version_id
                    JOIN captures c ON c.id=p.capture_id WHERE p.id=?""", (prediction_id,))
     if not row:
         return
     rebuild_flush_groups(db,row["capture_id"],model_version_id=int(row["model_version_id"]))
-    if row["model_key"] in {"charisis_cluster_tracking", "m18k_yolo_seg"}:
+    model_config = json.loads(row["config_json"] or "{}")
+    track_objects = bool(model_config.get(
+        "track_objects",
+        row["model_key"] == "charisis_cluster_tracking"
+        or "convnext" in str(row["architecture"]).lower(),
+    ))
+    if track_objects:
         rebuild_sequence_tracks(db,row["unit_id"],row["camera_id"],row["series_key"],row["model_version_id"])
 
 
@@ -114,7 +121,7 @@ if page == "Overview":
         st.dataframe(pd.DataFrame(models)[["model_key","version","architecture","source_species","status"]], width="stretch", hide_index=True)
     else:
         st.info("Model weights are not included in the submitted result ZIPs. Install the exported model bundles from Colab first.")
-    st.markdown("**Current direction:** M18K-trained YOLOv8-seg is the primary detector. Charisis contributes the mask-based temporal-tracking methodology; its original Mask R-CNN is not required. The WB-only M18K checkpoint is not a maturity classifier and has not yet been validated on side-view oyster images.")
+    st.markdown("**Production direction:** `charisis_cluster_tracking` segments whole oyster clusters into three growth stages and tracks them across captures. `mushr_maturity` separately segments individual oyster fruitbodies into harvest-readiness classes. Both use the same YOLO-seg runtime and prediction pipeline. The WB-only M18K checkpoint is a source-initialization candidate, not a production oyster model.")
 
 elif page == "Cultivation":
     st.subheader("Sites, growing units and cameras")
@@ -337,9 +344,16 @@ elif page == "Run inference":
                         failures.append((capture["id"],str(exc)))
                         messages.error(f"Capture #{capture['id']}: {type(exc).__name__}: {exc}")
                     progress.progress(index / len(choices))
-                if model["model_key"] in {"charisis_cluster_tracking", "m18k_yolo_seg"}:
+                track_objects = bool(config.get(
+                    "track_objects",
+                    model["model_key"] == "charisis_cluster_tracking"
+                    or "convnext" in str(model["architecture"]).lower(),
+                ))
+                if track_objects:
                     tracked = rebuild_sequence_tracks(db,unit["id"],camera["id"],series,model["id"])
                     st.write("Tracking summary", tracked)
+                else:
+                    st.info("This model is configured for per-image maturity/grouping, not temporal object tracking.")
                 for capture in choices:
                     rebuild_flush_groups(db,int(capture["id"]),model_version_id=int(model["id"]))
                 st.success(f"Completed {len(successes)} captures; failed {len(failures)}.")
@@ -390,19 +404,26 @@ elif page == "Growth tracking":
                     format_func=lambda x: f"{track_map[x]['track_key']} — {track_map[x]['observations']} observations / {float(track_map[x]['growth_pct'] or 0):.1f}% area change")
                 selected = track_map[selected_id]
                 observations = db.query("""SELECT o.frame_index,o.captured_at,o.area_px2,o.area_mm2,o.growth_vs_first_pct,
-                                       c.original_name FROM track_observations o JOIN captures c ON c.id=o.capture_id
+                                       p.class_name AS growth_stage,p.confidence AS stage_confidence,
+                                       c.original_name FROM track_observations o
+                                       JOIN predictions p ON p.id=o.prediction_id
+                                       JOIN captures c ON c.id=o.capture_id
                                        WHERE o.track_id=? ORDER BY o.frame_index""", (selected_id,))
                 chart = pd.DataFrame(observations)
+                st.subheader("Tracked growth")
                 st.line_chart(chart.set_index("frame_index")[["area_px2"]])
                 st.line_chart(chart.set_index("frame_index")[["growth_vs_first_pct"]])
                 if chart["area_mm2"].notna().any():
                     st.line_chart(chart.set_index("frame_index")[["area_mm2"]])
-                st.dataframe(chart, width="stretch", hide_index=True)
+                st.subheader("Observed stage progression")
+                st.dataframe(chart[["frame_index", "captured_at", "growth_stage", "stage_confidence", "original_name"]],
+                             width="stretch", hide_index=True)
+                st.caption("Stage is the model's per-capture class prediction. A transition is an observed model-label change, not proof that the biological transition occurred at that exact timestamp.")
                 st.download_button("Download track observations CSV",data=chart.to_csv(index=False),
                                    file_name=f"track_{selected_id}_observations.csv",mime="text/csv")
                 st.caption("Area is an image-pixel estimate. mm² is shown only when a camera calibration has been entered. Growth is compared within one camera/view/series.")
             else:
-                st.info("No tracks yet. Process captures with the active M18K or supported cluster-segmentation model.")
+                st.info("No tracks yet. Activate `charisis_cluster_tracking`, import a fixed-camera time-lapse series, and process its captures.")
 
 elif page == "Maturity & grouping":
     st.subheader("Spatial groups and maturity outputs")
@@ -416,9 +437,17 @@ elif page == "Maturity & grouping":
                           WHERE c.unit_id=? ORDER BY COALESCE(c.captured_at,c.imported_at) DESC""", (unit_id,))
         if rows:
             frame = pd.DataFrame(rows)
-            frame["class_area_json"] = frame["class_area_json"].apply(json.loads)
-            st.dataframe(frame.drop(columns=["class_area_json"]), width="stretch", hide_index=True)
-            st.caption("Groups describe spatially adjacent detections within one capture. They are not persistent track IDs. A WB-only M18K model detects White Button instances; it does not infer developmental maturity stages. Maturity labels appear only when the active model has stage-labelled classes.")
+            class_fractions = []
+            for _, group in frame.iterrows():
+                areas = json.loads(group["class_area_json"] or "{}")
+                total = sum(float(value) for value in areas.values())
+                fractions = {f"{name}_area_pct": (100.0 * float(value) / total if total else 0.0)
+                             for name, value in areas.items()}
+                class_fractions.append(fractions)
+            fraction_frame = pd.DataFrame(class_fractions).fillna(0.0)
+            display = pd.concat([frame.drop(columns=["class_area_json"]), fraction_frame], axis=1)
+            st.dataframe(display, width="stretch", hide_index=True)
+            st.caption("Groups describe spatially adjacent detections within one capture. They are not persistent track IDs. Per-class area percentages are computed from the active model's own taxonomy; do not compare percentages across different model families or taxonomies.")
         else:
             st.info("No spatial groups yet. Process captures with an active segmentation model.")
 
@@ -540,15 +569,18 @@ elif page == "Learning lab":
                 st.download_button("Download training dataset",data=exported.read_bytes(),file_name=exported.name,mime="application/zip")
             except Exception as exc: st.error(f"Dataset export failed: {type(exc).__name__}: {exc}")
     st.markdown("### Candidate training (Colab)")
-    st.code("""# Learning Lab ZIP is already YOLO-seg format:
-python -m zipfile -e reviewed_yolo_dataset.zip reviewed_dataset
+    st.code("""# Initial oyster cluster-stage transfer (M18K class metrics are NOT comparable):
 python tools/train_candidate.py --weights m18k_wb_best.pt \
-  --data reviewed_dataset/data.yaml --holdout-data sideview_holdout.yaml \
-  --source-holdout-data m18k_source_holdout.yaml --epochs 50 --imgsz 640 --batch 8 --device 0 \
-  --species 'Pleurotus pulmonarius' --taxonomy sideview_mushroom_instance \
-  --out candidate_bundle.zip
+  --data charisis_yolo/data.yaml --holdout-data charisis_yolo/data.yaml --holdout-split test \
+  --model-key charisis_cluster_tracking --prediction-role cluster_stage \
+  --species 'Pleurotus ostreatus' --taxonomy charisis_oyster_cluster_stage_v1 \
+  --pretrained-source 'team M18K V2 WB-only checkpoint' \
+  --epochs 50 --imgsz 640 --batch 8 --device 0 --out charisis_candidate.zip
 
-# Alternative: convert the COCO ZIP exported from Review & Learning:
+# For later updates, use the active SAME-TAXONOMY oyster checkpoint as --weights
+# and --baseline-weights, evaluated on the same untouched target holdout.
+
+# Alternative: convert a reviewed COCO annotation ZIP exported from Review & Learning:
 python tools/prepare_reviewed_dataset.py reviewed_coco.zip --out reviewed_dataset""",language="bash")
     st.warning("Do not use reviewed predictions as unquestioned ground truth. Inspect/correct masks, keep a separate sequence- or farm-level holdout, and evaluate baseline and candidate on exactly the same holdout before activation.")
     jobs=data_frame("SELECT id,model_key,created_at,finished_at,status,dataset_path,candidate_path,metrics_json,error FROM learning_jobs ORDER BY id DESC LIMIT 20")

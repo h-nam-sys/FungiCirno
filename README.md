@@ -1,93 +1,99 @@
-# FungiCirno — local mushroom monitoring
+# FungiCirno — oyster mushroom growth monitoring
 
-FungiCirno is a modular local application for organizing cultivation images, running instance segmentation, grouping detections, associating clusters across captures, measuring image-plane growth, reviewing predictions, and maintaining versioned models. The M18K-trained Ultralytics YOLO-seg family is the primary detection path. Charisis et al. are used as a methodological reference for mask-based temporal tracking; their Mask R-CNN checkpoint is not a runtime requirement.
+FungiCirno is a local computer-vision application for fixed-camera, side-view monitoring of oyster mushrooms (*Pleurotus ostreatus*). It combines instance segmentation, per-capture stage labels, persistent cluster tracking, visible-area growth measurement, individual maturity estimation, human review, environmental context, and offline model improvement.
 
-This release is an **integrated implementation handoff** for the team. It includes the application modules, YOLO model adapter, local CPU and AMD DirectML device selection, tracking and measurement, environmental data, human mask/class review, reviewed-data export, candidate fine-tuning/evaluation scripts, model versioning/rollback controls, and member runbooks. It does not include the trained M18K weights or a validated side-view oyster-mushroom checkpoint. The team must supply those artifacts and run the acceptance workflow on the target PC.
+**Important status:** the application and training/integration workflows are implemented in this release. The trained M18K White Button checkpoint is a source-domain starting point, not the production oyster model. Trained Charisis-taxonomy and MushR-taxonomy oyster checkpoints are not included. CPU and AMD DirectML end-to-end execution, target-domain metrics, sequence tracking metrics, and a full learning/rollback run still require real-data and target-hardware evidence. See `docs/FINAL_SYSTEM_ARCHITECTURE.md` and `docs/ACCEPTANCE_CHECKLIST.md`.
 
-## 1. System architecture
+## 1. Final system design
+
+One Ultralytics YOLOv8-seg inference implementation serves two separately trained model families. Both produce the same normalized `Prediction` records, so the database, review workflow, tracking, grouping, and dashboard do not depend on the model architecture.
+
+| Model family | Detection unit | Class taxonomy | Downstream role |
+|---|---|---|---|
+| `charisis_cluster_tracking` | Whole oyster cluster | `immature`, `well-defined`, `overstayed` | Primary cluster tracking, stage history, growth curves |
+| `mushr_maturity` | Individual oyster fruitbody | `not-ready`, `ready`, `overdue` | Individual harvest maturity and spatial flush summaries |
+| `m18k_source_wb` | White Button mushroom instance | `WB` | Source-domain checkpoint and integration/debug baseline only |
+
+Do not merge these taxonomies. The Charisis model predicts a cluster-level development stage. The MushR model predicts individual fruitbody harvest readiness. M18K predicts only White Button instances. A detection's area must never be used as a substitute for a maturity classifier.
+
+### Architecture
 
 ```text
-Cultivation site / unit / camera
-             |
-             v
-     Capture ingestion
-             |
-             v
-  Image validation + SHA-256 dedupe
-             |
-             v
-    Active model registry
-             |
-             v
-  YOLOv8-seg inference (CPU / AMD)
-             |
-             v
-  Prediction records + binary masks
-             |
-       +-----+------+
-       |            |
-       v            v
- Spatial groups   Temporal tracking
-       |            |
-       +-----+------+
-             |
-             v
-   Growth / maturity records
-             |
-             +---- Environmental readings (CSV)
-             |
-             v
-       SQLite + Streamlit
-             |
-             v
- Human review (accept / reject / class / mask correction)
-             |
-             v
- Reviewed YOLO-seg dataset export
-             |
-             v
+Site / growing unit / fixed side-view camera
+                    |
+                    v
+ Timestamped capture ingestion + SHA-256 deduplication
+                    |
+                    v
+             Model registry
+                    |
+          +---------+----------+
+          |                    |
+          v                    v
+ Charisis cluster model    MushR fruitbody model
+ YOLOv8-seg                YOLOv8-seg
+ 3 cluster stages          3 maturity classes
+          |                    |
+          v                    v
+     Normalized Prediction contract
+                    |
+          +---------+----------+
+          |                    |
+          v                    v
+ Cluster tracking        Spatial grouping
+ Stage history           Ready-area fraction
+ Growth measurements    Flush maturity summary
+          |                    |
+          +---------+----------+
+                    |
+                    v
+       SQLite persistence + Streamlit UI
+                    |
+                    v
+ Human review / class and mask correction
+                    |
+                    v
+ Reviewed YOLO dataset export
+                    |
+                    v
  Colab fine-tuning + independent holdout evaluation
-             |
-             v
- Candidate model ZIP -> registry -> activation / rollback
+                    |
+                    v
+ Candidate bundle -> registry -> approval / rollback
 ```
 
-### Model scope
+The full component decisions, data contracts, failure boundaries and research limitations are in `docs/FINAL_SYSTEM_ARCHITECTURE.md`.
 
-- **M18K YOLOv8n-seg:** trained by the team using M18K V2. The existing WB-only checkpoint recognizes the White Button class; it is not a mushroom maturity classifier and has not been proven to generalize to side-view oyster mushrooms.
-- **Side-view transfer learning:** fine-tune from the existing checkpoint using reviewed/public side-view labels. Report target-domain results only after evaluating on a separate sequence/farm-level holdout.
-- **Charisis-inspired tracking:** the app associates masks using IoU, predicted centroid proximity, area similarity and Hungarian assignment. This is a project implementation inspired by the paper, not an exact reproduction.
-- **Maturity estimation:** the app displays stage-labelled detections when the active model contains stage labels. A WB-only class does not provide maturity labels; do not infer readiness from area alone.
+## 2. Model and dataset plan
 
-## 2. Install on Windows — AMD DirectML
+### A. Primary cluster-stage model
 
-Use native Windows and Python 3.12 for the pinned DirectML environment.
+Use the public Charisis et al. oyster cluster time-lapse dataset (DOI `10.5281/zenodo.15041243`). It contains side-view cluster masks and the three cluster-level labels used by the paper. Preserve complete time-lapse trials/sequences when splitting data; adjacent frames from one trial must not leak across train, validation and test.
 
-```powershell
-py -3.12 -m venv .venv
-.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-python -m pip install -r requirements-ml.txt
-python -m pip install -e .
-```
+Train two initializations on the same target dataset and split:
 
-If PowerShell blocks activation, use `cmd.exe`:
+1. Team M18K `best.pt` as an initialization candidate. Its one-class WB head is replaced/adapted to the three oyster cluster classes; compatible feature weights may transfer, but this does not establish that the M18K model is better.
+2. COCO-pretrained `yolov8n-seg.pt` as the comparison initialization.
 
-```bat
-.venv\Scripts\activate.bat
-```
+Compare both on the same untouched oyster test sequences. Select based on target-domain segmentation quality and qualitative mask/stage errors, not source-domain M18K AP.
 
-Run the app:
+### B. Individual maturity model
 
-```powershell
-python -m streamlit run app.py
-```
+Use the public MushR annotated oyster mushroom dataset and its three labels: `not-ready`, `ready`, and `overdue`. This model is a separate task and checkpoint. It reuses the same YOLO-seg runtime and prediction schema. Spatial grouping estimates per-flush readiness by aggregating predicted mask area by class; that summary is not a separately trained classifier.
 
-Select **AMD Radeon RX 5500 XT (DirectML)** under Run inference. If the complete YOLO graph or an operation is not supported by the installed DirectML stack, choose CPU explicitly. DirectML availability and isolated operator tests do not prove full-model execution.
+MushR data are linked from `https://github.com/ETCE-LAB/MushR`. Inspect the supplied annotation format and its dataset terms before conversion. `tools/prepare_coco_yolo_dataset.py` converts COCO instance-segmentation annotations into YOLO-seg format when the downloaded annotations are COCO-compatible. Do not assume an annotation format without inspecting it.
 
-## 3. Install CPU-only
+### C. M18K's correct role
 
-CPU inference is part of the application contract and must remain available. In a fresh environment:
+The current M18K checkpoint is team-trained YOLOv8n-seg on M18K V2, WB-only class ID `0`. Its reported metrics apply only to the White Button held-out test split. Keep its weights and evaluation record separate. It can seed a target transfer experiment, but must not be deployed as the oyster model or assigned oyster stage names without target-domain training.
+
+Wang's seven-stage *Pleurotus pulmonarius* taxonomy is a separate research reference. It is not the production label map for this *P. ostreatus* system.
+
+## 3. Install and run
+
+Use Python 3.12. Training runs offline in Google Colab; the local application performs inference and management.
+
+### Windows CPU
 
 ```powershell
 py -3.12 -m venv .venv
@@ -99,125 +105,178 @@ python -m pip install -e .
 python -m streamlit run app.py
 ```
 
-On Linux, use the same CPU PyTorch wheel instruction with the platform-appropriate Python environment. DirectML is a native Windows backend.
-Optional COCO RLE tooling for research dataset conversion: `pip install -r requirements-research.txt`. It is not required by the normal application.
-
-## 4. Install an M18K YOLO model
-
-The registry accepts a ZIP bundle containing:
-
-```text
-model_bundle.zip
-  best.pt
-  model_config.json
-  class_mapping.json
-  evaluation_metrics.json   # optional but strongly recommended
-  README.txt                # optional
-```
-
-Create a bundle from an existing checkpoint:
+### Windows AMD DirectML
 
 ```powershell
-python tools/package_yolo_model.py --weights path\to\best.pt --out m18k_model_bundle.zip
+py -3.12 -m venv .venv
+.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -r requirements-ml.txt
+python -m pip install -e .
+python -m streamlit run app.py
 ```
 
-For a target-domain model, specify the class taxonomy and species:
+Alternatively run `setup_windows_cpu.ps1` or `setup_windows_amd.ps1`, then `run_windows.bat`.
 
-```powershell
-python tools/package_yolo_model.py --weights runs\segment\train\weights\best.pt `
-  --model-key m18k_yolo_seg --species "Pleurotus pulmonarius" `
-  --taxonomy sideview_mushroom_instance --out sideview_candidate.zip
+CPU is the guaranteed fallback. AMD DirectML is the primary optional accelerator, but full Ultralytics YOLO execution on the RX 5500 XT must be tested with the actual bundle. Run `tools/test_amd_directml.py --weights <model.pt> --image <capture.jpg>` to attempt a real YOLO segmentation forward pass on DirectML; this smoke test does not establish accuracy or sustained stability. Never label CPU execution as AMD execution. NVIDIA is future work.
+
+## 4. Convert a public COCO dataset
+
+When the source provides separate COCO JSON files and a common image root:
+
+```bash
+python tools/prepare_coco_yolo_dataset.py \
+  --images /content/source_images \
+  --train-json /content/annotations/train.json \
+  --val-json /content/annotations/val.json \
+  --test-json /content/annotations/test.json \
+  --class-order immature,well-defined,overstayed \
+  --out /content/charisis_yolo
 ```
 
-In FungiCirno, open **Models**, upload the ZIP, install it as a candidate, inspect its metrics, then activate it. Candidate activation can be blocked when the bundle explicitly records a failed/missing promotion gate. The UI exposes an explicit override for prototype use; do not use that to claim a validated model. The previous active version remains installed and can be reactivated for rollback.
+The converter produces `images/`, `labels/`, `data.yaml`, and `dataset_manifest.json`. Inspect converted masks/labels. It reduces each instance mask to its largest external contour because a YOLO-seg label row represents one polygon. If the source annotations are not COCO-compatible or use multiple disconnected components/holes that matter, write and validate a dataset-specific conversion rather than silently accepting that loss.
 
-## 5. Normal operation
+For MushR, use the correct class order:
 
-1. Add a site, growing unit and camera in **Cultivation**.
-2. Enter a camera-specific `mm_per_px` calibration only when a reliable known reference and fixed camera geometry are available. Otherwise, measurements remain in pixels.
-3. Import captures in **Capture images**. Assign the same series key to images from the same camera sequence and provide capture times when EXIF is absent.
-4. Activate a model in **Models**.
-5. Run selected captures in **Run inference**. Choose AMD or CPU, image size and confidence threshold.
-6. Inspect outputs in **Growth tracking** and **Maturity & grouping**.
-7. Import sensor CSV files in **Environment**. Required timestamp column: `measured_at` or `timestamp`; optional columns: `temperature_c`, `humidity_pct`, `co2_ppm`, `notes`.
-8. Review predictions in **Review & learning**. Accept, reject, correct class, or upload a corrected binary mask (white foreground on black background).
-9. Use **Learning lab** to export reviewed data for Colab fine-tuning.
+```bash
+--class-order not-ready,ready,overdue
+```
 
-## 6. Incremental learning workflow
+Only use a `test` split that is genuinely held out by full sequence/camera/growing-scene or equivalent independent grouping. The converter does not create a leakage-free split for you; it preserves the three source splits supplied to it.
 
-The local app does not train on the user's machine. It exports reviewed samples; training and evaluation happen in Colab or another GPU environment.
+## 5. Train the primary oyster cluster model in Colab
 
-1. Review predictions; do not treat model output as ground truth without human inspection.
-2. Export an Ultralytics YOLO-seg dataset from **Learning lab**. The export includes `images/`, `labels/`, `data.yaml` and a manifest.
-3. Keep an independent holdout dataset separated by capture sequence, growing scene or farm. Do not reuse the training export as the final test set.
-4. Run `tools/train_candidate.py` using the existing `best.pt` as initialization and the independent holdout YAML. The script measures baseline and candidate on the same holdout and writes `evaluation_metrics.json` into the candidate bundle.
-5. Import the candidate bundle into **Models**. Activate only after reviewing the holdout metrics, sample overlays, class map and device execution. Keep the previous model for rollback.
+Run both initializations independently on the **same** target dataset, training split, validation split, and untouched test split.
 
-Example Colab commands after transferring the files:
+M18K initialization:
 
 ```bash
 python tools/train_candidate.py \
-  --weights m18k_wb_best.pt \
-  --data reviewed_dataset/data.yaml \
-  --holdout-data sideview_holdout.yaml \
-  --source-holdout-data m18k_source_holdout.yaml \
+  --weights /content/best.pt \
+  --data /content/charisis_yolo/data.yaml \
+  --holdout-data /content/charisis_yolo/data.yaml --holdout-split test \
+  --holdout-id charisis_trial_holdout_v1 \
+  --model-key charisis_cluster_tracking \
+  --species 'Pleurotus ostreatus' \
+  --taxonomy charisis_oyster_cluster_stage_v1 \
+  --prediction-role cluster_stage \
+  --pretrained-source 'team M18K V2 WB-only YOLOv8n-seg checkpoint' \
   --epochs 50 --imgsz 640 --batch 8 --device 0 \
-  --species 'Pleurotus pulmonarius' \
-  --taxonomy sideview_mushroom_instance \
-  --out sideview_candidate_bundle.zip
+  --out /content/charisis_m18k_init_candidate.zip
 ```
 
-A candidate is promotion-ready only when it passes a target-domain minimum AP gate and retains source-domain performance within the configured regression tolerance. Both holdouts must be independent of training data. A candidate without either holdout is packaged as **not promotion-ready**.
+COCO-pretrained comparison:
 
-## 7. Database and files
+```bash
+python tools/train_candidate.py \
+  --weights yolov8n-seg.pt \
+  --data /content/charisis_yolo/data.yaml \
+  --holdout-data /content/charisis_yolo/data.yaml --holdout-split test \
+  --holdout-id charisis_trial_holdout_v1 \
+  --model-key charisis_cluster_tracking \
+  --species 'Pleurotus ostreatus' \
+  --taxonomy charisis_oyster_cluster_stage_v1 \
+  --prediction-role cluster_stage \
+  --pretrained-source 'Ultralytics COCO-pretrained YOLOv8n-seg' \
+  --epochs 50 --imgsz 640 --batch 8 --device 0 \
+  --out /content/charisis_coco_init_candidate.zip
+```
 
-- SQLite database: `data/mushroom_monitor.sqlite3`
-- Original captures: `data/captures/`
-- Prediction masks: `data/masks/`
-- Exports and reviewed datasets: `data/exports/`
-- Installed models: `models/registry/<model_key>/<version>/`
-- Incoming model ZIPs: `models/incoming/`
+For the first transfer, omit `--baseline-weights`: the one-class WB model and three-class oyster-stage model have different taxonomies, so their AP numbers are not comparable. Compare the two resulting candidates on the same target test set outside the training loop and choose one target initialization. For later updates to an already trained Charisis model, pass the active same-taxonomy model as both `--weights` and `--baseline-weights` so baseline and candidate are measured on the same untouched holdout.
 
-Back up the database and `data/` before changing releases. Database initialization performs additive schema creation and adds `flush_groups.model_version_id` to earlier databases when needed. Do not delete the database during an upgrade.
+## 6. Train the individual MushR maturity model
 
-## 8. Main modules
+Prepare its annotated data using the original dataset split and class mapping. Then train as a separate model family, for example:
+
+```bash
+python tools/train_candidate.py \
+  --weights yolov8n-seg.pt \
+  --data /content/mushr_yolo/data.yaml \
+  --holdout-data /content/mushr_yolo/data.yaml --holdout-split test \
+  --holdout-id mushr_test_v1 \
+  --model-key mushr_maturity \
+  --species 'Oyster mushroom (MushR dataset)' \
+  --taxonomy mushr_oyster_fruitbody_maturity_v1 \
+  --prediction-role fruitbody_maturity \
+  --pretrained-source 'Ultralytics COCO-pretrained YOLOv8n-seg' \
+  --epochs 50 --imgsz 640 --batch 8 --device 0 \
+  --out /content/mushr_candidate.zip
+```
+
+Do not use the Charisis model as a baseline for MushR or vice versa. Their objects and class meanings differ.
+
+## 7. Package an existing checkpoint
+
+```bash
+python tools/package_yolo_model.py \
+  --weights runs/segment/train/weights/best.pt \
+  --out charisis_cluster_bundle.zip \
+  --model-key charisis_cluster_tracking \
+  --species 'Pleurotus ostreatus' \
+  --taxonomy charisis_oyster_cluster_stage_v1 \
+  --prediction-role cluster_stage \
+  --pretrained-source 'M18K transfer or COCO initialization'
+```
+
+For Model B, use `--model-key mushr_maturity`, `--prediction-role fruitbody_maturity`, and `--taxonomy mushr_oyster_fruitbody_maturity_v1`. The candidate training script already emits a bundle with model metadata and evaluation metrics; do not re-package unless metadata needs correction.
+
+Upload the resulting ZIP in **Models**. Install as a candidate, inspect class mapping and `evaluation_metrics.json`, then explicitly activate it. A prior active version remains available for rollback. Never promote without an untouched target-domain evaluation.
+
+## 8. Normal operation
+
+1. Create the site, growing unit and fixed camera in **Cultivation**.
+2. Enter camera-specific `mm_per_px` only when measured from a reliable reference with unchanged camera geometry.
+3. Import timestamped images in **Capture images**. Every sequence must share one `series_key` and camera/view.
+4. Activate `charisis_cluster_tracking` and run inference across the ordered capture series. Review stage predictions, masks, and confidence.
+5. Use **Growth tracking** for stable cluster IDs, stage progression, visible area, and relative area change.
+6. Run `mushr_maturity` separately when individual fruitbody readiness/flush summaries are needed; inspect **Maturity & grouping**.
+7. Import environmental CSV (`measured_at`, `temperature_c`, `humidity_pct`, `co2_ppm`, optional `notes`).
+8. Review and correct predictions in **Review & learning**. Use **Learning lab** to export reviewed data for the matching model family.
+
+## 9. Human-reviewed learning and rollback
+
+1. The human inspects the source image, class and mask. Only genuinely inspected accepted items and corrected items are exported.
+2. Export the reviewed dataset for that model family. Do not mix class taxonomies.
+3. Keep a final target holdout out of the review/training export. Split by full sequence/farm/camera group, not adjacent frames.
+4. Fine-tune in Colab from the currently active checkpoint. Evaluate active baseline and candidate on the same untouched holdout only when taxonomy and test data are identical.
+5. Import the candidate. Require target holdout metrics and visual checks. Keep the prior active model installed.
+6. Activate explicitly; verify that rollback restores the prior model and that old results remain version-scoped.
+
+## 10. What is measured and what is not
+
+- `area_px2` is visible 2D mask area in source-image pixels.
+- `area_mm2` is available only with valid camera calibration; neither is 3D volume, mass, or biomass.
+- A stage change is the model's observed class change at capture times, not the exact biological transition time.
+- Track association score is a heuristic, not a probability.
+- Spatial grouping is per-capture and does not create persistent flush identities.
+- Flush readiness is a descriptive aggregate of individual predictions, not a separately trained classifier.
+- Environmental alignment/correlation is descriptive, not causal. Live sensor drivers are not included.
+
+## 11. Project structure
 
 | Path | Responsibility |
 |---|---|
-| `app.py` | Streamlit application and workflows |
-| `src/mushroom_monitor/db.py` | SQLite schema, transactions, migrations, model status |
-| `src/mushroom_monitor/image_io.py` | Image validation, EXIF timestamps, deduplication, resizing |
-| `src/mushroom_monitor/model_registry.py` | Bundle inspection, safe installation, version registry |
-| `src/mushroom_monitor/inference/runtime.py` | YOLO-seg and TorchVision inference, CPU/DirectML device selection |
-| `src/mushroom_monitor/service.py` | Inference orchestration, persistence, derived outputs |
-| `src/mushroom_monitor/tracking.py` | Motion-assisted mask association and persistent cluster tracks |
-| `src/mushroom_monitor/maturity.py` | Adaptive connected-component spatial grouping |
-| `src/mushroom_monitor/environment.py` | CSV parsing and nearest-time growth/environment joins |
-| `src/mushroom_monitor/review.py` | Human review, mask correction, COCO export |
-| `src/mushroom_monitor/learning.py` | Reviewed YOLO dataset export |
-| `tools/train_candidate.py` | Fine-tuning and same-holdout candidate comparison |
-| `tools/prepare_reviewed_dataset.py` | Convert reviewed COCO ZIP to YOLO-seg format |
-| `tools/package_yolo_model.py` | Package YOLO checkpoint for registry installation |
+| `app.py` | Streamlit UI and workflows |
+| `src/mushroom_monitor/db.py` | SQLite schema and persistence |
+| `src/mushroom_monitor/image_io.py` | Capture ingestion, timestamping, hashing, preprocessing |
+| `src/mushroom_monitor/model_registry.py` | Model bundle install, metadata, versions and activation |
+| `src/mushroom_monitor/inference/runtime.py` | Shared YOLO-seg inference and legacy TorchVision compatibility |
+| `src/mushroom_monitor/service.py` | Normalization, inference orchestration, persistence and derived outputs |
+| `src/mushroom_monitor/tracking.py` | Mask/centroid/area Hungarian association and persistent tracks |
+| `src/mushroom_monitor/maturity.py` | Per-capture spatial grouping and class-area summaries |
+| `src/mushroom_monitor/environment.py` | Environmental CSV parsing and time alignment |
+| `src/mushroom_monitor/review.py`, `learning.py` | Human review, mask correction and reviewed-data export |
+| `tools/prepare_coco_yolo_dataset.py` | COCO instance-mask to YOLO-seg conversion |
+| `tools/train_candidate.py` | Offline training, holdout evaluation and candidate bundle |
+| `tools/package_yolo_model.py` | YOLO model bundle creation |
 
-## 9. Runbook and ownership
+## 12. Team validation
 
-- `docs/handoff/MINH_THINH.md`: M18K model lifecycle, transfer learning, local backend and incremental learning.
-- `docs/handoff/THIEN_KHANG.md`: tracking, grouping, growth measurements and environmental analytics.
-- `docs/handoff/HAI_NAM.md`: integration, database, app, system acceptance and release control.
-- `docs/INTEGRATION_CONTRACTS.md`: shared data structures and file ownership.
-- `docs/ACCEPTANCE_CHECKLIST.md`: whole-product validation.
-- `docs/DECISIONS_AND_LIMITATIONS.md`: fixed decisions and claims the system must not make without evidence.
+- `START_HERE_TEAM.md`: short team entry point.
+- `docs/FINAL_SYSTEM_ARCHITECTURE.md`: architecture contract.
+- `docs/INTEGRATION_CONTRACTS.md`: shared schemas and ownership boundaries.
+- `docs/ACCEPTANCE_CHECKLIST.md`: executable system acceptance criteria.
+- `docs/handoff/`: member validation responsibilities.
+- `docs/ai_handoff/`: ready-to-paste coding-AI prompts.
 
-## 10. Data and research limitations
-
-- M18K V2 WB-only metrics apply to the M18K held-out test split, not side-view oyster mushroom production images.
-- A single WB class does not estimate maturity.
-- Mask area is an image-plane measurement. Physical units require calibrated camera geometry and a stable reference plane.
-- A correlation between environmental readings and growth is descriptive, not causal.
-- Track association scores are heuristic similarities, not calibrated probabilities.
-- The Charisis-inspired tracker is a local implementation; it must be evaluated on annotated sequences before reporting tracking accuracy.
-- Human acceptance of a model-generated mask does not automatically make it ground truth; inspect it.
-
-## 11. Licence and attribution
-
-Cite M18K, Ultralytics, PyTorch, OpenCV, SciPy, Streamlit, the relevant datasets and all reused source implementations. Review the licences of datasets and model weights before redistribution. See `LICENSE` for this repository's code licence.
+Do not mark features complete from code presence alone. Record commands, model hashes, data/split IDs, backend, inference time, RSS, example masks, tracking errors and failure logs. Do not commit weights, raw datasets, local captures, masks or databases.

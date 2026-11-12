@@ -24,13 +24,13 @@ class ModelService:
         self._engines: dict[tuple[int, int, str, float | None], InferenceEngine] = {}
 
     def engine_for(self, model_id: int, inference_side: int = DEFAULT_INFERENCE_SIDE,
-                   device_preference: str = "cpu", score_threshold: float | None = None) -> InferenceEngine:
+                   device_preference: str = "cpu", score_floor: float | None = None) -> InferenceEngine:
         row = self.db.one("SELECT * FROM model_versions WHERE id=?", (model_id,))
         if not row:
             raise ValueError("Model version is not registered")
-        key = (model_id, inference_side, device_preference, score_threshold)
+        key = (model_id, inference_side, device_preference, score_floor)
         if key not in self._engines:
-            self._engines[key] = InferenceEngine(row, inference_side, device_preference, score_threshold)
+            self._engines[key] = InferenceEngine(row, inference_side, device_preference, score_floor)
         return self._engines[key]
 
     def clear_model_cache(self) -> None:
@@ -55,7 +55,8 @@ class ModelService:
             (capture_id, model_id, utc_now()),
         )
         try:
-            engine = self.engine_for(model_id, inference_side, device_preference, threshold)
+            score_floor = float(config.get("score_floor", config.get("inference_score_floor", 0.01)))
+            engine = self.engine_for(model_id, inference_side, device_preference, score_floor)
             predictions, image, info = engine.predict_path(Path(capture["file_path"]))
             original_w, original_h = image.size
             scale_x = original_w / info["inference_width"]
@@ -98,7 +99,8 @@ class ModelService:
             downstream: dict[str, Any] = {}
             if rebuild_derived:
                 downstream["spatial_groups"] = rebuild_flush_groups(self.db, capture_id, model_version_id=int(model_id))
-            if rebuild_derived and model_key in {"charisis_cluster_tracking", "m18k_yolo_seg"}:
+            track_objects = bool(config.get("track_objects", model_key == "charisis_cluster_tracking"))
+            if rebuild_derived and track_objects:
                 downstream["tracking"] = rebuild_sequence_tracks(
                     self.db, int(capture["unit_id"]), int(capture["camera_id"]),
                     str(capture["series_key"]), int(model_id),
@@ -106,7 +108,7 @@ class ModelService:
             elapsed = time.perf_counter() - started
             diagnostics = {**info, **downstream, "candidate_count": created,
                            "accepted_count": sum(1 for p in predictions if p.confidence >= threshold),
-                           "final_threshold": threshold, "model_key": model_key}
+                           "final_threshold": threshold, "score_floor": score_floor, "model_key": model_key}
             self.db.execute(
                 """UPDATE inference_runs SET finished_at=?,device=?,duration_seconds=?,status='completed',
                    detection_count=?,diagnostics_json=? WHERE id=?""",

@@ -1,43 +1,110 @@
-"""Strict AMD DirectML smoke test for this app's Mask R-CNN operator path.
+#!/usr/bin/env python
+"""Run an actual YOLOv8-seg checkpoint through AMD DirectML end to end.
 
-Run in the app virtual environment: python tools/test_amd_directml.py
-The script never moves tensors to CPU to make an operator pass.
+This is a full-model smoke test, not an accuracy evaluation. It has no CPU fallback.
+Use a target oyster checkpoint for production acceptance; M18K WB weights only test
+basic YOLO runtime compatibility.
 """
+from __future__ import annotations
+
+import argparse
+import json
+import os
 import platform
-import sys
+import time
+from pathlib import Path
 
-if platform.system() != "Windows":
-    raise SystemExit("This check targets native Windows DirectML.")
+import cv2
+import psutil
 
-import torch
-import torchvision
-import torch_directml
-from torchvision.ops import nms, roi_align
 
-DML = torch_directml.device()
-print("Python:", sys.version.split()[0])
-print("PyTorch:", torch.__version__)
-print("TorchVision:", torchvision.__version__)
-print("DirectML device:", DML)
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--weights", required=True, help="YOLOv8-seg .pt checkpoint")
+    parser.add_argument("--image", required=True, help="Representative image with visible target objects")
+    parser.add_argument("--imgsz", type=int, default=768)
+    parser.add_argument("--conf", type=float, default=0.01)
+    parser.add_argument("--iou", type=float, default=0.70)
+    parser.add_argument("--max-det", type=int, default=1000)
+    parser.add_argument("--out", default="results/directml")
+    args = parser.parse_args()
 
-# Verify DirectML tensor compute.
-x = torch.randn((1, 8, 32, 32), device=DML)
-conv = torch.nn.Conv2d(8, 16, kernel_size=3, padding=1).to(DML).eval()
-with torch.no_grad():
-    y = conv(x)
-print("Conv2d on DirectML:", tuple(y.shape), "device=", y.device)
-assert str(y.device).startswith("privateuseone"), f"Unexpected device: {y.device}"
+    if platform.system() != "Windows":
+        raise SystemExit("AMD DirectML requires native Windows; use CPU on this operating system.")
+    weights = Path(args.weights).expanduser().resolve()
+    image_path = Path(args.image).expanduser().resolve()
+    if not weights.is_file():
+        raise FileNotFoundError(weights)
+    image = cv2.imread(str(image_path), cv2.IMREAD_COLOR)
+    if image is None:
+        raise FileNotFoundError(f"Could not read image: {image_path}")
 
-# Mask R-CNN requires ROIAlign and NMS. Test these explicitly before loading checkpoints.
-rois = torch.tensor([[0, 2, 2, 24, 24]], dtype=torch.float32, device=DML)
-roi = roi_align(y, rois, output_size=(7, 7), spatial_scale=1.0, sampling_ratio=2)
-print("torchvision ROIAlign on DirectML:", tuple(roi.shape), "device=", roi.device)
-assert str(roi.device).startswith("privateuseone"), f"ROIAlign left DirectML: {roi.device}"
+    import torch_directml
+    from ultralytics import YOLO
 
-boxes = torch.tensor([[0, 0, 10, 10], [1, 1, 9, 9], [20, 20, 30, 30]], dtype=torch.float32, device=DML)
-scores = torch.tensor([0.9, 0.8, 0.7], dtype=torch.float32, device=DML)
-keep = nms(boxes, scores, 0.5)
-print("torchvision NMS on DirectML:", keep.tolist(), "device=", keep.device)
+    device = torch_directml.device()
+    model = YOLO(str(weights), task="segment")
+    model.model.to(device)
+    model.model.eval()
+    parameter_device = str(next(model.model.parameters()).device)
+    if not parameter_device.startswith("privateuseone"):
+        raise RuntimeError(f"Model parameters are not on DirectML: {parameter_device}")
 
-print("PASS: DirectML tensor, ROIAlign and NMS checks completed.")
-print("Next: run the app with Compute backend = AMD and test one image per model.")
+    process = psutil.Process(os.getpid())
+    rss_before = process.memory_info().rss / (1024 * 1024)
+    started = time.perf_counter()
+    result = model.predict(
+        source=image,
+        imgsz=args.imgsz,
+        conf=args.conf,
+        iou=args.iou,
+        max_det=args.max_det,
+        retina_masks=True,
+        device=device,
+        verbose=False,
+    )[0]
+    elapsed = time.perf_counter() - started
+    rss_after = process.memory_info().rss / (1024 * 1024)
+
+    if result.boxes is None or result.masks is None:
+        raise RuntimeError(
+            "The YOLO model executed but returned no instance masks for this image. "
+            "Choose a representative image with clearly visible target objects and retry."
+        )
+    boxes = result.boxes.xyxy.detach().cpu().numpy()
+    classes = result.boxes.cls.detach().cpu().numpy().astype(int)
+    scores = result.boxes.conf.detach().cpu().numpy()
+    masks = result.masks.data.detach().cpu().numpy()
+    if len(boxes) == 0 or len(masks) == 0:
+        raise RuntimeError("No instance masks were produced; full segmentation path was not verified.")
+
+    output = Path(args.out).resolve()
+    output.mkdir(parents=True, exist_ok=True)
+    overlay = result.plot()
+    cv2.imwrite(str(output / "overlay.jpg"), overlay)
+    summary = {
+        "weights": str(weights),
+        "image": str(image_path),
+        "device": str(device),
+        "model_parameter_device": parameter_device,
+        "imgsz": args.imgsz,
+        "confidence_floor": args.conf,
+        "nms_iou": args.iou,
+        "detections": int(len(boxes)),
+        "mask_count": int(len(masks)),
+        "class_ids": classes.tolist(),
+        "confidences": [float(value) for value in scores],
+        "elapsed_seconds": elapsed,
+        "ms_per_image": elapsed * 1000,
+        "process_rss_before_mb": rss_before,
+        "process_rss_after_mb": rss_after,
+        "status": "full_yolo_seg_directml_inference_passed",
+        "note": "Smoke/compatibility test only; it is not a labelled accuracy evaluation.",
+    }
+    (output / "directml_test.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
+    print(json.dumps(summary, indent=2))
+    print(f"Overlay: {output / 'overlay.jpg'}")
+
+
+if __name__ == "__main__":
+    main()

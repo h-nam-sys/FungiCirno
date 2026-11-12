@@ -1,29 +1,24 @@
-# FungiCirno integrated implementation handoff
+# FungiCirno implementation release notes
 
-## Included
+## Architecture finalized
 
-- Streamlit cultivation and capture-management application.
-- SQLite schema creation and additive migration for model-specific grouping records.
-- YOLOv8-seg model bundle import and inference adapter.
-- Legacy TorchVision bundle compatibility.
-- Explicit CPU and AMD DirectML execution selection.
-- Per-image predictions, mask persistence, review queue and corrected-mask support.
-- Reviewed YOLO-seg dataset export for offline fine-tuning.
-- Candidate fine-tuning/evaluation/package script.
-- Candidate promotion gates, model versioning and rollback path.
-- Adaptive per-image spatial grouping.
-- Mask/centroid/area-based temporal tracking with Hungarian assignment and missed-frame tolerance.
-- Growth history and environmental CSV alignment.
-- Member handoffs, integration contracts and end-to-end acceptance checklist.
+- One production inference implementation: Ultralytics YOLOv8-seg.
+- Primary Model A: `charisis_cluster_tracking`, oyster cluster stage segmentation (`immature`, `well-defined`, `overstayed`) plus persistent temporal tracking and stage history.
+- Model B: `mushr_maturity`, individual oyster fruitbody maturity segmentation (`not-ready`, `ready`, `overdue`) plus spatial/flush aggregation.
+- M18K WB-only checkpoint is retained as a source initialization candidate and integration model, not the deployed oyster maturity model.
+- Legacy TorchVision model loader remains for old bundle compatibility only.
 
-## Not included
+## Application and workflow changes
 
-- Trained M18K `best.pt` weights or candidate weights.
-- Raw M18K, side-view or other datasets.
-- Previous developer's SQLite database, local capture files or mask files.
-- A validated side-view oyster maturity classifier.
-- Live sensor driver/hardware integration.
+- Added a split-preserving COCO instance-segmentation to YOLO-seg converter, including mask decoding and dataset manifest output.
+- Candidate training now accepts model family, role, species and taxonomy; it rejects mismatched target class order and same-taxonomy baseline comparisons.
+- Candidate evaluation uses an untouched supplied holdout; initial M18K-to-oyster transfer does not compare against WB source AP.
+- Model packaging now requires explicit model key/species/taxonomy/role and validates the production class order.
+- Separated the low inference `score_floor` from the final automatic-analysis confidence threshold so uncertain predictions can remain available to human review.
+- Growth UI displays per-capture stage label and confidence from the linked prediction.
+- Inference UI uses each model's `track_objects` metadata rather than assuming every segmentation model should be tracked.
+- Acceptance checklist and team handoffs now follow the finalized two-task architecture.
 
-## Validation status
+## Evidence status
 
-This package is an integrated implementation handoff for member testing and correction. It has not been run end-to-end on the target AMD PC in this session. DirectML operator coverage for Ultralytics YOLO, CPU RAM behavior under the team's real checkpoint, sequence-level tracking accuracy and candidate promotion/rollback must be verified by the team. Do not report those as completed until evidence is collected.
+The code and training workflows are included. No Charisis/MushR trained target checkpoints are bundled. Full target-domain model metrics, CPU/AMD execution on actual target checkpoints, tracking identity metrics, calibration evidence and a complete reviewed-learning/rollback cycle remain to be produced from real datasets and target hardware. No such results are fabricated in this release.

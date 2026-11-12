@@ -90,3 +90,24 @@ README.txt
 | `app.py`, `db.py`, `config.py`, shared interfaces, migrations, `README.md`, release packaging | Nguyen Hai Nam — integration lead |
 
 Members may submit bug fixes outside their ownership, but must not independently change shared interfaces or database schema.
+
+## Production model-family contract
+
+The production runtime is one Ultralytics YOLO-seg adapter. Model family is metadata, not a different downstream prediction schema.
+
+| `model_key` | `prediction_role` | Required zero-based class order | `track_objects` |
+|---|---|---|---|
+| `charisis_cluster_tracking` | `cluster_stage` | `immature`, `well-defined`, `overstayed` | `true` |
+| `mushr_maturity` | `fruitbody_maturity` | `not-ready`, `ready`, `overdue` | `false` |
+| `m18k_source_wb` | `generic_instance` | `WB` | `false` by default; enable only for explicit integration tests |
+
+The package and training tools validate the required target class order for the two production roles. Do not rename labels or mix classes between model families. The class name and model version on each prediction are retained all the way into the track observation/review history.
+
+`confidence_threshold` is the minimum score for automatic downstream analysis (`final_for_analysis`). `score_floor` is the lower inference threshold. Detections between the two remain stored and reviewable, but are excluded from automatic grouping/tracking until accepted/corrected according to the application's review policy.
+
+## Dataset and model lineage
+
+- Model A is trained with the Charisis oyster cluster time-lapse annotations. Compare M18K-initialized and COCO-initialized runs on the same target split. WB source metrics are not a baseline for oyster class performance.
+- Model B is trained with the annotated MushR oyster fruitbody dataset. Its object unit and labels differ from Model A.
+- M18K source weights, model A, and model B use separate `model_key` entries and independent checkpoints.
+- Each model bundle must retain source species, taxonomy, role, class mapping, training source, inference settings, checkpoint hash, holdout identity and metrics where available.

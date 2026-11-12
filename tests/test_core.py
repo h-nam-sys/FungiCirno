@@ -15,6 +15,8 @@ from mushroom_monitor.image_io import store_capture
 from mushroom_monitor.maturity import rebuild_flush_groups
 from mushroom_monitor.model_registry import read_model_package, install_model_bundle
 from mushroom_monitor.tracking import rebuild_sequence_tracks
+from mushroom_monitor.review import review_prediction
+from mushroom_monitor.learning import export_reviewed_yolo_dataset
 
 
 class CoreTests(unittest.TestCase):
@@ -30,7 +32,7 @@ class CoreTests(unittest.TestCase):
             """INSERT INTO model_versions(model_key,version,architecture,source_species,taxonomy,
                classes_json,config_json,bundle_path,checkpoint_path,checkpoint_sha256,status,installed_at)
                VALUES(?,?,?,?,?,?,?,?,?,?,?,?)""",
-            ("charisis_cluster_tracking","test-v1","TorchVision Mask R-CNN with ConvNeXt-Tiny-FPN",
+            ("legacy_charisis_maskrcnn","test-v1","TorchVision Mask R-CNN with ConvNeXt-Tiny-FPN",
              "Pleurotus ostreatus","charisis_oyster_cluster_stage",
              json.dumps({"1":"immature_cluster","2":"mature_cluster","3":"overstayed_cluster"}),
              json.dumps({"confidence_threshold":0.2}),str(self.root),str(self.root/"weights.pth"),"abc","candidate",utc_now()),
@@ -39,11 +41,11 @@ class CoreTests(unittest.TestCase):
     def tearDown(self):
         self.temp.cleanup()
 
-    def add_capture(self, name: str, when: str):
+    def add_capture(self, name: str, when: str, series_key: str = "series-A"):
         image_path = self.root / name
         Image.new("RGB", (320, 240), "white").save(image_path)
         return self.db.create_capture(
-            unit_id=self.unit["id"], camera_id=self.camera["id"], series_key="series-A",
+            unit_id=self.unit["id"], camera_id=self.camera["id"], series_key=series_key,
             original_name=name, file_path=str(image_path), sha256=name,
             captured_at=when, time_source="manual", imported_at=utc_now(),
             width=320, height=240, source="test", metadata_json="{}", status="processed",
@@ -126,6 +128,117 @@ class CoreTests(unittest.TestCase):
         frames = self.db.query("SELECT frame_index FROM track_observations WHERE track_id=? ORDER BY frame_index",(track["id"],))
         self.assertEqual([x["frame_index"] for x in frames],[0,2])
 
+    def test_reviewed_yolo_export_preserves_taxonomy_and_splits_by_series(self):
+        c1 = self.add_capture("review_a.jpg", "2026-11-10T08:00:00", "series-A")
+        c2 = self.add_capture("review_b.jpg", "2026-11-11T08:00:00", "series-B")
+        for index, capture_id in enumerate((c1, c2), start=1):
+            mask = np.zeros((240, 320), np.uint8)
+            mask[30:100, 40:120] = 255
+            mask_path = self.root / f"review_mask_{index}.png"
+            Image.fromarray(mask).save(mask_path)
+            self.add_prediction(capture_id, mask_path, 0)
+            prediction = self.db.one(
+                "SELECT id FROM predictions WHERE capture_id=? AND model_version_id=? ORDER BY id DESC LIMIT 1",
+                (capture_id, self.model_id),
+            )
+            review_prediction(self.db, prediction["id"], "accepted")
+
+        destination = self.root / "reviewed_yolo.zip"
+        exported, count = export_reviewed_yolo_dataset(
+            self.db, destination, "legacy_charisis_maskrcnn", "test export"
+        )
+        self.assertEqual(count, 2)
+        import zipfile
+        with zipfile.ZipFile(exported) as archive:
+            names = archive.namelist()
+            self.assertTrue(any(name.startswith("images/train/") for name in names))
+            self.assertTrue(any(name.startswith("images/val/") for name in names))
+            data_yaml = archive.read("data.yaml").decode("utf-8")
+            self.assertIn('"immature_cluster"', data_yaml)
+            self.assertIn('"mature_cluster"', data_yaml)
+            self.assertIn('"overstayed_cluster"', data_yaml)
+            manifest = json.loads(archive.read("dataset_manifest.json"))
+            self.assertEqual(len(manifest["split_groups"]["train"]), 1)
+            self.assertEqual(len(manifest["split_groups"]["val"]), 1)
+
+    def test_coco_converter_keeps_three_splits_and_class_order(self):
+        import subprocess
+        import sys
+        image_root = self.root / "coco_images"
+        image_root.mkdir()
+        annotations = {}
+        for split in ("train", "val", "test"):
+            filename = f"{split}.jpg"
+            Image.new("RGB", (64, 48), "white").save(image_root / filename)
+            annotations[split] = {
+                "images": [{"id": 1, "file_name": filename, "width": 64, "height": 48}],
+                "annotations": [{"id": 1, "image_id": 1, "category_id": 7,
+                                 "segmentation": [[10, 10, 40, 10, 40, 35, 10, 35]], "iscrowd": 0}],
+                "categories": [
+                    {"id": 7, "name": "immature"},
+                    {"id": 8, "name": "well-defined"},
+                    {"id": 9, "name": "overstayed"},
+                ],
+            }
+            path = self.root / f"{split}.json"
+            path.write_text(json.dumps(annotations[split]), encoding="utf-8")
+            annotations[split] = path
+        output = self.root / "converted"
+        command = [
+            sys.executable, str(ROOT / "tools" / "prepare_coco_yolo_dataset.py"),
+            "--images", str(image_root),
+            "--train-json", str(annotations["train"]),
+            "--val-json", str(annotations["val"]),
+            "--test-json", str(annotations["test"]),
+            "--class-order", "immature,well-defined,overstayed",
+            "--out", str(output),
+        ]
+        subprocess.run(command, check=True, capture_output=True, text=True)
+        self.assertTrue((output / "images/train").is_dir())
+        self.assertTrue((output / "images/val").is_dir())
+        self.assertTrue((output / "images/test").is_dir())
+        data = (output / "data.yaml").read_text(encoding="utf-8")
+        self.assertIn("0: immature", data)
+        self.assertIn("1: well-defined", data)
+        self.assertIn("2: overstayed", data)
+        manifest = json.loads((output / "dataset_manifest.json").read_text(encoding="utf-8"))
+        self.assertEqual(set(manifest["splits"]), {"train", "val", "test"})
+
+    def test_yolo_model_registry_rejects_mixed_oyster_taxonomy(self):
+        root = self.root / "yolo_bundle"
+        root.mkdir()
+        (root / "best.pt").write_bytes(b"checkpoint-stub")
+        (root / "model_config.json").write_text(json.dumps({
+            "model_key": "charisis_cluster_tracking",
+            "version": "test-yolo-v1",
+            "architecture": "Ultralytics YOLOv8n-seg",
+            "runtime_type": "ultralytics_yolo_seg",
+            "prediction_role": "cluster_stage",
+            "track_objects": True,
+            "source_species": "Pleurotus ostreatus",
+            "taxonomy": "charisis_oyster_cluster_stage_v1",
+            "names": {"0": "immature", "1": "well-defined", "2": "overstayed"},
+        }))
+        (root / "class_mapping.json").write_text(json.dumps({
+            "label_to_name": {"0": "immature", "1": "well-defined", "2": "overstayed"}
+        }))
+        package = read_model_package(root)
+        self.assertEqual(package.model_key, "charisis_cluster_tracking")
+        self.assertEqual([package.classes[i] for i in range(3)], ["immature", "well-defined", "overstayed"])
+
+        (root / "class_mapping.json").write_text(json.dumps({
+            "label_to_name": {"0": "WB", "1": "ready", "2": "overdue"}
+        }))
+        with self.assertRaisesRegex(ValueError, "requires role"):
+            read_model_package(root)
+
+    def test_model_activation_requires_promotion_report_or_override(self):
+        with self.assertRaisesRegex(ValueError, "Explicit override is required"):
+            self.db.set_model_status(self.model_id, "active")
+        self.db.set_model_status(self.model_id, "active", force=True)
+        row = self.db.one("SELECT status FROM model_versions WHERE id=?", (self.model_id,))
+        self.assertEqual(row["status"], "active")
+
     def test_model_bundle_zip_installs_into_registry(self):
         import zipfile
         root = self.root / "bundle_source"
@@ -141,7 +254,7 @@ class CoreTests(unittest.TestCase):
         record = self.db.one("SELECT * FROM model_versions WHERE id=?",(model_id,))
         self.assertTrue(Path(record["checkpoint_path"]).exists())
         self.assertEqual(record["status"],"candidate")
-        self.assertEqual(record["model_key"],"charisis_cluster_tracking")
+        self.assertEqual(record["model_key"],"legacy_charisis_maskrcnn")
 
     def test_model_bundle_metadata_is_read(self):
         bundle = self.root / "bundle"
@@ -150,7 +263,7 @@ class CoreTests(unittest.TestCase):
         (bundle / "class_mapping.json").write_text(json.dumps({"label_to_name":{"1":"immature_cluster","2":"mature_cluster","3":"overstayed_cluster"}}))
         (bundle / "model_checkpoint.pth").write_bytes(b"checkpoint-stub")
         package = read_model_package(bundle)
-        self.assertEqual(package.model_key,"charisis_cluster_tracking")
+        self.assertEqual(package.model_key,"legacy_charisis_maskrcnn")
         self.assertEqual(len(package.classes),3)
         self.assertTrue(package.checkpoint_sha256)
 

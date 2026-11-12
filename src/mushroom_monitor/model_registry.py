@@ -49,11 +49,34 @@ def _read_root(root: Path) -> ModelPackage:
         else: raw=config.get('names',config.get('classes',{0:'mushroom'}))
         classes={int(k):str(v) for k,v in raw.items()} if isinstance(raw,dict) else {i:str(v) for i,v in enumerate(raw)}
         if not classes: raise ValueError('YOLO bundle contains no class mapping')
+        if sorted(classes) != list(range(len(classes))):
+            raise ValueError('YOLO class IDs must be contiguous and zero-based')
         model_key=str(config.get('model_key','m18k_yolo_seg'))
         architecture=str(config.get('architecture','Ultralytics YOLOv8n-seg'))
-        version=str(config.get('version') or f"m18k-{sha256_file(pt)[:12]}")
-        species=str(config.get('source_species','Agaricus bisporus (M18K White Button)'))
-        taxonomy=str(config.get('taxonomy','m18k_mushroom_instance'))
+        version=str(config.get('version') or f"yolo-{sha256_file(pt)[:12]}")
+        species=str(config.get('source_species','unknown'))
+        taxonomy=str(config.get('taxonomy','custom'))
+        role=str(config.get('prediction_role','generic_instance'))
+        expected = {
+            'charisis_cluster_tracking': ('cluster_stage', ['immature', 'well-defined', 'overstayed'], True),
+            'mushr_maturity': ('fruitbody_maturity', ['not-ready', 'ready', 'overdue'], False),
+            'm18k_source_wb': ('generic_instance', ['wb'], False),
+        }
+        if model_key in expected:
+            expected_role, expected_names, expected_tracking = expected[model_key]
+            actual_names=[classes[i].strip().casefold() for i in range(len(classes))]
+            if role != expected_role or actual_names != expected_names:
+                raise ValueError(
+                    f'Model {model_key!r} requires role={expected_role!r} and class order {expected_names}; '
+                    f'got role={role!r}, classes={actual_names}'
+                )
+            if bool(config.get('track_objects', expected_tracking)) != expected_tracking:
+                raise ValueError(f'Model {model_key!r} has invalid track_objects configuration')
+        configured_names=config.get('names')
+        if configured_names is not None:
+            configured={int(k):str(v) for k,v in configured_names.items()} if isinstance(configured_names,dict) else {i:str(v) for i,v in enumerate(configured_names)}
+            if configured != classes:
+                raise ValueError('model_config.json names do not match class_mapping.json')
         config={**config,'runtime_type':'ultralytics_yolo_seg','task':'segment'}
         return ModelPackage(model_key,version,architecture,species,taxonomy,classes,config,root,pt,sha256_file(pt),metrics)
     # Existing TorchVision Mask R-CNN member format.
@@ -62,10 +85,11 @@ def _read_root(root: Path) -> ModelPackage:
     raw=json.loads(mappingp.read_text(encoding='utf8')); raw=raw.get('label_to_name',raw.get('classes',{}))
     classes={int(k):str(v) for k,v in raw.items()}; architecture=str(config.get('architecture',''))
     low=architecture.lower()
-    if 'convnext' in low: key,tax,species='charisis_cluster_tracking','charisis_oyster_cluster_stage','Pleurotus ostreatus'
-    elif 'resnet' in low: key,tax,species='mushr_maturity','mushr_oyster_maturity','Pleurotus ostreatus'
+    if 'convnext' in low: key,tax,species='legacy_charisis_maskrcnn','legacy_charisis_cluster_taxonomy','Pleurotus ostreatus'
+    elif 'resnet' in low: key,tax,species='legacy_mushr_maskrcnn','legacy_mushr_maturity_taxonomy','Pleurotus ostreatus'
     else: key,tax,species=str(config.get('model_key','custom_torchvision')),str(config.get('taxonomy','custom')),str(config.get('source_species','unknown'))
-    config={**config,'runtime_type':config.get('runtime_type','torchvision_state_dict')}
+    config={**config,'runtime_type':config.get('runtime_type','torchvision_state_dict'),
+            'track_objects':bool(config.get('track_objects','convnext' in low))}
     version=str(config.get('version') or f'checkpoint-{sha256_file(cp)[:12]}')
     return ModelPackage(key,version,architecture,species,tax,classes,config,root,cp,sha256_file(cp),metrics)
 

@@ -29,9 +29,11 @@ def select_device(preference:str='auto')->DeviceInfo:
     raise ValueError('Backend must be amd, cpu, or auto')
 
 class InferenceEngine:
-    def __init__(self,model_row:dict[str,Any],inference_side:int=768,device_preference:str='auto',score_threshold:float|None=None,mask_threshold:float=.5):
+    def __init__(self,model_row:dict[str,Any],inference_side:int=768,device_preference:str='auto',score_floor:float|None=None,mask_threshold:float=.5):
         self.model_row=model_row; self.package=package_for_model_row(model_row); self.inference_side=int(inference_side); self.device_info=select_device(device_preference)
-        self.score_threshold=float(score_threshold if score_threshold is not None else self.package.config.get('confidence_threshold',.25)); self.mask_threshold=float(mask_threshold); self.model=None; self.load_model()
+        # Keep low-confidence detections available for human review. The separate
+        # final-analysis threshold is applied by ModelService after inference.
+        self.score_floor=float(score_floor if score_floor is not None else self.package.config.get('score_floor',.01)); self.mask_threshold=float(mask_threshold); self.model=None; self.load_model()
     def load_model(self):
         rt=self.package.config.get('runtime_type','torchvision_state_dict')
         try:
@@ -47,7 +49,7 @@ class InferenceEngine:
             raise RuntimeError(f"Could not load {self.package.architecture} on {self.device_info.label}: {type(exc).__name__}: {exc}") from exc
     def _predict_yolo(self,image:Image.Image):
         arr=np.asarray(image.convert('RGB'))
-        results=self.model.predict(source=arr,imgsz=self.inference_side,conf=self.score_threshold,iou=float(self.package.config.get('nms_iou',.7)),max_det=int(self.package.config.get('max_det',1000)),retina_masks=True,device=self.device_info.device if self.device_info.backend=='directml' else 'cpu',verbose=False)
+        results=self.model.predict(source=arr,imgsz=self.inference_side,conf=self.score_floor,iou=float(self.package.config.get('nms_iou',.7)),max_det=int(self.package.config.get('max_det',1000)),retina_masks=True,device=self.device_info.device if self.device_info.backend=='directml' else 'cpu',verbose=False)
         r=results[0]; preds=[]
         if r.boxes is None or r.masks is None: return preds
         boxes=r.boxes.xyxy.detach().cpu().numpy(); ids=r.boxes.cls.detach().cpu().numpy().astype(int); scores=r.boxes.conf.detach().cpu().numpy(); masks=r.masks.data.detach().cpu().numpy()
@@ -66,7 +68,7 @@ class InferenceEngine:
         with torch.no_grad(): out=self.model([tensor])[0]
         boxes=out['boxes'].detach().cpu().numpy(); labels=out['labels'].detach().cpu().numpy(); scores=out['scores'].detach().cpu().numpy(); masks=out['masks'].detach().cpu().numpy(); preds=[]
         for i,(b,c,s,m) in enumerate(zip(boxes,labels,scores,masks)):
-            if int(c) not in self.package.classes or float(s)<self.score_threshold: continue
+            if int(c) not in self.package.classes or float(s)<self.score_floor: continue
             binary=(m[0]>=self.mask_threshold).astype(np.uint8)
             if binary.any(): preds.append(Prediction(i,int(c),self.package.classes[int(c)],float(s),tuple(float(x) for x in b),binary))
         return preds
