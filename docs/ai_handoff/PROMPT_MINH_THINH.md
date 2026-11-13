@@ -1,24 +1,49 @@
-# Coding-AI prompt — Minh Thinh: verify the model workstream
+# Coding-AI prompt — Minh Thinh: Charisis model/runtime owner
 
-You are validating an existing implementation. **Do not redesign FungiCirno or invent a second inference system.** Read `docs/FINAL_SYSTEM_ARCHITECTURE.md`, `docs/INTEGRATION_CONTRACTS.md`, `docs/ACCEPTANCE_CHECKLIST.md`, this handoff, and then inspect the actual source code before changing anything.
+You are validating the primary FungiCirno cluster-growth model. Inspect the real repository and run artifacts before editing. Do not redesign the model system or convert the Charisis model to YOLO.
 
-## Fixed model decisions
+## Fixed facts
 
-- `charisis_cluster_tracking`: YOLOv8-seg; oyster cluster masks; zero-based classes exactly `immature`, `well-defined`, `overstayed`; tracking on.
-- `mushr_maturity`: YOLOv8-seg; individual oyster fruitbody masks; zero-based classes exactly `not-ready`, `ready`, `overdue`; temporal tracking off, spatial flush summary on.
-- `m18k_source_wb`: one-class WB source model only. It is not an oyster classifier.
-- One Ultralytics adapter and one normalized Prediction contract serve all three. Do not mix the taxonomies.
+- Primary model key: `charisis_cluster_tracking`.
+- Architecture: TorchVision Mask R-CNN + ConvNeXt-Tiny-FPN.
+- Runtime: `torchvision_state_dict`.
+- Foreground classes and IDs: 1=`immature_cluster`, 2=`mature_cluster`, 3=`overstayed_cluster`; 0 is background. Preserve exact names and IDs.
+- Model output: per-image whole-cluster boxes, masks, stage labels and confidence.
+- FungiCirno's application tracker assigns persistent identities after inference. The model itself does not output persistent track IDs.
+- The training notebook's own tracker is separate from the application tracker.
+- The optional MushR model is a distinct individual-fruitbody task, only if lead-approved.
+- M18K is a historical one-class White Button YOLO experiment. It is not a Charisis initialization because the architectures/checkpoints are incompatible.
 
-## Your actual work
+## Existing evidence
 
-1. Inspect the real Charisis and MushR public datasets, annotation formats, licences/terms, class names, camera/sequence metadata and split manifests.
-2. Validate/fix the generic COCO-to-YOLO conversion where appropriate; write a scoped converter only if the actual annotation format requires it. Inspect labels and masks after conversion.
-3. Train Charisis Model A twice on identical target splits: M18K initialization and COCO YOLOv8n-seg initialization. Compare both on the same untouched oyster test sequences. Do not compare WB AP against oyster AP.
-4. Train MushR Model B as an independent task/model family. Do not use Model A as its baseline.
-5. Verify model bundles and exact class order; CPU app inference is mandatory. Test AMD DirectML full inference on the actual RX 5500 XT; report exact blocker if unsupported.
-6. Exercise human-reviewed export, offline candidate training, same-taxonomy holdout regression, promotion gate and rollback.
-7. Submit only evidence-backed fixes in your ownership area. Preserve shared schema/contracts.
+Read `docs/MVP_VALIDATION.md` and inspect:
+- `notebooks/Charisis_Full_Training.ipynb`
+- `src/mushroom_monitor/inference/models.py`
+- `src/mushroom_monitor/inference/runtime.py`
+- `src/mushroom_monitor/model_registry.py`
+- `src/mushroom_monitor/service.py`
+
+The attached notebook completed 10 epochs and reports held-out mask AP@[.50:.95]=0.650, AP50=0.782 and AP75=0.759 on 1,055 images from sequences 1 and 3. The supplied SQLite snapshot contains 15 successful AMD DirectML Charisis inference runs. The `.pth` binary is not inside the source ZIP; obtain `model_bundle.zip` from Kaggle output.
+
+## Your tasks
+
+1. Verify the actual Kaggle `model_bundle.zip`: checkpoint hash, config, class mapping, state-dict keys and evaluation metrics. Do not assume notebook output filenames are present without inspecting the bundle.
+2. Install the bundle into a clean checkout through Models. Confirm it canonicalizes to `charisis_cluster_tracking`.
+3. Reproduce CPU inference with the actual checkpoint. Verify mask/box dimensions, class IDs, confidence and persisted source-image area.
+4. Reproduce AMD DirectML inference on the target RX 5500 XT when available. Record exact package versions, backend, latency, memory and overlays; CPU remains mandatory.
+5. Compare the notebook builder with the app builder. Strict state-dict loading must pass without silently dropping/mapping parameters.
+6. Fix only demonstrated defects in your owned model/runtime files. Add focused regression tests.
+7. Inspect human-reviewed COCO export compatibility with the Charisis notebook. Do not use the YOLO exporter or `tools/train_candidate.py` for this TorchVision checkpoint.
+8. Do not train optional MushR unless Hai Nam confirms individual harvest readiness is a required deliverable.
+
+## Ownership
+
+- `src/mushroom_monitor/inference/`
+- `src/mushroom_monitor/model_registry.py`
+- `src/mushroom_monitor/learning.py`
+- Charisis notebook and model docs
+- Optional Ultralytics YOLO tooling only when explicitly requested
 
 ## Return evidence
 
-Dataset and licence/source info; split manifests; exact commands; training settings; checkpoint hashes; holdout metrics; overlays; model ZIPs (weights shared outside Git); CPU/AMD logs; RAM/latency; dependency versions; commit hash and known issues. Do not claim target-domain readiness from M18K metrics.
+Checkpoint bundle/hash, config/class map, package versions, clean-install logs, CPU/AMD logs, sample overlays, timing/RSS, commands, tests and their exact results, commit hash, and known limitations. Never claim tracking accuracy from the notebook's 213 predicted tracks.

@@ -1,55 +1,47 @@
 # FungiCirno — team verification handoff
 
-This release contains the agreed application architecture, shared prediction contract, YOLO-seg model integration, tracking/grouping workflows, review/export lifecycle, training tools, and detailed acceptance tests. The two members are **validators and bounded fix owners**, not asked to redesign the system.
+This release uses the already-trained Charisis model as the primary oyster cluster-growth model. The model is TorchVision Mask R-CNN + ConvNeXt-Tiny-FPN, not YOLO. The application already contains a matching builder/loader and its included SQLite snapshot records successful AMD DirectML runs.
 
 ## Fixed architecture
 
-- Production runtime: one Ultralytics YOLOv8-seg inference implementation.
-- Model A `charisis_cluster_tracking`: oyster cluster instances, `immature` / `well-defined` / `overstayed`; tracking enabled. This is the primary growth-stage/time-series model.
-- Model B `mushr_maturity`: individual oyster fruitbodies, `not-ready` / `ready` / `overdue`; tracking off by default, spatial flush aggregation enabled.
-- M18K WB-only `best.pt`: source initialization candidate/debug model only; not an oyster-stage model.
-- One normalized `Prediction` contract feeds SQLite, tracking, grouping, review and dashboard. No second application or separate tracker.
-- Colab handles training. The local app handles inference, data, review, model registry and rollback. CPU is mandatory; AMD DirectML is the primary optional accelerator and must be verified end-to-end.
+- **Core model:** `charisis_cluster_tracking`, TorchVision Mask R-CNN + ConvNeXt-Tiny-FPN.
+- **Object and labels:** whole oyster mushroom clusters; preserve foreground class IDs exactly: `1=immature_cluster`, `2=mature_cluster`, `3=overstayed_cluster`; ID 0 is background.
+- **Core downstream:** application temporal tracker, persistent cluster IDs, stage history and visible mask-area growth curves.
+- **Tracker:** FungiCirno's own mask/centroid/area association with Hungarian assignment. It is separate from the tracker included in the training notebook.
+- **Optional extension:** `mushr_maturity`, individual-fruitbody harvest readiness (`not-ready`, `ready`, `overdue`). Defer unless the lead requires individual harvest-readiness output.
+- **M18K:** historical White Button YOLO segmentation benchmark only. It is not the oyster production model and is not a compatible initialization for the Charisis TorchVision checkpoint.
+- All inference backends return the shared normalized `Prediction` record. Do not force Charisis through the YOLO loader.
+- Training is offline in Kaggle/Colab. Local app performs inference, persistence, review, tracking and model management.
 
-Read `docs/FINAL_SYSTEM_ARCHITECTURE.md` for the definitive decisions. Do not alter taxonomies or shared interfaces independently.
+Read `docs/FINAL_SYSTEM_ARCHITECTURE.md` and `docs/INTEGRATION_CONTRACTS.md` before making shared changes.
+
+## Evidence and current blockers
+
+- Charisis full training: 10 epochs; 433 train, 109 validation, 1,055 held-out test images; sequences 2/4 for training/validation and 1/3 for test.
+- Held-out mask metrics: AP@[.50:.95] 0.650, AP50 0.782, AP75 0.759.
+- Notebook generated 9,483 detections and 213 predicted tracks. These are not tracking accuracy metrics; no ground-truth persistent IDs were supplied.
+- Supplied app database: 15 successful Charisis AMD DirectML runs, 96 candidate predictions, 43 passing the 0.20 analysis threshold, and 22 app tracks containing 43 observations. Small-sample evidence, not a controlled benchmark.
+- The project archive does not include `model_checkpoint.pth`. The SQLite snapshot records an absolute path from the original Windows checkout. A clean checkout must import the Charisis `model_bundle.zip` downloaded from Kaggle.
+- CPU inference with the actual checkpoint and clean-install acceptance are still required.
 
 ## Team ownership
 
-- **Nguyen Hai Nam (lead):** main branch, app, DB/schema, shared contracts, release integration and final system acceptance. `docs/handoff/HAI_NAM.md`.
-- **Nguyen Minh Thinh:** model/data/training/runtime validation and fixes. `docs/handoff/MINH_THINH.md`.
-- **Le Thien Khang:** temporal tracking, maturity aggregation, growth/calibration/environment validation and fixes. `docs/handoff/THIEN_KHANG.md`.
+- **Nguyen Hai Nam (lead):** main branch, app, DB/schema, shared contracts, bundle integration, release and system acceptance.
+- **Nguyen Minh Thinh:** Charisis checkpoint packaging/loading, model runtime and training/evaluation lifecycle. Optional YOLO/M18K work only when explicitly scoped.
+- **Le Thien Khang:** sequence handling, application tracking, growth measurements, calibration and environment integration. Do not treat the notebook's 213 predicted tracks as verified ground truth.
 
-## Setup
+## Rules
 
-Use Python 3.12 on Windows.
+- Never work directly on `main`; use assigned member branches.
+- Do not change DB schema/migrations, app entry point or shared inference contracts without Hai Nam's approval.
+- Preserve Charisis class IDs and names exactly. Do not re-label `mature_cluster` as `well-defined`.
+- Do not run per-image fruitbody grouping on Charisis whole-cluster detections.
+- Do not mix cluster-stage and individual-maturity taxonomies.
+- Do not claim IDF1/HOTA/MOTA without ground-truth persistent identities.
+- CPU inference is mandatory. AMD DirectML must be verified with the actual checkpoint on the target PC; no silent fallback.
+- Keep weights, raw datasets, private captures, credentials and local databases out of Git.
+- Do not claim a test passed unless it was executed; include the command and result.
 
-**AMD PC:**
+## Return to Hai Nam
 
-```powershell
-Set-ExecutionPolicy -Scope Process Bypass
-.\setup_windows_amd.ps1
-.\run_windows.bat
-```
-
-**CPU-only machine:**
-
-```powershell
-Set-ExecutionPolicy -Scope Process Bypass
-.\setup_windows_cpu.ps1
-.\run_windows.bat
-```
-
-The weights, raw datasets, captures, masks and local SQLite database are external/local assets and are intentionally not committed.
-
-## What members need to return
-
-1. A short report of what works and what does not.
-2. The exact commands, environment/package versions, model hashes, dataset/split IDs, logs and sample output artifacts.
-3. Focused bug-fix commits only within their ownership area.
-4. Any dependency that cannot be resolved from the public datasets or current hardware, stated explicitly.
-
-Do not change DB schema, `app.py`, or shared interfaces without Hai Nam's approval. Do not claim completion from code presence alone.
-
-## Final acceptance
-
-Use `docs/ACCEPTANCE_CHECKLIST.md`. The release is not a scientifically validated production system until both oyster model families have target-domain weights and the CPU/AMD, sequence-tracking, review-learning, and rollback workflows have execution evidence.
+Send branch/commit, exact commands and results, checkpoint SHA-256, package versions, logs, sample overlays, dataset/split IDs, failures and remaining risks. See `docs/ACCEPTANCE_CHECKLIST.md` for system acceptance.

@@ -1,76 +1,75 @@
-# FungiCirno whole-system acceptance
+# FungiCirno core acceptance checklist
 
-Record actual run IDs, model versions, checkpoint hashes, dataset/split IDs, commands, logs and sample artifacts. Do not tick an item because code exists. The system has two production model families with separate taxonomies; complete acceptance requires both target-domain bundles unless a documented scope decision defers Model B.
+Record actual run IDs, checkpoint hashes, dataset/split IDs, commands, logs and sample artifacts. Do not tick an item because code exists.
 
-## A. Environment and application
-- [ ] Fresh setup succeeds on Windows/Python 3.12.
-- [ ] Streamlit starts and all pages load.
-- [ ] CPU PyTorch is installed and CPU inference succeeds with each real target checkpoint.
-- [ ] AMD DirectML enumerates the RX 5500 XT and full YOLO inference succeeds for each target checkpoint, or a reproducible backend blocker is recorded.
-- [ ] The app remains within the 12 GB system RAM constraint; record peak process RSS and GPU memory observations.
-- [ ] App restart preserves model versions, captures, inference runs, predictions, masks, tracks, reviews and environment records.
+## A. Primary Charisis model
 
-## B. Model and dataset preparation
-- [ ] Charisis public oyster cluster dataset source, terms, annotation format and sequence metadata are recorded.
-- [ ] Charisis train/validation/test splits are independent by complete trial/sequence/farm group; split manifest and hashes are saved.
-- [ ] Charisis model class order is exactly `immature`, `well-defined`, `overstayed`.
-- [ ] M18K initialization and COCO-pretrained initialization are trained on identical Charisis splits and compared on the same untouched target test set.
-- [ ] MushR annotated oyster fruitbody dataset source, terms, annotation format and split IDs are recorded.
-- [ ] MushR class order is exactly `not-ready`, `ready`, `overdue`.
-- [ ] Candidate bundles contain `best.pt`, `model_config.json`, `class_mapping.json`, `evaluation_metrics.json`; hashes and metadata agree.
-- [ ] Class IDs are zero-based and are not remapped after training without changing metadata consistently.
+- [x] Charisis notebook full training completed for 10 epochs on a Kaggle Tesla T4.
+- [x] Train/validation uses sequences 2 and 4; held-out test uses sequences 1 and 3.
+- [x] Held-out inference completed on 1,055 sampled images; overall mask AP@[.50:.95]=0.650, AP50=0.782, AP75=0.759.
+- [x] Notebook exported `model_bundle.zip` from the full run.
+- [x] Project has a ConvNeXt-Tiny-FPN Mask R-CNN builder and strict TorchVision `.pth` state-dictionary loader.
+- [x] Bundle import preserves Charisis foreground IDs/names and canonicalizes the family to `charisis_cluster_tracking`.
+- [x] Unit tests verify Charisis tracking is enabled, individual-fruitbody grouping is disabled, and legacy/canonical Charisis activation is mutually exclusive.
+- [x] Supplied app database records 15 successful Charisis AMD DirectML inference runs.
+- [ ] Install the actual bundle into a clean checkout and verify checkpoint hash/config/class map.
+- [ ] Run a representative Charisis capture on CPU and record inference time/memory.
+- [ ] Repeat AMD DirectML inference after clean installation and retain overlays/logs.
+- [ ] Confirm the exact checkpoint binary and bundle are retained outside the source archive.
 
-## C. Cultivation and capture
-- [ ] Create a site, growing unit, fixed camera and capture series.
-- [ ] Import multiple timestamped side-view images; EXIF/manual/import fallback is visible.
-- [ ] Duplicate image import is skipped by SHA-256.
-- [ ] Capture ordering uses capture timestamp, not import order when capture timestamps exist.
-- [ ] Images in one track series use the same camera, view and framing.
+## B. Capture, inference and persistence
 
-## D. Detection and persistence
-- [ ] Install/activate a real `charisis_cluster_tracking` bundle.
-- [ ] Run cluster inference on CPU and AMD; visually inspect masks, boxes, labels, scores and original-image scaling.
-- [ ] Verify per-capture `immature` / `well-defined` / `overstayed` predictions are persisted with their model version.
-- [ ] Install/activate a real `mushr_maturity` bundle.
-- [ ] Run individual maturity inference and visually inspect `not-ready` / `ready` / `overdue` masks and scores.
-- [ ] Confirm low-confidence detections remain in the review queue while final-analysis inclusion follows the configured threshold.
-- [ ] Verify predictions/masks survive restart.
-- [ ] Verify failed inference stores complete error details and does not erase earlier successful runs.
+- [ ] Create a site, growing unit, fixed side-view camera and capture series.
+- [ ] Import multiple timestamped side-view images; duplicate image import is skipped by SHA-256.
+- [ ] Confirm capture order uses capture timestamp, not import order.
+- [ ] Run the Charisis model and visually inspect masks, boxes, labels, confidence and source-image scaling.
+- [ ] Verify class IDs 1, 2, 3 map to the checkpoint's names; ID 0 remains background.
+- [ ] Verify predictions/masks survive restart and failed runs retain full error details.
 
-## E. Spatial and temporal analytics
-- [ ] Spatial groups are generated per capture and model version.
-- [ ] Model B ready-area fraction is derived from `ready` mask area and shown as a descriptive flush summary.
-- [ ] Model A's ordered time series produces stable `track_key` values across adjacent captures.
-- [ ] Track observations preserve the linked prediction's per-capture stage and confidence.
-- [ ] Empty/missed captures advance the gap counter; reappearance within the configured gap is handled as expected.
-- [ ] Crowded/overlapping cases, newly appearing pins and partial harvesting are inspected.
-- [ ] Multiple model versions do not delete or overwrite each other's tracks/groups.
-- [ ] Growth charts show source-image mask area and relative area change; physical units appear only after calibration.
-- [ ] Tracking metrics are reported only against explicit reference object IDs with a stated metric definition.
-- [ ] Export a track observation CSV and manually reconcile sample rows against source images.
+## C. Temporal tracking and growth
 
-## F. Environment
+- [x] Project app has a separate Hungarian mask/centroid/area tracker and persistent track records.
+- [x] Model-service regression test confirms Charisis inference dispatches to tracking without creating fruitbody flush groups.
+- [x] Supplied DB snapshot records 22 Charisis track records containing 43 observations.
+- [ ] Manually annotate a reference subset with persistent cluster IDs.
+- [ ] Measure identity switches, track fragmentation and IDF1/HOTA/MOTA only if ground-truth IDs are available.
+- [ ] Check empty captures, missed-frame gaps, reappearance, cluster splits/merges and new pins.
+- [ ] Reconcile selected track observations against their source images.
+- [ ] Compare image-plane growth curves with manual measurements.
+- [ ] Show physical units only when camera-specific calibration is validated.
+
+## D. Review and model lifecycle
+
+- [ ] Accept, reject, correct class labels and replace masks.
+- [x] Generic human-reviewed COCO export exists.
+- [ ] Confirm reviewed Charisis COCO exports preserve class IDs and sequence metadata.
+- [ ] Integrate reviewed COCO samples into a Charisis-specific fine-tuning workflow; this is not yet automated.
+- [ ] Candidate must be evaluated on an untouched sequence-/farm-separated holdout.
+- [ ] Candidate activation and rollback are exercised.
+
+## E. Optional individual maturity extension
+
+- [ ] Confirm with the lead whether per-individual harvest readiness is required.
+- [ ] Only if required: train and validate the optional MushR/individual-fruitbody model with its separate `not-ready`, `ready`, `overdue` taxonomy.
+- [ ] Keep its per-image spatial grouping separate from Charisis temporal cluster tracking.
+
+## F. Runtime and deployment
+
+- [ ] Fresh Windows/Python environment setup succeeds.
+- [ ] CPU inference succeeds with the actual Charisis checkpoint.
+- [x] AMD DirectML succeeded for 15 sample Charisis app runs in the supplied DB snapshot.
+- [ ] Record a repeatable clean-install AMD test, latency and memory; existing sample evidence is not a controlled benchmark.
+- [ ] Confirm the app remains within the 12 GB system RAM constraint under a multi-capture sequence.
+
+## G. Environment and reporting
+
 - [ ] Import CSV with timestamps, temperature, humidity and CO2.
-- [ ] Invalid timestamp/range is rejected with a clear message.
-- [ ] Duplicate timestamp/source imports update instead of duplicating records.
-- [ ] Nearest environmental join respects the configured 12-hour limit.
-- [ ] Correlations are labelled exploratory/descriptive, not causal.
+- [ ] Invalid timestamps/ranges are rejected; duplicate imports update.
+- [ ] Nearest environmental reading is aligned within the configured window.
+- [ ] Correlation outputs remain exploratory/descriptive, not causal.
+- [ ] Paper/presentation claims distinguish notebook mask AP, generated tracks and app integration evidence. Do not report tracking accuracy without ground truth.
 
-## G. Human review and incremental learning
-- [ ] Accept, reject and correct class labels for each model family independently.
-- [ ] Replace a mask with a corrected binary mask.
-- [ ] Export reviewed YOLO data and inspect images/labels manually.
-- [ ] Confirm the exported class mapping/taxonomy matches the selected model family.
-- [ ] Fine-tune from the active model checkpoint in Colab.
-- [ ] Compare active baseline and candidate on the same untouched holdout for same-taxonomy updates.
-- [ ] First M18K-to-oyster transfer is evaluated against target-domain absolute gates; WB source metrics are not used as a regression baseline.
-- [ ] Candidate with missing/failed holdout is not promoted without an explicit override.
-- [ ] Successful candidate activation and rollback to the previous model are both demonstrated.
+## H. Automated regression checks
 
-## H. Reproducibility and deliverables
-- [ ] Store dataset source/terms, annotation converter version, split manifests, checkpoint SHA-256 and training configuration.
-- [ ] Save test outputs, overlays and failure cases under `results/`.
-- [ ] Record software versions, ms/image, process RSS and available GPU memory.
-- [ ] Complete the course-required baseline/ablation/self-implemented-algorithm evidence.
-- [ ] Record a demo showing import -> Model A inference -> tracking/stage history/growth -> review -> export; show Model B maturity summary separately.
-- [ ] Build the PDF report and presentation from actual measured results only.
+- [x] `python -m unittest discover -s tests -v` — 15 tests passed in the updated project workspace.
+- [x] Changed Python sources passed in-memory syntax compilation.

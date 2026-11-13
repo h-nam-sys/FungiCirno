@@ -19,7 +19,7 @@ from mushroom_monitor.db import Database, utc_now
 from mushroom_monitor.environment import growth_environment_join, parse_environment_csv
 from mushroom_monitor.image_io import store_capture
 from mushroom_monitor.maturity import rebuild_flush_groups
-from mushroom_monitor.model_registry import install_model_bundle
+from mushroom_monitor.model_registry import install_model_bundle, model_capabilities
 from mushroom_monitor.learning import export_reviewed_yolo_dataset
 from mushroom_monitor.review import export_reviewed_samples, review_prediction, replace_prediction_mask
 from mushroom_monitor.service import ModelService, add_environment_rows
@@ -60,9 +60,19 @@ def model_options(key: str | None = None):
 
 
 def show_status():
-    registered = db.query("SELECT model_key,version,architecture,source_species,status FROM model_versions ORDER BY model_key,installed_at DESC")
+    registered = db.query("""SELECT model_key,version,architecture,source_species,status,checkpoint_path
+                              FROM model_versions ORDER BY model_key,installed_at DESC""")
+    for row in registered:
+        row["checkpoint_available"] = Path(row.get("checkpoint_path") or "").is_file()
     if not registered:
-        st.warning("No model weights are installed. Import a target oyster model bundle under Models before production inference. M18K WB-only is available only as a source-domain/debug model.")
+        st.warning("No model bundles are registered. Import the Charisis bundle under Models before running the core oyster growth workflow.")
+    missing_active = [row for row in registered if row["status"] == "active" and not row["checkpoint_available"]]
+    if missing_active:
+        keys = ", ".join(f"{row['model_key']} / {row['version']}" for row in missing_active)
+        st.warning(
+            f"Active registry records have no checkpoint at their saved path: {keys}. "
+            "The source ZIP omits model weights. Download the Charisis model_bundle.zip from Kaggle and import it through Models."
+        )
     return registered
 
 
@@ -85,14 +95,11 @@ def refresh_after_review(prediction_id: int):
                    JOIN captures c ON c.id=p.capture_id WHERE p.id=?""", (prediction_id,))
     if not row:
         return
-    rebuild_flush_groups(db,row["capture_id"],model_version_id=int(row["model_version_id"]))
     model_config = json.loads(row["config_json"] or "{}")
-    track_objects = bool(model_config.get(
-        "track_objects",
-        row["model_key"] == "charisis_cluster_tracking"
-        or "convnext" in str(row["architecture"]).lower(),
-    ))
-    if track_objects:
+    capabilities = model_capabilities(row["model_key"], row["architecture"], model_config)
+    if capabilities["spatial_grouping"]:
+        rebuild_flush_groups(db,row["capture_id"],model_version_id=int(row["model_version_id"]))
+    if capabilities["track_objects"]:
         rebuild_sequence_tracks(db,row["unit_id"],row["camera_id"],row["series_key"],row["model_version_id"])
 
 
@@ -118,10 +125,10 @@ if page == "Overview":
     st.dataframe(recent, width="stretch", hide_index=True)
     st.subheader("Installed models")
     if models:
-        st.dataframe(pd.DataFrame(models)[["model_key","version","architecture","source_species","status"]], width="stretch", hide_index=True)
+        st.dataframe(pd.DataFrame(models)[["model_key","version","architecture","source_species","status","checkpoint_available"]], width="stretch", hide_index=True)
     else:
         st.info("Model weights are not included in the submitted result ZIPs. Install the exported model bundles from Colab first.")
-    st.markdown("**Production direction:** `charisis_cluster_tracking` segments whole oyster clusters into three growth stages and tracks them across captures. `mushr_maturity` separately segments individual oyster fruitbodies into harvest-readiness classes. Both use the same YOLO-seg runtime and prediction pipeline. The WB-only M18K checkpoint is a source-initialization candidate, not a production oyster model.")
+    st.markdown("**Primary production path:** the Charisis ConvNeXt-Tiny-FPN Mask R-CNN segments whole oyster clusters into three developmental classes. FungiCirno then assigns persistent IDs, records per-capture stage history, and measures visible mask-area change. Individual fruitbody harvest-readiness analysis (MushR taxonomy) is an optional, separate extension. M18K WB-only is retained as a historical source-domain segmentation benchmark, not an oyster production model.")
 
 elif page == "Cultivation":
     st.subheader("Sites, growing units and cameras")
@@ -296,7 +303,14 @@ elif page == "Capture images":
 
 elif page == "Run inference":
     st.subheader("Run an installed model")
-    models = model_options()
+    registered_active = model_options()
+    models = [row for row in registered_active if Path(row.get("checkpoint_path") or "").is_file()]
+    missing_active = [row for row in registered_active if not Path(row.get("checkpoint_path") or "").is_file()]
+    if missing_active:
+        st.warning(
+            "An active model registry entry has no checkpoint at its saved path. "
+            "Import the Charisis model_bundle.zip through Models before inference."
+        )
     if not models:
         show_status()
     else:
@@ -344,18 +358,16 @@ elif page == "Run inference":
                         failures.append((capture["id"],str(exc)))
                         messages.error(f"Capture #{capture['id']}: {type(exc).__name__}: {exc}")
                     progress.progress(index / len(choices))
-                track_objects = bool(config.get(
-                    "track_objects",
-                    model["model_key"] == "charisis_cluster_tracking"
-                    or "convnext" in str(model["architecture"]).lower(),
-                ))
-                if track_objects:
+                capabilities = model_capabilities(model["model_key"], model["architecture"], config)
+                if capabilities["track_objects"]:
                     tracked = rebuild_sequence_tracks(db,unit["id"],camera["id"],series,model["id"])
-                    st.write("Tracking summary", tracked)
-                else:
-                    st.info("This model is configured for per-image maturity/grouping, not temporal object tracking.")
-                for capture in choices:
-                    rebuild_flush_groups(db,int(capture["id"]),model_version_id=int(model["id"]))
+                    st.write("Cluster tracking summary", tracked)
+                if capabilities["spatial_grouping"]:
+                    for capture in choices:
+                        rebuild_flush_groups(db,int(capture["id"]),model_version_id=int(model["id"]))
+                    st.info("Spatial grouping was calculated per capture. These groups are not persistent temporal track IDs.")
+                if not capabilities["track_objects"] and not capabilities["spatial_grouping"]:
+                    st.info("This model performs standalone instance segmentation; no tracking or spatial grouping is enabled.")
                 st.success(f"Completed {len(successes)} captures; failed {len(failures)}.")
                 if failures:
                     st.warning("Failures are preserved below and in SQLite. Fix the reported issue, then rerun only failed captures.")
@@ -426,7 +438,8 @@ elif page == "Growth tracking":
                 st.info("No tracks yet. Activate `charisis_cluster_tracking`, import a fixed-camera time-lapse series, and process its captures.")
 
 elif page == "Maturity & grouping":
-    st.subheader("Spatial groups and maturity outputs")
+    st.subheader("Optional individual-fruitbody maturity and spatial grouping")
+    st.caption("This view is for models that detect individual fruitbodies (for example, an optional MushR maturity model). The primary Charisis model detects whole clusters; its stage history and growth measurements are shown under Growth tracking, not grouped again here.")
     units = unit_options()
     if units:
         unit_map = {int(x["id"]): x for x in units}
@@ -434,7 +447,9 @@ elif page == "Maturity & grouping":
         rows = db.query("""SELECT f.*,c.original_name,c.captured_at,u.code AS unit,m.model_key,m.version
                           FROM flush_groups f JOIN captures c ON c.id=f.capture_id
                           JOIN grow_units u ON u.id=c.unit_id LEFT JOIN model_versions m ON m.id=f.model_version_id
-                          WHERE c.unit_id=? ORDER BY COALESCE(c.captured_at,c.imported_at) DESC""", (unit_id,))
+                          WHERE c.unit_id=? AND COALESCE(m.model_key,'') NOT IN
+                                ('charisis_cluster_tracking','legacy_charisis_maskrcnn')
+                          ORDER BY COALESCE(c.captured_at,c.imported_at) DESC""", (unit_id,))
         if rows:
             frame = pd.DataFrame(rows)
             class_fractions = []
@@ -549,7 +564,7 @@ elif page == "Review & learning":
 
 elif page == "Learning lab":
     st.subheader("Human-reviewed incremental learning")
-    st.caption("This workflow exports reviewed predictions for offline Colab fine-tuning. It does not train inside the local app or automatically replace the active model.")
+    st.caption("Human review is backend-independent. COCO reviewed-sample exports can preserve Charisis masks/classes. The primary Charisis training workflow is the TorchVision notebook; the YOLO-seg exporter/trainer below is only for optional YOLO experiments. Nothing is trained or activated automatically by the local app.")
     summary=data_frame("""SELECT m.model_key,COUNT(*) AS predictions,
                        SUM(CASE WHEN p.review_status='pending' THEN 1 ELSE 0 END) AS pending,
                        SUM(CASE WHEN p.review_status='accepted' THEN 1 ELSE 0 END) AS accepted,
@@ -561,28 +576,24 @@ elif page == "Learning lab":
     if model_keys:
         key=st.selectbox("Model family to export",[r["model_key"] for r in model_keys],key="learning_model_key")
         reviewer_note=st.text_area("Dataset notes",placeholder="Side-view target domain, capture source, annotation review notes...")
-        if st.button("Build reviewed YOLO-seg dataset ZIP"):
+        st.caption("The COCO export in Review & Learning is the appropriate generic reviewed-mask export for the Charisis TorchVision workflow. The YOLO export is a separate format and is not consumed by the Charisis `.pth` checkpoint.")
+        if st.button("Build reviewed YOLO-seg dataset ZIP (optional YOLO models only)"):
             try:
                 out=paths.exports/f"reviewed_yolo_{key}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.zip"
                 exported,count=export_reviewed_yolo_dataset(db,out,key,reviewer_note)
                 st.success(f"Prepared {count} reviewed instance masks.")
-                st.download_button("Download training dataset",data=exported.read_bytes(),file_name=exported.name,mime="application/zip")
+                st.download_button("Download YOLO training dataset",data=exported.read_bytes(),file_name=exported.name,mime="application/zip")
             except Exception as exc: st.error(f"Dataset export failed: {type(exc).__name__}: {exc}")
-    st.markdown("### Candidate training (Colab)")
-    st.code("""# Initial oyster cluster-stage transfer (M18K class metrics are NOT comparable):
-python tools/train_candidate.py --weights m18k_wb_best.pt \
-  --data charisis_yolo/data.yaml --holdout-data charisis_yolo/data.yaml --holdout-split test \
-  --model-key charisis_cluster_tracking --prediction-role cluster_stage \
-  --species 'Pleurotus ostreatus' --taxonomy charisis_oyster_cluster_stage_v1 \
-  --pretrained-source 'team M18K V2 WB-only checkpoint' \
-  --epochs 50 --imgsz 640 --batch 8 --device 0 --out charisis_candidate.zip
+    st.markdown("### Primary Charisis training workflow")
+    st.code("""notebooks/Charisis_Full_Training.ipynb
 
-# For later updates, use the active SAME-TAXONOMY oyster checkpoint as --weights
-# and --baseline-weights, evaluated on the same untouched target holdout.
-
-# Alternative: convert a reviewed COCO annotation ZIP exported from Review & Learning:
-python tools/prepare_reviewed_dataset.py reviewed_coco.zip --out reviewed_dataset""",language="bash")
-    st.warning("Do not use reviewed predictions as unquestioned ground truth. Inspect/correct masks, keep a separate sequence- or farm-level holdout, and evaluate baseline and candidate on exactly the same holdout before activation.")
+TorchVision Mask R-CNN + ConvNeXt-Tiny-FPN
+Model family: charisis_cluster_tracking
+Classes (IDs): 1=immature_cluster, 2=mature_cluster, 3=overstayed_cluster
+Train/validation sequences: 2 and 4
+Held-out test sequences: 1 and 3""")
+    st.info("`tools/train_candidate.py` and the YOLO-seg dataset exporter are only for Ultralytics `.pt` experiments. They do not train or convert the primary Charisis `.pth` model. The Charisis notebook's reviewed-data fine-tuning integration remains a separate future task.")
+    st.warning("Do not use reviewed predictions as unquestioned ground truth. Inspect/correct masks and keep a separate sequence- or farm-level holdout.")
     jobs=data_frame("SELECT id,model_key,created_at,finished_at,status,dataset_path,candidate_path,metrics_json,error FROM learning_jobs ORDER BY id DESC LIMIT 20")
     if not jobs.empty:
         st.subheader("Learning job history"); st.dataframe(jobs,width="stretch",hide_index=True)
@@ -592,7 +603,7 @@ python tools/prepare_reviewed_dataset.py reviewed_coco.zip --out reviewed_datase
 
 elif page == "Models":
     st.subheader("Model registry")
-    st.write("Import a ZIP containing an Ultralytics YOLO segmentation checkpoint (`best.pt`), `model_config.json`, and `class_mapping.json`. Legacy TorchVision bundles remain supported for research comparison.")
+    st.write("Import a model ZIP containing `model_config.json` and `class_mapping.json`, plus either a TorchVision Mask R-CNN `model_checkpoint.pth` or an Ultralytics YOLO-seg `best.pt`. The primary Charisis bundle uses TorchVision Mask R-CNN + ConvNeXt-Tiny-FPN and is registered as `charisis_cluster_tracking`.")
     uploaded_bundle = st.file_uploader("Model bundle ZIP", type=["zip"])
     if uploaded_bundle and st.button("Install model bundle"):
         incoming = paths.incoming_models / uploaded_bundle.name
@@ -605,7 +616,9 @@ elif page == "Models":
             st.error(f"Bundle rejected: {type(exc).__name__}: {exc}")
     registry = db.query("SELECT * FROM model_versions ORDER BY model_key,installed_at DESC")
     if registry:
-        st.dataframe(pd.DataFrame(registry)[["id","model_key","version","architecture","source_species","status","installed_at","checkpoint_sha256"]], width="stretch", hide_index=True)
+        registry_view = pd.DataFrame(registry)
+        registry_view["checkpoint_available"] = registry_view["checkpoint_path"].map(lambda value: Path(value or "").is_file())
+        st.dataframe(registry_view[["id","model_key","version","architecture","source_species","status","checkpoint_available","installed_at","checkpoint_sha256"]], width="stretch", hide_index=True)
         registry_map = {int(x["id"]): x for x in registry}
         candidate_id = st.selectbox("Model version to activate / archive", list(registry_map),
                                  format_func=lambda x: f"#{x} {registry_map[x]['model_key']} {registry_map[x]['version']} [{registry_map[x]['status']}]")

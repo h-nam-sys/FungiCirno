@@ -1,29 +1,44 @@
-# Charisis-inspired temporal cluster tracking
+# Charisis model and FungiCirno temporal tracking
 
-## Purpose
+## Model role
 
-This module associates segmented oyster-mushroom cluster masks across captures from the same camera and capture series. It operationalizes the project's Charisis-inspired workflow: instance/cluster masks are the primary spatial evidence; temporal association then produces persistent cluster identities and area trajectories.
+The Charisis-trained Mask R-CNN detects whole oyster mushroom clusters and assigns one of three developmental labels: `immature_cluster`, `mature_cluster`, and `overstayed_cluster`. It outputs instance masks, boxes, class IDs and confidence scores. It does not assign persistent identities by itself.
 
-This is an implementation inspired by the described methodology, **not an exact reproduction** of the paper's complete pipeline or a claim that its private/training code was reproduced.
+## Training checkpoint
 
-## Current association method
+The member's executed notebook trained TorchVision Mask R-CNN with a ConvNeXt-Tiny-FPN backbone. It used the Charisis COCO annotation set, source sequences 2 and 4 for training/validation, and sequences 1 and 3 as held-out test. Frames were sampled every fourth capture (one-hour cadence). It completed 10 epochs on a Kaggle Tesla T4.
 
-1. **Candidate detections:** use only predictions whose confidence passed the configured application threshold (`final_for_analysis=1`). Human review can accept, reject, or correct the class before rebuilding tracks.
-2. **Mask representation:** load each binary mask and downsample it to a fixed square canvas while preserving its aspect ratio.
-3. **Motion estimate:** extrapolate the last normalized centroid using the previous two observations, with a short prediction horizon capped at three frames.
-4. **Association score:** combine mask IoU (0.55), predicted-centroid affinity (0.30), and mask-area ratio (0.15). Reject pairs outside a normalized spatial gate or with extreme area changes.
-5. **Global assignment:** solve the frame-level assignment with the Hungarian algorithm rather than greedy pair ordering.
-6. **Occlusion tolerance:** retain unmatched tracks for a configurable number of missed captures. Captures with zero detections still advance this counter.
-7. **Growth:** report image-space mask area and percentage change relative to the first observation. Physical area is calculated only when the camera has an explicit mm-per-pixel calibration.
-8. **Persistence:** track observations retain frame index, timestamp, area, growth and association score. Track rebuilding is isolated by model version.
+Held-out mask metrics:
 
-Class changes are allowed because a cluster can develop through maturity stages. The latest observed class is stored on the track; per-frame classes remain available through linked predictions.
+- overall AP@[.50:.95]: 0.650
+- AP50: 0.782
+- AP75: 0.759
+- AR100: 0.765
+
+The notebook exported predictions and a separate sequence-tracking CSV. Its 213 predicted tracks are not a tracking accuracy score because ground-truth persistent IDs were not provided in the evidence.
+
+## Application tracker
+
+FungiCirno's tracker is a separate implementation that consumes the normalized prediction masks from the Charisis model:
+
+1. Load only the latest inference run for each capture/model version and retain detections accepted for automatic analysis.
+2. Resize masks to a bounded square canvas while preserving aspect ratio.
+3. Predict the next normalized centroid from recent observations, with a short prediction horizon.
+4. Score candidate associations using mask IoU (0.55), predicted-centroid affinity (0.30), and area ratio (0.15).
+5. Reject pairs outside spatial/area gates, then solve one-to-one assignment with the Hungarian algorithm.
+6. Keep unmatched tracks for a configurable missed-capture gap; empty captures still advance the gap counter.
+7. Store each observation's linked prediction, per-frame class, timestamp, source-image area and relative change from the first observed area.
+
+This is FungiCirno's tracker, not a verbatim implementation of Charisis et al. The notebook's own tracker uses a separate candidate-matching routine. The two outputs must not be conflated.
+
+## App integration evidence
+
+The supplied project database records 15 successful Charisis inference runs through AMD DirectML. It contains 96 candidate predictions; 43 passed the 0.20 automatic-analysis threshold. The application tracker produced 22 track records containing 43 observations. This establishes that the model was loaded and exercised through the application on a small capture sample. It does not establish tracking accuracy.
 
 ## Interpretation limits
 
-- Association score is a heuristic similarity score, not a calibrated probability.
-- Mask IoU can become unreliable under large camera movement, viewpoint changes, major occlusion, or large time gaps.
-- The current tracker does not perform camera-motion compensation, substrate-plane homography, or learned re-identification.
-- Area growth is only comparable within a consistent camera/view, framing, resolution and capture protocol.
-- A track is not biological ground truth. Review masks and manually verify a sample of trajectories.
-- Evaluation requires labelled sequences and identity metrics (e.g. IDF1/HOTA or track precision/recall), plus segmentation metrics. The current software tests validate mechanics, not biological accuracy.
+- An association score is a heuristic, not a probability.
+- A track closing after a missed-frame gap means it was no longer observed; it does not prove harvest/removal.
+- Growth curves measure visible 2D mask area. They are not biomass, mass, volume or 3D growth.
+- Calibration must be tied to the fixed camera and reference plane.
+- Validate identity continuity against manually annotated ground-truth tracks before reporting IDF1, HOTA or MOTA.

@@ -1,11 +1,17 @@
-FungiCirno — oyster mushroom growth-monitoring application
+FungiCirno — side-view oyster mushroom growth monitoring
 
-Open README.md for install/run instructions.
-Open docs/FINAL_SYSTEM_ARCHITECTURE.md for the fixed system design.
-Open START_HERE_TEAM.md for the member verification plan.
+Primary model: Charisis TorchVision Mask R-CNN + ConvNeXt-Tiny-FPN.
+Task: segment whole oyster clusters, classify developmental stage, track clusters across captures, and measure visible mask-area change.
 
-Primary model: charisis_cluster_tracking (oyster cluster-stage segmentation + temporal tracking).
-Secondary model: mushr_maturity (individual oyster fruitbody maturity + flush aggregation).
-M18K WB-only best.pt is a source initialization candidate, not a production oyster model.
+The core cluster-growth pipeline does NOT require a separate MushR model.
+MushR is an optional individual-fruitbody harvest-readiness extension.
+M18K is a historical White Button segmentation benchmark, not the oyster production model.
 
-Trained oyster model weights and raw public datasets are external assets and are not included. Full CPU/AMD, target-domain, sequence-tracking, and learning/rollback evidence must be collected before calling the system validated.
+The Charisis full training run and prior AMD DirectML app inference evidence are documented in:
+- docs/MVP_VALIDATION.md
+- docs/CHARISIS_TRACKING_METHOD.md
+- docs/ACCEPTANCE_CHECKLIST.md
+
+The source archive intentionally excludes model weights and raw datasets. Download the executed Charisis notebook's model_bundle.zip from Kaggle and import it through the app's Models page. The SQLite snapshot contains a historic Windows checkpoint path; re-import the bundle in a clean checkout.
+
+See README.md for setup, installation, operation, limitations and team documentation.

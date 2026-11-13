@@ -1,11 +1,15 @@
-FungiCirno TorchVision NMS registration hotfix
+Optional legacy runtime patch — MushR TorchScript / TorchVision NMS
 
-Replace:
-  src/mushroom_monitor/inference/runtime.py
+This patch note applies only to the optional older MushR TorchScript path, if that
+extension is reintroduced. It is not required by the primary Charisis model.
 
-Then fully stop and restart Streamlit. Re-open Run inference and retry a capture.
+The current core Charisis checkpoint is a regular TorchVision Mask R-CNN state
+dictionary loaded by `src/mushroom_monitor/inference/runtime.py` and
+`src/mushroom_monitor/inference/models.py`. Do not replace the current runtime
+with an old patch unless a reproducible traceback demonstrates that the active
+code needs it.
 
-Reason:
-The MushR TorchScript graph references torchvision::nms. TorchVision's C++ extension
-must be imported before torch.jit.load() so the operator is registered in the process.
-This patch does not enable CPU fallback and does not alter model weights or preprocessing.
+Historical issue:
+A MushR TorchScript graph referenced `torchvision::nms`; TorchVision's C++
+extension had to be imported before `torch.jit.load()` so the operator was
+registered. That workaround did not change weights or enable CPU fallback.

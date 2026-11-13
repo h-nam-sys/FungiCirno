@@ -58,7 +58,7 @@ def _read_root(root: Path) -> ModelPackage:
         taxonomy=str(config.get('taxonomy','custom'))
         role=str(config.get('prediction_role','generic_instance'))
         expected = {
-            'charisis_cluster_tracking': ('cluster_stage', ['immature', 'well-defined', 'overstayed'], True),
+            'charisis_cluster_tracking': ('cluster_stage', ['immature_cluster', 'mature_cluster', 'overstayed_cluster'], True),
             'mushr_maturity': ('fruitbody_maturity', ['not-ready', 'ready', 'overdue'], False),
             'm18k_source_wb': ('generic_instance', ['wb'], False),
         }
@@ -79,19 +79,83 @@ def _read_root(root: Path) -> ModelPackage:
                 raise ValueError('model_config.json names do not match class_mapping.json')
         config={**config,'runtime_type':'ultralytics_yolo_seg','task':'segment'}
         return ModelPackage(model_key,version,architecture,species,taxonomy,classes,config,root,pt,sha256_file(pt),metrics)
-    # Existing TorchVision Mask R-CNN member format.
-    mappingp=root/'class_mapping.json'; cp=root/'model_checkpoint.pth'
-    if not mappingp.exists() or not cp.exists(): raise FileNotFoundError('Bundle needs best.pt or model_checkpoint.pth plus model_config.json/class_mapping.json')
-    raw=json.loads(mappingp.read_text(encoding='utf8')); raw=raw.get('label_to_name',raw.get('classes',{}))
-    classes={int(k):str(v) for k,v in raw.items()}; architecture=str(config.get('architecture',''))
-    low=architecture.lower()
-    if 'convnext' in low: key,tax,species='legacy_charisis_maskrcnn','legacy_charisis_cluster_taxonomy','Pleurotus ostreatus'
-    elif 'resnet' in low: key,tax,species='legacy_mushr_maskrcnn','legacy_mushr_maturity_taxonomy','Pleurotus ostreatus'
-    else: key,tax,species=str(config.get('model_key','custom_torchvision')),str(config.get('taxonomy','custom')),str(config.get('source_species','unknown'))
-    config={**config,'runtime_type':config.get('runtime_type','torchvision_state_dict'),
-            'track_objects':bool(config.get('track_objects','convnext' in low))}
-    version=str(config.get('version') or f'checkpoint-{sha256_file(cp)[:12]}')
-    return ModelPackage(key,version,architecture,species,tax,classes,config,root,cp,sha256_file(cp),metrics)
+    # TorchVision Mask R-CNN bundles. Charisis is the primary oyster model;
+    # MushR remains an optional individual-fruitbody maturity extension.
+    mappingp = root / 'class_mapping.json'
+    cp = root / 'model_checkpoint.pth'
+    if not mappingp.exists() or not cp.exists():
+        raise FileNotFoundError('Bundle needs best.pt or model_checkpoint.pth plus model_config.json/class_mapping.json')
+    raw = json.loads(mappingp.read_text(encoding='utf8'))
+    raw = raw.get('label_to_name', raw.get('classes', {}))
+    classes = {int(k): str(v) for k, v in raw.items()}
+    architecture = str(config.get('architecture', ''))
+    low = architecture.lower()
+
+    if 'convnext' in low:
+        # Older project bundles used this legacy key. New imports use the
+        # stable production family key while retaining the old directory/path.
+        key = 'charisis_cluster_tracking'
+        expected_classes = {
+            1: 'immature_cluster',
+            2: 'mature_cluster',
+            3: 'overstayed_cluster',
+        }
+        if classes != expected_classes:
+            raise ValueError(
+                'Charisis Mask R-CNN class_mapping.json must preserve '
+                '1=immature_cluster, 2=mature_cluster, 3=overstayed_cluster; '
+                'class ID 0 is reserved for background'
+            )
+        taxonomy = str(config.get('taxonomy') or 'charisis_oyster_cluster_stage_v1')
+        species = str(config.get('source_species') or 'Pleurotus ostreatus')
+        capabilities = {'prediction_role': 'cluster_stage', 'track_objects': True, 'spatial_grouping': False}
+    elif 'resnet-50' in low or 'resnet50' in low:
+        key = 'mushr_maturity'
+        expected_classes = {
+            1: 'not-ready',
+            2: 'ready',
+            3: 'overdue',
+        }
+        if classes != expected_classes:
+            raise ValueError(
+                'MushR Mask R-CNN class_mapping.json must preserve '
+                '1=not-ready, 2=ready, 3=overdue; class ID 0 is reserved for background'
+            )
+        taxonomy = str(config.get('taxonomy') or 'mushr_oyster_fruitbody_maturity_v1')
+        species = str(config.get('source_species') or 'Pleurotus ostreatus')
+        capabilities = {'prediction_role': 'fruitbody_maturity', 'track_objects': False, 'spatial_grouping': True}
+    else:
+        key = str(config.get('model_key', 'custom_torchvision'))
+        taxonomy = str(config.get('taxonomy', 'custom'))
+        species = str(config.get('source_species', 'unknown'))
+        capabilities = {'track_objects': False, 'spatial_grouping': False}
+
+    # Keep the source checkpoint's class IDs and names unchanged. TorchVision
+    # detection models reserve class ID 0 for background; Charisis labels are 1..3.
+    config = {
+        **config,
+        'model_key': key,
+        'runtime_type': 'torchvision_state_dict',
+        'source_species': species,
+        'taxonomy': taxonomy,
+        **capabilities,
+    }
+    version = str(config.get('version') or f'checkpoint-{sha256_file(cp)[:12]}')
+    return ModelPackage(key, version, architecture, species, taxonomy, classes, config,
+                        root, cp, sha256_file(cp), metrics)
+
+
+def model_capabilities(model_key: str, architecture: str, config: dict[str, Any] | None = None) -> dict[str, bool]:
+    """Return downstream capabilities without coupling them to the model backend."""
+    cfg = config or {}
+    key = str(model_key).casefold()
+    arch = str(architecture).casefold()
+    is_charisis = key in {'charisis_cluster_tracking', 'legacy_charisis_maskrcnn'} or 'convnext' in arch
+    is_mushr = key in {'mushr_maturity', 'legacy_mushr_maskrcnn'} or ('resnet' in arch and 'mask' in arch)
+    return {
+        'track_objects': bool(cfg.get('track_objects', is_charisis)),
+        'spatial_grouping': bool(cfg.get('spatial_grouping', is_mushr)),
+    }
 
 def read_model_package(bundle: Path) -> ModelPackage:
     bundle=bundle.resolve()

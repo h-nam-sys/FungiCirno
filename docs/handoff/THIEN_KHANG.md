@@ -1,48 +1,40 @@
-# Workstream B — Le Thien Khang: tracking and growth analytics verification
+# Workstream B — Le Thien Khang: tracking and growth analytics
 
 ## Ownership
 
-Validate and repair the existing tracking, grouping, growth, calibration and environmental modules. Do not build a separate tracker or redesign the application.
+Validate and repair FungiCirno's sequence handling, temporal cluster tracking, growth measurements, calibration and environmental association. The primary input is the trained Charisis cluster model. Do not build a second tracker.
 
-## Inputs
+## Fixed inputs and concepts
 
-- Primary tracking input: predictions from `charisis_cluster_tracking`, with whole oyster cluster masks and Charisis's three stage labels (`immature`, `well-defined`, `overstayed`).
-- Supplementary maturity input: `mushr_maturity`, with individual fruitbody masks and (`not-ready`, `ready`, `overdue`) labels. This model feeds per-image spatial grouping and flush readiness summaries; it is not the temporal cluster tracker.
+- Primary input: `charisis_cluster_tracking` predictions.
+- Whole-cluster masks and exact labels: `immature_cluster`, `mature_cluster`, `overstayed_cluster` with class IDs 1, 2, 3 (0 is background).
+- Charisis neural network predicts a cluster instance and its stage; it does **not** assign persistent IDs.
+- FungiCirno's application tracker associates predictions across captures using mask overlap, predicted centroid proximity and area similarity with one-to-one Hungarian assignment.
+- Notebook's own tracker is a separate implementation. Its 213 predicted tracks are not the app's 22 tracks and are not ground-truth IDs.
+- Per-image spatial grouping is for individual fruitbody predictions only. It must not run on Charisis whole-cluster masks.
+- Individual-fruitbody maturity (`not-ready`, `ready`, `overdue`) is optional and deferred unless the lead confirms it is required.
 
-The normalized Prediction schema is shared. Do not change model class IDs or taxonomy.
+## Required work
 
-## What to verify and deliver
+1. Verify that each capture series uses one growing unit and fixed camera/view, and is sorted by capture timestamp. Test missing timestamps, duplicate timestamps, empty captures and sequences imported out of order.
+2. Inspect the application tracker in `src/mushroom_monitor/tracking.py`. Validate predicted centroids, mask IoU, area-ratio scoring, one-to-one Hungarian assignment, bounded missed-frame gaps, stable track keys and rebuild idempotency.
+3. Test crowded clusters, overlaps, new pins, occlusions, disappearance/reappearance, partial harvest and cluster split/merge cases.
+4. Confirm each track observation links to its source prediction and retains per-capture stage, confidence, timestamp, source-image area and growth-vs-first value.
+5. Build a manually checked identity-reference subset if the source dataset has no usable persistent track IDs. Report ID switches, IDF1/HOTA/MOTA only with actual ground-truth identities and a documented metric implementation.
+6. Compare selected image-plane growth curves with manual mask-area measurements. Distinguish actual biological growth from viewpoint, occlusion and segmentation changes.
+7. Keep `area_mm2` disabled unless camera-specific calibration and geometry are valid. Pixel area is not volume, biomass or physical surface area.
+8. Validate environmental CSV timestamp matching and missing/malformed readings. Interpret relationships descriptively, not causally.
+9. Validate optional individual-maturity grouping only if that task is approved and an individual-fruitbody checkpoint exists.
 
-1. Use the public Charisis side-view time-lapse sequences with the same camera/view per series. Verify capture ordering, missing timestamp fallback, and that separate sequences are not mixed.
-2. Verify the existing Hungarian association uses mask IoU, predicted centroid proximity and area ratio, one-to-one matching and a bounded missed-frame gap. Inspect crowded frames, overlapping masks, new pins, occlusions and partial harvesting.
-3. Verify stable track keys and that each track observation links to its source prediction, preserving the per-capture predicted stage and confidence. Confirm stage transitions display alongside area/growth curves.
-4. Build a small manually checked tracking reference subset from public time-lapse images if the source does not supply persistent object IDs. Report identity switches, IDF1/MOTA or another clearly defined sequence metric only when reference IDs exist. Do not label heuristic association scores as probabilities.
-5. Verify Model B spatial groups are per capture/model version, not persistent track IDs. Verify class-area percentages and `ready_area_fraction` are derived from Model B's own taxonomy only.
-6. Verify model-version-scoped rebuilds do not overwrite another model's groups or tracks. Check empty captures, gaps, reappearance and rerun idempotency.
-7. Verify relative growth from source-image mask area. `mm^2` must remain unavailable without a valid camera-specific calibration and fixed reference plane. Document how calibration was measured.
-8. Import environmental CSV files and test malformed timestamps, valid ranges, duplicate source rows, nearest-reading alignment and the 12-hour match limit. Keep analysis descriptive, not causal.
-9. Fix demonstrated issues only inside your modules and focused UI outputs. Ask Hai Nam before shared schema/interface changes.
-
-## Files you own
+## Owned paths
 
 - `src/mushroom_monitor/tracking.py`
-- `src/mushroom_monitor/maturity.py`
+- `src/mushroom_monitor/maturity.py` (individual-fruitbody grouping only)
 - `src/mushroom_monitor/environment.py`
-- focused tracking/analytics UI and tests, coordinated with Hai Nam for `app.py`
+- analytics tests and documentation
 
-## Definition of done
+Do not change the Charisis model class map, inference contract, DB schema or app entry point without Hai Nam's approval.
 
-- Multi-capture oyster cluster sequence yields explainable stable tracks and per-observation stage history.
-- Missed captures/temporary occlusion do not instantly destroy a track.
-- Tracking results are evaluated against a labelled reference subset, or the absence of persistent public IDs is documented.
-- Individual maturity and cluster-stage taxonomies remain separate.
-- Growth and physical calibration outputs are traceable and honest.
-- Environmental import/alignment works with real CSV examples and survives restart.
+## Return evidence
 
-## Guardrails
-
-Do not change model weights or class mappings. Do not treat per-image groups as persistent biological flush IDs. Do not infer 3D size or biomass from 2D area. Do not report a tracking metric without ground-truth identities.
-
-## Return package
-
-Branch `member/khang-growth-analytics`; changed files and commit hash; sequence/source manifest; overlays; track observation CSV; reference IDs and metric definitions; calibration evidence; environment test CSV/output; logs and known issues.
+Return sequence manifest, test cases, overlays, per-track observation CSV, manually verified reference IDs and identity metrics (if available), growth-measurement comparison, calibration method, environment CSV checks, exact test commands/results, commit hash and known limitations.

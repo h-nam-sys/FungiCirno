@@ -1,52 +1,60 @@
-# Workstream A — Minh Thinh: model/data/runtime verification
+# Workstream A — Minh Thinh: Charisis model lifecycle and runtime
 
 ## Ownership
 
-Validate and repair the existing YOLO-seg model lifecycle. Do not design a new model registry, new inference backend, or separate application.
+Own the primary Charisis model's checkpoint, packaging, model loading, inference validation, and offline model lifecycle. The trained member checkpoint is TorchVision Mask R-CNN + ConvNeXt-Tiny-FPN. Do not rewrite it as YOLO or create another inference stack.
 
-## Fixed tasks and taxonomies
+## Fixed model decisions
 
-- `charisis_cluster_tracking`: whole oyster cluster segmentation, classes in this exact order: `immature`, `well-defined`, `overstayed`. This is the primary model for growth-stage history and persistent tracking.
-- `mushr_maturity`: individual oyster fruitbody segmentation, classes: `not-ready`, `ready`, `overdue`. This is a separate maturity task.
-- `m18k_source_wb`: WB-only source model, class `WB`. It is not a target oyster classifier.
+- Primary family: `charisis_cluster_tracking`.
+- Architecture: TorchVision Mask R-CNN + ConvNeXt-Tiny-FPN.
+- Runtime: `torchvision_state_dict`.
+- Detection unit: whole *Pleurotus ostreatus* cluster.
+- Preserve exact foreground mapping: `1=immature_cluster`, `2=mature_cluster`, `3=overstayed_cluster`; class 0 is background.
+- Capabilities: `track_objects=true`, `spatial_grouping=false`.
+- Legacy installed DB alias `legacy_charisis_maskrcnn` remains recognized.
+- `mushr_maturity` is an optional separate individual-fruitbody task, only if the lead approves it.
+- M18K WB-only YOLO is a historical White Button benchmark. It is not a Charisis initializer because YOLO and TorchVision Mask R-CNN checkpoints are architecturally incompatible.
 
-Both production models use the same `ultralytics_yolo_seg` runtime and normalized Prediction record. Do not merge class maps or compare metrics across task taxonomies.
+## Evidence already available
 
-## What to verify and deliver
+- The executed Charisis notebook completed 10 epochs on a Kaggle Tesla T4.
+- Dataset: 6,382 images and 37,004 annotations; train/validation sequences 2 and 4, test sequences 1 and 3; one-hour sampling.
+- Split sizes: 433 train, 109 validation, 1,055 held-out test.
+- Mask AP@[.50:.95]=0.650, AP50=0.782, AP75=0.759; final train loss 0.1449, validation loss 0.1649.
+- Notebook test inference: 9,483 detections and 213 notebook-generated predicted tracks. No GT identity metric is available.
+- Supplied DB snapshot: 15 successful Charisis AMD DirectML runs. The checkpoint bytes are not included in the project ZIP; DB path points to the original Windows checkout.
 
-1. Download/inspect the public Charisis oyster cluster dataset (DOI `10.5281/zenodo.15041243`) and the annotated MushR dataset linked from `https://github.com/ETCE-LAB/MushR`. Record licences/terms, annotation format, class names, sequence/camera metadata, counts and hashes. Do not redistribute raw data without permission.
-2. Convert Charisis COCO masks using `tools/prepare_coco_yolo_dataset.py` if the source annotations match the converter's supported COCO format. Inspect random exported labels, all three classes and any fragmented masks. If MushR is not COCO-compatible, make a small dataset-specific converter and document the annotation semantics; do not force an incompatible format through the generic converter.
-3. Establish train/validation/test splits by complete trial/sequence/farm group. Never split adjacent time-lapse frames randomly. Preserve the final test set untouched.
-4. Train Model A twice on identical splits: once initialized from the team's M18K WB `best.pt`, once from COCO-pretrained `yolov8n-seg.pt`. The M18K head must adapt to the three target classes; inspect training logs for transferred/reinitialized layers. Evaluate both on the same Charisis holdout and select by target-domain results, not M18K metrics.
-5. Train Model B as a separate MushR maturity checkpoint. Do not use the Charisis model as its baseline.
-6. Package each candidate with `tools/train_candidate.py` or `tools/package_yolo_model.py`. Verify `model_key`, `prediction_role`, `taxonomy`, zero-based class mapping, checkpoint hash and evaluation metadata.
-7. Verify reviewed-data export is separated by model family/taxonomy. Run one complete review -> export -> Colab fine-tune -> holdout evaluate -> candidate install -> activation gate -> rollback cycle when target-labelled data are available.
-8. Run the actual installed checkpoints through the local app on CPU. Then test AMD DirectML on the RX 5500 XT. Record unsupported operators/errors precisely; never call a smoke test full inference.
-9. Record peak process RSS, GPU memory if available, per-image latency, masks visually inspected, package versions and checkpoint hashes.
+## Required work
 
-## Files you own
+1. Inspect `notebooks/Charisis_Full_Training.ipynb`, `src/mushroom_monitor/inference/models.py`, `runtime.py`, `model_registry.py`, and the exact bundle metadata.
+2. Obtain `model_bundle.zip` from the Kaggle output. Verify its checkpoint SHA-256, state-dictionary key layout, class IDs/names, architecture config and any evaluation metrics.
+3. Install the bundle into a clean project checkout through **Models**. Confirm it canonicalizes to `charisis_cluster_tracking` and has `runtime_type=torchvision_state_dict`.
+4. Run a representative capture on CPU. Confirm class IDs 1/2/3, boxes, mask dimensions, confidence, source-image scaling and persisted pixel area.
+5. Run on AMD DirectML on the target RX 5500 XT. Record runtime, peak process memory, backend/device and actual overlay. CPU remains mandatory. Do not infer full-model compatibility from an operator-only smoke test.
+6. Inspect the loader's strict state-dictionary compatibility against the executed notebook. Fix only demonstrated discrepancies and add regression tests.
+7. Keep the Charisis notebook's COCO training/evaluation split by complete sequences. Do not randomly split adjacent time-lapse frames.
+8. The application's reviewed-sample export is COCO-oriented. Verify its class map and masks before proposing a Charisis fine-tuning path. `tools/train_candidate.py` and `tools/package_yolo_model.py` are YOLO-only; do not use them to train/package the primary `.pth` model.
+9. Only work on MushR if the lead confirms per-fruitbody harvest readiness. It is a different task and must have its own checkpoint and class map.
+
+## Owned paths
 
 - `src/mushroom_monitor/inference/`
 - `src/mushroom_monitor/model_registry.py`
 - `src/mushroom_monitor/learning.py`
-- `tools/train_candidate.py`
-- `tools/prepare_reviewed_dataset.py`
-- `tools/prepare_coco_yolo_dataset.py` (dataset conversion fixes)
-- `tools/package_yolo_model.py`
-- model/training documentation and Colab notebook updates
+- `notebooks/Charisis_Full_Training.ipynb`
+- model bundle/packaging documentation
+- Optional YOLO tools only when explicitly scoped
 
-## Definition of done
+## Do not
 
-- Both target-domain model bundles are reproducibly packaged with the correct independent taxonomies, or a specific public-data/annotation blocker is returned.
-- CPU end-to-end inference succeeds for each available real checkpoint.
-- AMD DirectML end-to-end inference succeeds with evidence or has a reproducible documented blocker.
-- The M18K-vs-COCO initialization comparison for Model A is completed on the same untouched target holdout.
-- The model-specific human-review and candidate promotion/rollback workflow is exercised.
-
-## Guardrails
-
-Do not change SQLite schema, app navigation or shared prediction contracts without Hai Nam's approval. Never use WB source metrics as oyster evidence. Do not use adjacent time-lapse frames across splits. Do not promote without an independent target holdout.
+- Replace Charisis with M18K or claim M18K predicts oyster maturity.
+- Rename `mature_cluster` to `well-defined` without a documented taxonomy migration and new evaluation.
+- Force `.pth` into the Ultralytics `.pt` loader.
+- Use notebook-generated tracks as ground-truth tracking metrics.
+- Change shared DB schema or app entrypoint without Hai Nam's approval.
+- Claim a workflow passed because code or a notebook cell exists.
 
 ## Return package
 
-Branch `member/minh-thinh-ml`; changed files and commit hash; source/dataset URLs and terms; split manifest; class maps; checkpoint SHA-256; training commands/configs; holdout metrics; sample overlays; CPU/AMD logs; package versions; known issues.
+Provide the model bundle outside Git, checkpoint SHA-256, exact package versions, run manifest, held-out metrics, overlay examples, CPU/AMD logs, inference timing/RSS, tests run, commit hash and known limitations.

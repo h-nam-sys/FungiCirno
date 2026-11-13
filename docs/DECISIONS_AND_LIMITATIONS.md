@@ -1,56 +1,53 @@
 # Architecture decisions and claim limits
 
-## Final decisions
+## Current decisions
 
-1. **One inference implementation:** Ultralytics YOLOv8-seg is the production runtime for both model families. The legacy TorchVision loader remains only for importing older experimental bundles; it is not required for the production workflow.
-2. **Two distinct model families:**
-   - `charisis_cluster_tracking`: whole oyster clusters, three Charisis cluster-stage labels (`immature`, `well-defined`, `overstayed`), persistent tracking enabled.
-   - `mushr_maturity`: individual oyster fruitbodies, three MushR maturity labels (`not-ready`, `ready`, `overdue`), spatial flush aggregation enabled.
-3. **M18K role:** the WB-only YOLOv8n-seg checkpoint is a source-domain initialization candidate. It is not the deployed oyster model and does not predict maturity. Compare it with COCO-pretrained YOLOv8n-seg on the same Charisis target split before selecting an initialization.
-4. **Target domain:** fixed-camera side-view oyster mushroom monitoring, primarily *Pleurotus ostreatus*. Target-domain results must come from oyster-labelled data and sequence/farm-separated evaluation.
-5. **Research taxonomy:** Wang's seven-stage taxonomy concerns *Pleurotus pulmonarius* and remains separate. Do not map it into the *P. ostreatus* class sets without a new labelled training/evaluation design.
-6. **Tracking:** Charisis informs mask-based association and missed-detection handling. The local Hungarian tracker is a project implementation, not an exact reproduction of the paper.
-7. **Runtime:** CPU inference must work. AMD DirectML is the primary optional accelerator and must be demonstrated with the real YOLO model end-to-end. No silent fallback.
-8. **Training:** offline in Colab. The local application performs inference, persistence, review and model management; it does not train in production.
-9. **Persistence:** SQLite stores captures, model versions, inference runs, predictions, masks, tracks, observations, review records and environmental measurements.
-10. **Learning lifecycle:** human-reviewed exports -> offline fine-tuning -> independent holdout evaluation -> candidate bundle -> explicit activation -> rollback.
-11. **Environment:** CSV import and time alignment are included. Live sensor integration and causal environmental-response modelling are not.
+1. **Primary production model:** Charisis-trained TorchVision Mask R-CNN with ConvNeXt-Tiny-FPN, operating on whole oyster mushroom clusters.
+2. **Primary classes:** preserve the notebook's exact labels and IDs: `1=immature_cluster`, `2=mature_cluster`, `3=overstayed_cluster`; TorchVision reserves 0 for background.
+3. **Primary temporal logic:** the FungiCirno application performs its own mask/centroid/area association with Hungarian assignment. This is not the notebook's tracker or an exact reproduction of Charisis et al.
+4. **Core output:** persistent cluster IDs, per-capture predicted stage, visible mask area and relative growth history.
+5. **Optional second task:** individual fruitbody harvest maturity using MushR classes only if the lead explicitly requires per-mushroom readiness. It is not required for the core cluster-growth pipeline.
+6. **M18K:** historical White Button YOLO benchmark/reference. It is not the oyster production model and is not a required Charisis initialization.
+7. **Shared application interface:** backend-specific loaders feed one normalized prediction record and the same persistence/review/tracking services. Do not force the Charisis checkpoint into the YOLO loader.
+8. **Training:** offline notebook. The local app runs inference and manages data/review/model versions; it does not train.
 
-## Model and taxonomy boundaries
+## Evidence currently available
 
-- Charisis: cluster-level `immature`, `well-defined`, `overstayed`.
-- MushR: individual-level `not-ready`, `ready`, `overdue`.
-- M18K: source-domain `WB` only.
-- Wang: separate seven-stage *P. pulmonarius* taxonomy.
+- Charisis full run: 10 epochs; 433 train images, 109 validation images, 1,055 held-out test images; test sequences are disjoint from training/validation sequences.
+- Overall mask AP@[0.50:0.95]=0.650, AP50=0.782, AP75=0.759.
+- Notebook test inference: 9,483 detections and 213 predicted tracks. No ground-truth track IDs/identity metric is provided.
+- Supplied app database: 15 successful Charisis AMD DirectML runs, 96 candidate predictions, 43 analysis-eligible predictions at threshold 0.20, 22 application tracks and 43 observations. The active legacy row reports checkpoint SHA-256 `3aabb8c4a9ed6016c29b80008afe6dc1d4a1c454392bebaac3fc110c0c79f2d8`.
+- Local app median model inference ≈0.56 s and median end-to-end run ≈2.15 s over that small sample. Not a benchmark.
 
-Never compare these class IDs or class-area fractions across model families. A WB detection is not a maturity estimate. A cluster-stage label is not an individual fruitbody harvest label.
+## Taxonomy boundaries
 
-## Measurement limits
+- Charisis cluster task: `immature_cluster`, `mature_cluster`, `overstayed_cluster`.
+- MushR individual-maturity task: `not-ready`, `ready`, `overdue`.
+- M18K source task: `WB` only.
 
-- `area_px2` is projected two-dimensional mask area in source-image pixels.
-- `area_mm2` is computed only with a camera-specific calibration valid for the fixed reference plane.
-- Relative area change is not biomass, volume, mass, or full 3D growth.
-- Track association scores are heuristics, not probabilities.
-- Spatial groups are per-image connected groups, not persistent biological flush identities.
-- Group maturity summaries are descriptive aggregates of model outputs, not independent classifiers.
-- Environmental correlations are descriptive, not causal.
+Do not mix labels or class IDs across model families. A cluster-stage class does not establish the maturity of every individual fruitbody inside that cluster. Mask area is not a maturity label.
 
-## Evaluation limits
+## Measurement and evaluation limits
 
-- M18K WB metrics are source-domain results, not oyster side-view accuracy.
-- Charisis target evaluation must keep full time-lapse/farm sequences separate across train, validation and test.
-- MushR training/holdout must retain its published dataset split or an equally strict sequence-separated split.
-- Predictions require human inspection before they become learning labels.
-- A validation split used for checkpoint selection is not the final untouched test set.
-- Unit tests and mocked inference do not prove full-model AMD DirectML support, tracking accuracy or biological validity.
+- `area_px2` is projected visible 2D mask area.
+- `area_mm2` requires valid camera-specific calibration and stable reference geometry.
+- Relative area change is not biomass, volume, mass or full 3D growth.
+- Association score is a heuristic, not a probability.
+- The notebook's 213 tracks and the app's 22 tracks are outputs of different tracking runs/implementations; neither number is a tracking-accuracy metric.
+- No IDF1, HOTA or MOTA claim is valid without verified ground-truth identity annotations.
+- The 15 app runs in the DB demonstrate that a Charisis TorchVision checkpoint was loaded through AMD DirectML in the recorded local environment. The checkpoint file is absent from the source archive, so the DB hash cannot be independently compared with the attached notebook's Kaggle output bundle. This is functional integration evidence, not an independent deployment benchmark.
+- The notebook's training/validation loss and COCO mask AP do not alone prove correct biological maturity estimation in a new farm/camera setting.
 
 ## Remaining evidence dependencies
 
-- Download/licence confirmation and split manifest for Charisis and MushR datasets.
-- Trained oyster cluster-stage YOLO bundle.
-- Trained individual maturity YOLO bundle (unless deliberately deferred and reported as such).
-- Full CPU inference and memory measurement on the real target bundles.
-- Full AMD DirectML YOLO inference on the RX 5500 XT or a reproducible blocker.
-- Tracking identity evaluation on annotated multi-capture sequences.
-- Camera calibration validation.
-- One end-to-end reviewed export -> fine-tune -> holdout gate -> activation -> rollback run.
+- CPU inference run with the actual Charisis checkpoint and current environment.
+- Reproducible AMD DirectML test on the actual checkpoint after a clean installation; existing database records show successful sample runs.
+- Manually verified track-ID subset and tracking metrics, or explicit report that public ground-truth IDs are unavailable.
+- Manual growth measurement comparison and camera calibration evidence.
+- Full sequence run in the application, not only isolated images.
+- A decision from the lead on whether individual fruitbody harvest-readiness is required. If not, defer MushR.
+- Charisis-aware reviewed-sample fine-tuning integration if incremental learning is required; the current generic COCO export is not yet wired directly into the training notebook.
+
+## Packaging limitation
+
+The supplied project ZIP and notebook do not contain the binary `model_checkpoint.pth`. The notebook indicates that it writes `model_bundle.zip` to Kaggle's output directory. Keep the downloaded bundle/checkpoint separately and install it through the Models page. Do not claim a clean archive includes model weights when it does not.

@@ -216,7 +216,20 @@ class Database:
                 )
         with self.transaction() as conn:
             if status == "active":
-                conn.execute("UPDATE model_versions SET status='candidate' WHERE model_key=? AND status='active'", (model["model_key"],))
+                # The historical Charisis key and the canonical key are the
+                # same model family. Never leave two active versions after a
+                # clean bundle import.
+                family_keys = (
+                    ("charisis_cluster_tracking", "legacy_charisis_maskrcnn")
+                    if model["model_key"] in {"charisis_cluster_tracking", "legacy_charisis_maskrcnn"}
+                    else (model["model_key"],)
+                )
+                placeholders = ",".join("?" for _ in family_keys)
+                conn.execute(
+                    f"UPDATE model_versions SET status='candidate' "
+                    f"WHERE model_key IN ({placeholders}) AND status='active'",
+                    family_keys,
+                )
             conn.execute("UPDATE model_versions SET status=? WHERE id=?", (status, model_id))
 
 

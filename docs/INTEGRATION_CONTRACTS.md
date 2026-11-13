@@ -1,59 +1,102 @@
-# Integration contracts
+# FungiCirno integration contracts
 
-These interfaces are the shared boundary between the three workstreams. Keep them stable. A change to a shared field requires a coordinated database migration and an update to all consumers.
+These interfaces are the shared boundary between inference, persistence, review, tracking and the UI. Keep them stable. A shared-field change requires coordinated tests and, where relevant, a database migration.
 
 ## Capture identity
 
-A capture is identified by its database `capture_id` and belongs to one `unit_id`, `camera_id`, and `series_key`. Captures in one series must come from the same fixed camera/view and be ordered by `captured_at` when available, otherwise `imported_at`.
+A capture belongs to one `unit_id`, `camera_id` and `series_key`. A tracking series must use one fixed camera/view and be ordered by `captured_at` where available; import time is only a fallback.
 
-## Model prediction record
+## Normalized prediction contract
 
-The database `predictions` row is the canonical normalized detection contract:
+All model loaders return `Prediction` objects from `src/mushroom_monitor/inference/runtime.py`, regardless of backend. The database prediction row is the downstream contract:
 
 ```python
 {
-    "id": int,                    # prediction_id assigned by SQLite
+    "id": int,
     "capture_id": int,
     "model_version_id": int,
     "detection_index": int,
-    "class_id": int,              # model-local ID; preserve the model mapping
+    "class_id": int,              # model-local ID; preserve mapping
     "class_name": str,
     "confidence": float,          # [0, 1]
     "x1": float, "y1": float, "x2": float, "y2": float,  # source-image pixels
-    "area_px2": float,            # source-image projected mask area
+    "area_px2": float,            # projected source-image mask area
     "area_mm2": float | None,     # only with camera calibration
     "centroid_x": float, "centroid_y": float,
-    "mask_path": str,             # binary mask file, resolvable locally
+    "mask_path": str,
     "mask_width": int, "mask_height": int,
     "review_status": "pending|accepted|corrected|rejected",
     "final_for_analysis": bool,
 }
 ```
 
-Model adapters return a list of `Prediction` objects from `inference/runtime.py`. They must return masks at the resized inference-image resolution, and boxes in the same coordinate system. `ModelService` scales boxes, area and centroid to the original capture dimensions before saving.
+The runtime adapter returns masks and boxes in inference-image coordinates. `ModelService` maps boxes, centroids and area back to source-image dimensions before persistence.
 
-M18K YOLO models use zero-based class IDs. The old TorchVision adapters may use one-based labels. Do not renumber labels without rewriting `class_mapping.json` and the checkpoint's metadata together.
+## Supported model bundles and class-ID conventions
+
+### Primary Charisis TorchVision bundle
+
+```text
+model_checkpoint.pth
+model_config.json
+class_mapping.json
+evaluation_metrics.json       # when available
+MODEL_IMPLEMENTATION_NOTE.txt
+```
+
+- `runtime_type`: `torchvision_state_dict`
+- `architecture`: `TorchVision Mask R-CNN with ConvNeXt-Tiny-FPN`
+- `model_key`: `charisis_cluster_tracking`
+- `prediction_role`: `cluster_stage`
+- `track_objects`: `true`
+- `spatial_grouping`: `false`
+- `source_species`: `Pleurotus ostreatus`
+- `taxonomy`: `charisis_oyster_cluster_stage_v1`
+- `class_mapping.json`: preserve TorchVision foreground IDs 1, 2, 3 for `immature_cluster`, `mature_cluster`, `overstayed_cluster`; ID 0 is background.
+- Checkpoint payload contains the trained `model` state dictionary. Load with strict state-dictionary matching into the matching ConvNeXt-Tiny-FPN Mask R-CNN builder.
+
+Older model rows/bundles named `legacy_charisis_maskrcnn` remain supported and are treated as Charisis cluster models by the capability resolver.
+
+### Optional MushR TorchVision bundle
+
+- `runtime_type`: `torchvision_state_dict`
+- Architecture: Mask R-CNN ResNet-50-FPN
+- Task: individual oyster fruitbody maturity
+- Class IDs: preserve the checkpoint's one-based foreground mapping for `not-ready`, `ready`, `overdue`.
+- `track_objects=false`, `spatial_grouping=true`.
+- This model is optional; it is not required to validate cluster-level growth monitoring.
+
+### Historical M18K YOLO bundle
+
+- Checkpoint: `best.pt`
+- `runtime_type`: `ultralytics_yolo_seg`
+- Class IDs are zero-based (`0: WB`).
+- Task: White Button instance segmentation only.
+- It is a historical benchmark/reference model, not the Charisis production model.
+
+Do not renumber class IDs or reuse a taxonomy across model families.
+
+## Downstream capabilities
+
+`model_capabilities(model_key, architecture, config)` determines whether to run downstream tasks:
+
+- Charisis cluster model: temporal tracking enabled; per-image spatial flush grouping disabled.
+- MushR individual maturity model: temporal tracking disabled by default; per-image spatial grouping enabled.
+- M18K generic instance model: neither capability enabled unless explicitly configured.
+
+Spatial groups are within-image aggregates, not persistent IDs. Track records are linked to source predictions and scoped by unit, camera, series and model version.
 
 ## Tracking output
 
-`rebuild_sequence_tracks()` consumes only the latest inference run for each capture/model version and returns:
+`rebuild_sequence_tracks()` consumes the latest inference run for each capture/model version and returns capture, observation, track and active-track counts. `track_key` is the stable display/export key for a fixed ordered series and model version; SQLite numeric IDs may change on a rebuild.
 
-```python
-{
-    "captures": int,
-    "observations": int,
-    "tracks": int,
-    "active_tracks": int,
-}
-```
+The FungiCirno app tracker uses mask IoU, predicted-centroid proximity, area ratio and Hungarian assignment. Its score is a heuristic, not a probability.
 
-Tracks are scoped by `(unit_id, camera_id, series_key, model_version_id)`. A track's stable key is deterministic for the same ordered sequence and model version. A rebuilt sequence may reassign numeric SQLite IDs; consumers should use `track_key` as the stable display/export key.
+## Reviewed samples and training
 
-Each `track_observations` row stores `frame_index`, `captured_at`, `area_px2`, optional `area_mm2`, `growth_vs_first_pct`, and `association_score`. The association score is a heuristic similarity, not a probability.
+Only human accepted/corrected samples are learning candidates. `export_reviewed_samples()` produces a COCO-style reviewed-mask archive with the original model taxonomy and sequence-group metadata. `export_reviewed_yolo_dataset()` is specifically a YOLO-seg export and must not be passed to the Charisis TorchVision loader/training workflow.
 
-## Spatial grouping output
-
-`rebuild_flush_groups()` consumes the latest inference run for one capture and one model version. `flush_groups.model_version_id` is required to keep different models' group outputs separate. Groups are per-image connected components, not persistent temporal identities.
+The current Charisis notebook trains from the public Charisis dataset. Direct ingestion of reviewed COCO exports into its resume/fine-tuning flow is not yet automated. Preserve sequence identity and a separate untouched holdout when adding that capability.
 
 ## Environmental readings
 
@@ -63,51 +106,4 @@ CSV fields:
 measured_at,temperature_c,humidity_pct,co2_ppm,notes
 ```
 
-`timestamp` is accepted as an alias for `measured_at`. Blank sensor values are allowed. Duplicate `(unit_id, measured_at, source)` imports update the existing row. Time-aligned comparisons use the nearest reading within 12 hours and are descriptive only.
-
-## Reviewed learning samples
-
-Only `review_items.status IN ('accepted','corrected')` are exported for candidate training. A human mask correction replaces the stored binary mask at source-image resolution. An accepted prediction means the reviewer accepted the existing mask/class; it is not automatically an independent annotation unless the reviewer actually inspected it.
-
-## Model bundle contract (YOLO-seg)
-
-```text
-best.pt
-model_config.json
-class_mapping.json
-evaluation_metrics.json   # recommended/required for promotion
-README.txt
-```
-
-`model_config.json` includes `model_key`, `version`, `architecture`, `runtime_type=ultralytics_yolo_seg`, `task=segment`, and inference parameters. `class_mapping.json` contains `label_to_name` with zero-based IDs. `evaluation_metrics.json` should include `promotion_ready`, baseline/candidate metrics, holdout identity and gate values.
-
-## Ownership boundaries
-
-| Files | Owner |
-|---|---|
-| `src/mushroom_monitor/inference/`, `model_registry.py`, `learning.py`, `tools/train_candidate.py`, `tools/package_yolo_model.py` | Minh Thinh — model/lifecycle workstream |
-| `tracking.py`, `maturity.py`, `environment.py` | Le Thien Khang — analytics workstream |
-| `app.py`, `db.py`, `config.py`, shared interfaces, migrations, `README.md`, release packaging | Nguyen Hai Nam — integration lead |
-
-Members may submit bug fixes outside their ownership, but must not independently change shared interfaces or database schema.
-
-## Production model-family contract
-
-The production runtime is one Ultralytics YOLO-seg adapter. Model family is metadata, not a different downstream prediction schema.
-
-| `model_key` | `prediction_role` | Required zero-based class order | `track_objects` |
-|---|---|---|---|
-| `charisis_cluster_tracking` | `cluster_stage` | `immature`, `well-defined`, `overstayed` | `true` |
-| `mushr_maturity` | `fruitbody_maturity` | `not-ready`, `ready`, `overdue` | `false` |
-| `m18k_source_wb` | `generic_instance` | `WB` | `false` by default; enable only for explicit integration tests |
-
-The package and training tools validate the required target class order for the two production roles. Do not rename labels or mix classes between model families. The class name and model version on each prediction are retained all the way into the track observation/review history.
-
-`confidence_threshold` is the minimum score for automatic downstream analysis (`final_for_analysis`). `score_floor` is the lower inference threshold. Detections between the two remain stored and reviewable, but are excluded from automatic grouping/tracking until accepted/corrected according to the application's review policy.
-
-## Dataset and model lineage
-
-- Model A is trained with the Charisis oyster cluster time-lapse annotations. Compare M18K-initialized and COCO-initialized runs on the same target split. WB source metrics are not a baseline for oyster class performance.
-- Model B is trained with the annotated MushR oyster fruitbody dataset. Its object unit and labels differ from Model A.
-- M18K source weights, model A, and model B use separate `model_key` entries and independent checkpoints.
-- Each model bundle must retain source species, taxonomy, role, class mapping, training source, inference settings, checkpoint hash, holdout identity and metrics where available.
+`timestamp` is accepted as an alias. The nearest-reading join is descriptive and limited to the configured time window; it does not establish causality.

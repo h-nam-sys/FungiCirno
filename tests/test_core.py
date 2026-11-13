@@ -13,10 +13,12 @@ sys.path.insert(0, str(ROOT / "src"))
 from mushroom_monitor.db import Database, utc_now
 from mushroom_monitor.image_io import store_capture
 from mushroom_monitor.maturity import rebuild_flush_groups
-from mushroom_monitor.model_registry import read_model_package, install_model_bundle
+from mushroom_monitor.model_registry import read_model_package, install_model_bundle, model_capabilities
 from mushroom_monitor.tracking import rebuild_sequence_tracks
 from mushroom_monitor.review import review_prediction
 from mushroom_monitor.learning import export_reviewed_yolo_dataset
+from mushroom_monitor.service import ModelService
+from mushroom_monitor.config import AppPaths
 
 
 class CoreTests(unittest.TestCase):
@@ -66,6 +68,69 @@ class CoreTests(unittest.TestCase):
             review_status="accepted", final_for_analysis=1, metadata_json="{}",
         )
 
+    def test_model_capabilities_separate_cluster_tracking_from_spatial_grouping(self):
+        charisis = model_capabilities(
+            "charisis_cluster_tracking",
+            "TorchVision Mask R-CNN with ConvNeXt-Tiny-FPN",
+            {"track_objects": True, "spatial_grouping": False},
+        )
+        self.assertEqual(charisis, {"track_objects": True, "spatial_grouping": False})
+
+        legacy_charisis = model_capabilities(
+            "legacy_charisis_maskrcnn",
+            "TorchVision Mask R-CNN with ConvNeXt-Tiny-FPN",
+            {},
+        )
+        self.assertEqual(legacy_charisis, {"track_objects": True, "spatial_grouping": False})
+
+        optional_mushr = model_capabilities(
+            "mushr_maturity",
+            "TorchVision Mask R-CNN ResNet-50-FPN",
+            {},
+        )
+        self.assertEqual(optional_mushr, {"track_objects": False, "spatial_grouping": True})
+
+        m18k = model_capabilities(
+            "m18k_source_wb",
+            "Ultralytics YOLOv8-seg",
+            {"track_objects": False, "spatial_grouping": False},
+        )
+        self.assertEqual(m18k, {"track_objects": False, "spatial_grouping": False})
+
+    def test_charisis_torchvision_bundle_is_canonicalized_without_remapping_class_ids(self):
+        bundle = self.root / "charisis_bundle"
+        bundle.mkdir()
+        (bundle / "model_checkpoint.pth").write_bytes(b"test-checkpoint-placeholder")
+        (bundle / "class_mapping.json").write_text(json.dumps({
+            "label_to_name": {
+                "1": "immature_cluster",
+                "2": "mature_cluster",
+                "3": "overstayed_cluster",
+            }
+        }), encoding="utf-8")
+        (bundle / "model_config.json").write_text(json.dumps({
+            "architecture": "TorchVision Mask R-CNN with ConvNeXt-Tiny-FPN",
+            "class_names": {
+                "1": "immature_cluster",
+                "2": "mature_cluster",
+                "3": "overstayed_cluster",
+            },
+            "confidence_threshold": 0.2,
+        }), encoding="utf-8")
+
+        package = read_model_package(bundle)
+        self.assertEqual(package.model_key, "charisis_cluster_tracking")
+        self.assertEqual(package.config["runtime_type"], "torchvision_state_dict")
+        self.assertEqual(package.config["prediction_role"], "cluster_stage")
+        self.assertTrue(package.config["track_objects"])
+        self.assertFalse(package.config["spatial_grouping"])
+        self.assertEqual(package.classes, {
+            1: "immature_cluster",
+            2: "mature_cluster",
+            3: "overstayed_cluster",
+        })
+        self.assertEqual(package.source_species, "Pleurotus ostreatus")
+
     def test_default_database_records(self):
         self.assertEqual(self.db.one("SELECT COUNT(*) n FROM sites")["n"], 1)
         self.assertEqual(self.db.one("SELECT COUNT(*) n FROM grow_units")["n"], 1)
@@ -95,6 +160,67 @@ class CoreTests(unittest.TestCase):
         self.assertEqual(count,1)
         group = self.db.one("SELECT * FROM flush_groups WHERE capture_id=?",(capture_id,))
         self.assertEqual(group["fruitbody_count"],2)
+
+    def test_model_service_tracks_charisis_without_creating_flush_groups(self):
+        from unittest.mock import patch
+
+        capture_id = self.add_capture("service_charisis.jpg", "2026-11-10T08:00:00")
+        paths = AppPaths(
+            root=self.root,
+            data=self.root / "data",
+            captures=self.root / "data" / "captures",
+            masks=self.root / "data" / "masks",
+            exports=self.root / "data" / "exports",
+            models=self.root / "models",
+            model_registry=self.root / "models" / "registry",
+            incoming_models=self.root / "models" / "incoming",
+            database=self.root / "data" / "test.sqlite3",
+        )
+
+        class FakePrediction:
+            detection_index = 0
+            class_id = 1
+            class_name = "immature_cluster"
+            confidence = 0.95
+            bbox = (40.0, 30.0, 100.0, 90.0)
+            mask = np.pad(np.ones((60, 60), dtype=np.uint8), ((30, 150), (40, 220)))
+
+        class FakeEngine:
+            def __init__(self, *args, **kwargs):
+                pass
+
+            def predict_path(self, image_path):
+                image = Image.open(image_path).convert("RGB")
+                return [FakePrediction()], image, {
+                    "device": "CPU",
+                    "backend": "cpu",
+                    "runtime_type": "torchvision_state_dict",
+                    "inference_width": image.width,
+                    "inference_height": image.height,
+                }
+
+        service = ModelService(self.db, paths)
+        with patch("mushroom_monitor.service.InferenceEngine", FakeEngine):
+            result = service.run_capture(
+                capture_id,
+                self.model_id,
+                inference_side=768,
+                device_preference="cpu",
+                final_threshold=0.20,
+                rebuild_derived=True,
+            )
+
+        self.assertEqual(result["detection_count"], 1)
+        self.assertIn("tracking", result["diagnostics"])
+        self.assertNotIn("spatial_groups", result["diagnostics"])
+        self.assertEqual(
+            self.db.one("SELECT COUNT(*) n FROM flush_groups WHERE capture_id=?", (capture_id,))["n"],
+            0,
+        )
+        self.assertEqual(
+            self.db.one("SELECT COUNT(*) n FROM tracks WHERE model_version_id=?", (self.model_id,))["n"],
+            1,
+        )
 
     def test_tracking_connects_two_frames_and_persists_track(self):
         c1 = self.add_capture("frame1.jpg", "2026-11-10T08:00:00")
@@ -217,14 +343,14 @@ class CoreTests(unittest.TestCase):
             "track_objects": True,
             "source_species": "Pleurotus ostreatus",
             "taxonomy": "charisis_oyster_cluster_stage_v1",
-            "names": {"0": "immature", "1": "well-defined", "2": "overstayed"},
+            "names": {"0": "immature_cluster", "1": "mature_cluster", "2": "overstayed_cluster"},
         }))
         (root / "class_mapping.json").write_text(json.dumps({
-            "label_to_name": {"0": "immature", "1": "well-defined", "2": "overstayed"}
+            "label_to_name": {"0": "immature_cluster", "1": "mature_cluster", "2": "overstayed_cluster"}
         }))
         package = read_model_package(root)
         self.assertEqual(package.model_key, "charisis_cluster_tracking")
-        self.assertEqual([package.classes[i] for i in range(3)], ["immature", "well-defined", "overstayed"])
+        self.assertEqual([package.classes[i] for i in range(3)], ["immature_cluster", "mature_cluster", "overstayed_cluster"])
 
         (root / "class_mapping.json").write_text(json.dumps({
             "label_to_name": {"0": "WB", "1": "ready", "2": "overdue"}
@@ -238,6 +364,26 @@ class CoreTests(unittest.TestCase):
         self.db.set_model_status(self.model_id, "active", force=True)
         row = self.db.one("SELECT status FROM model_versions WHERE id=?", (self.model_id,))
         self.assertEqual(row["status"], "active")
+
+    def test_canonical_charisis_activation_deactivates_legacy_alias(self):
+        self.db.execute(
+            """INSERT INTO model_versions(model_key,version,architecture,source_species,taxonomy,
+               classes_json,config_json,bundle_path,checkpoint_path,checkpoint_sha256,status,installed_at,metrics_json)
+               VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+            ("charisis_cluster_tracking","test-v2","TorchVision Mask R-CNN with ConvNeXt-Tiny-FPN",
+             "Pleurotus ostreatus","charisis_oyster_cluster_stage_v1",
+             json.dumps({"1":"immature_cluster","2":"mature_cluster","3":"overstayed_cluster"}),
+             json.dumps({"track_objects":True,"spatial_grouping":False}),
+             str(self.root),str(self.root/"new_weights.pth"),"def","candidate",utc_now(),json.dumps({"promotion_ready":True})),
+        )
+        new_id = self.db.one(
+            "SELECT id FROM model_versions WHERE model_key='charisis_cluster_tracking' AND version='test-v2'"
+        )["id"]
+        self.db.set_model_status(new_id, "active")
+        old = self.db.one("SELECT status FROM model_versions WHERE id=?", (self.model_id,))
+        new = self.db.one("SELECT status FROM model_versions WHERE id=?", (new_id,))
+        self.assertEqual(old["status"], "candidate")
+        self.assertEqual(new["status"], "active")
 
     def test_model_bundle_zip_installs_into_registry(self):
         import zipfile
@@ -254,7 +400,7 @@ class CoreTests(unittest.TestCase):
         record = self.db.one("SELECT * FROM model_versions WHERE id=?",(model_id,))
         self.assertTrue(Path(record["checkpoint_path"]).exists())
         self.assertEqual(record["status"],"candidate")
-        self.assertEqual(record["model_key"],"legacy_charisis_maskrcnn")
+        self.assertEqual(record["model_key"],"charisis_cluster_tracking")
 
     def test_model_bundle_metadata_is_read(self):
         bundle = self.root / "bundle"
@@ -263,7 +409,7 @@ class CoreTests(unittest.TestCase):
         (bundle / "class_mapping.json").write_text(json.dumps({"label_to_name":{"1":"immature_cluster","2":"mature_cluster","3":"overstayed_cluster"}}))
         (bundle / "model_checkpoint.pth").write_bytes(b"checkpoint-stub")
         package = read_model_package(bundle)
-        self.assertEqual(package.model_key,"legacy_charisis_maskrcnn")
+        self.assertEqual(package.model_key,"charisis_cluster_tracking")
         self.assertEqual(len(package.classes),3)
         self.assertTrue(package.checkpoint_sha256)
 

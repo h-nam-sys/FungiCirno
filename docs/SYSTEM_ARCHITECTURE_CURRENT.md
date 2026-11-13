@@ -1,58 +1,46 @@
 # FungiCirno — current MVP architecture
 
-## Runtime
+## Core objective
 
-- Streamlit local dashboard (`app.py`).
-- SQLite persistence (`src/mushroom_monitor/db.py`).
-- Local image and mask storage under `data/`.
-- Model registry with candidate/active/archived versions.
-- Model inference service with a hardware-specific runtime adapter.
-- Human review queue and reviewed-sample export for Colab.
-- Descriptive environment-to-growth time alignment.
+Monitor oyster mushroom cluster development from fixed-camera side-view captures. The core path uses the Charisis-trained cluster-stage model, the application's temporal tracker and image-plane growth measurements.
 
-## Two independent model paths
+## Primary model path — Charisis
 
-### Charisis-inspired cluster path
+`timestamped capture -> TorchVision Mask R-CNN/ConvNeXt-Tiny-FPN -> cluster masks + stage labels -> Hungarian temporal association -> track observations -> area/growth history`
 
-`image -> cluster segmentation -> confidence/review filter -> temporal mask association -> track observations -> area/growth series`
+- Three trained labels: `immature_cluster`, `mature_cluster`, `overstayed_cluster` (TorchVision IDs 1, 2, 3; background is ID 0).
+- New model bundles register as `charisis_cluster_tracking`; older rows under `legacy_charisis_maskrcnn` remain supported.
+- The existing local app has a successful AMD DirectML integration sample: 15 inference runs, 96 candidate predictions, 43 passed the 0.20 analysis threshold, and 22 application tracks / 43 observations.
+- Charisis detections are clusters. Do not spatially regroup them as if they were individual fruitbodies.
 
-- Tracks cluster masks across captures from the same camera and series.
-- Uses mask IoU, predicted centroid, area ratio and Hungarian assignment.
-- Supports short missed-frame gaps.
-- Tracks are isolated by model version.
-- Does not currently implement camera-motion compensation, homography calibration, or learned re-identification.
+## Optional individual maturity path — MushR
 
-### MushR maturity path
+`image -> individual fruitbody masks + maturity labels -> per-image spatial grouping -> flush summary`
 
-`image -> fruitbody segmentation/maturity classes -> confidence/review filter -> within-image spatial grouping -> flush summary`
+- Optional scope extension only when individual harvest readiness is required.
+- Separate taxonomy: `not-ready`, `ready`, `overdue`.
+- Uses per-image spatial grouping; not temporal identity tracking.
+- Do not require this model to demonstrate the core cluster-growth system.
 
-- DBSCAN-equivalent connected components with `min_samples=1` group nearby fruitbody predictions.
-- A flush is a spatial grouping in one image, not a temporal identity.
-- MushR and Charisis class taxonomies must remain separate.
+## Historical model path — M18K
 
-## Model contract status
+- WB-only YOLOv8-seg benchmark/source-domain experiment.
+- Retained for historical results and optional generic segmentation testing.
+- Not an oyster cluster model and not needed to load or initialize the trained Charisis checkpoint.
 
-The current `InferenceEngine` is built around TorchVision Mask R-CNN models reconstructed from `.pth` state dictionaries. The official MushR export being tested separately is Detectron2 TorchScript. A dedicated adapter is required before that artifact can be registered and run through this app. Input preprocessing, output tuple structure and class mapping must be verified from the actual exported artifact.
+## Inference and storage contract
 
-## Storage / data flow
+The runtime is selected by bundle metadata/architecture. Charisis uses the TorchVision Mask R-CNN loader; historical M18K uses the Ultralytics YOLO loader. Both normalize outputs into the same `Prediction` contract consumed by `ModelService`, SQLite, review, tracking and the dashboard.
 
-- Captures are immutable source images identified by SHA-256.
-- Each inference run records device, duration, status, detection count and diagnostics.
-- Prediction masks are stored as image files; database rows retain paths and source-image geometry.
-- Human decisions are stored separately from model confidence.
-- Only accepted/corrected review records are eligible for COCO export.
-- Pixel area is not physical area. mm² requires a camera-specific mm-per-pixel calibration.
+- Source-image mask area is in px².
+- Physical area requires valid camera-specific calibration.
+- Track association scores are heuristics, not probabilities.
+- Track end due to a missed-frame gap does not prove harvest/removal.
 
-## Current deployment discrepancy
+## Training and learning status
 
-The earlier architecture specification says CPU inference must always work. The latest runtime in this repository is AMD DirectML-only and explicitly disables CPU fallback. This document records the code's current behavior; CPU support remains an unimplemented architecture requirement.
-
-## MVP exit criteria
-
-1. Import the official MushR TorchScript port using a dedicated, tested runtime adapter.
-2. Verify official class-ID/name mapping from release metadata.
-3. Run the complete model on the RX 5500 XT at a conservative image size; record latency, memory behavior and failures.
-4. Run Charisis and MushR on real source images and preserve overlays.
-5. Capture at least two or three time points from one fixed camera for temporal tracking demonstration.
-6. Manually review a sample of masks and track associations.
-7. Report software tests separately from model quality and biological claims.
+- Charisis full training notebook completed 10 epochs on a Kaggle T4; held-out mask AP@[.50:.95] 0.650, AP50 0.782 and AP75 0.759.
+- The notebook generated 9,483 accepted test detections and 213 tracks using its own tracker implementation; no ground-truth tracking metric is available.
+- FungiCirno uses its own Hungarian tracker. The notebook tracker and app tracker are separate implementations.
+- Generic COCO reviewed-sample export exists. Direct reviewed-data fine-tuning in the Charisis notebook is not yet automated.
+- The project archive excludes the trained `.pth` bytes. Download the notebook's `model_bundle.zip` separately for a clean installation.

@@ -13,6 +13,7 @@ from PIL import Image
 from .config import AppPaths, DEFAULT_INFERENCE_SIDE, DEFAULT_SCORE_THRESHOLD
 from .db import Database, json_dumps, utc_now
 from .inference.runtime import InferenceEngine
+from .model_registry import model_capabilities
 from .maturity import rebuild_flush_groups
 from .tracking import rebuild_sequence_tracks
 
@@ -97,10 +98,12 @@ class ModelService:
                 created += 1
             model_key = str(model_row["model_key"])
             downstream: dict[str, Any] = {}
-            if rebuild_derived:
-                downstream["spatial_groups"] = rebuild_flush_groups(self.db, capture_id, model_version_id=int(model_id))
-            track_objects = bool(config.get("track_objects", model_key == "charisis_cluster_tracking"))
-            if rebuild_derived and track_objects:
+            capabilities = model_capabilities(model_key, str(model_row["architecture"]), config)
+            if rebuild_derived and capabilities["spatial_grouping"]:
+                downstream["spatial_groups"] = rebuild_flush_groups(
+                    self.db, capture_id, model_version_id=int(model_id)
+                )
+            if rebuild_derived and capabilities["track_objects"]:
                 downstream["tracking"] = rebuild_sequence_tracks(
                     self.db, int(capture["unit_id"]), int(capture["camera_id"]),
                     str(capture["series_key"]), int(model_id),

@@ -1,24 +1,44 @@
-FungiCirno — completed application architecture + verification handoff
-Release: 2026-11-12
+FungiCirno — Charisis-first implementation and verification handoff
+Release update: 2026-11-13
+
+Primary architecture:
+- Primary model: Charisis-trained TorchVision Mask R-CNN + ConvNeXt-Tiny-FPN.
+- Task: side-view *Pleurotus ostreatus* whole-cluster instance segmentation and three-stage classification.
+- Preserve foreground class IDs: 1=immature_cluster, 2=mature_cluster, 3=overstayed_cluster; ID 0 is background.
+- FungiCirno's application tracker assigns persistent cluster IDs and produces stage/growth histories.
+- Shared normalized Prediction contract supports backend-specific loaders.
+- Optional MushR individual-fruitbody maturity model is deferred unless the lead requires per-mushroom harvest readiness.
+- M18K is a historical White Button YOLO segmentation benchmark, not a production oyster model or Charisis initialization.
 
 Included:
-- Modular Streamlit application and SQLite persistence.
-- Shared Ultralytics YOLOv8-seg runtime and normalized Prediction pipeline.
-- Legacy TorchVision bundle compatibility for old experiments only.
-- Separate model-family contracts for oyster cluster stages and individual fruitbody maturity.
-- Capture ingestion, hash deduplication, prediction/mask persistence.
-- Model registry, version activation, promotion gates and rollback path.
-- Hungarian mask/centroid/area temporal tracking with missed-capture tolerance.
-- Per-capture stage history and growth measurements.
-- Spatial grouping and area-weighted ready-class summaries.
-- Environmental CSV import and time alignment.
-- Human review, mask correction, reviewed dataset export.
-- COCO-to-YOLO-seg dataset conversion, candidate training and model packaging tools.
-- Final architecture, integration contract, acceptance checklist and focused member/AI handoffs.
+- Local Streamlit application and SQLite persistence.
+- TorchVision Charisis model builder and strict state-dictionary loading.
+- Legacy Charisis model-key alias support and canonical `charisis_cluster_tracking` bundle import.
+- Explicit model capability routing: Charisis tracks clusters and does not enter individual-fruitbody spatial grouping.
+- Capture ingestion, timestamping and hash deduplication.
+- Model registry, versioning, candidate activation and rollback controls.
+- Application Hungarian mask/centroid/area temporal tracking.
+- Stage history and visible 2D mask-area growth measurements.
+- Environmental CSV import/time alignment.
+- Human review and reviewed COCO-mask export.
+- Charisis executed training notebook, held-out metrics and application evidence docs.
+- Historical M18K/YOLO notebook and optional YOLO runtime support.
+
+Evidence:
+- Charisis full training: 10 epochs on Kaggle Tesla T4; 433 train, 109 validation, 1,055 held-out test images.
+- Held-out sequences 1/3; training/validation sequences 2/4.
+- Mask AP@[.50:.95]=0.650, AP50=0.782, AP75=0.759.
+- Notebook: 9,483 detections and 213 predicted tracks (not ground-truth tracking accuracy).
+- Supplied SQLite snapshot: 15 successful Charisis AMD DirectML app runs, 96 candidate detections, 43 analysis-eligible detections, 22 application tracks and 43 observations. Small-sample integration evidence, not a benchmark.
 
 Intentionally not included:
-- M18K checkpoint weights, Charisis/MushR model weights or other trained weights.
-- Raw datasets, local captures/masks, SQLite database or private machine data.
+- Charisis binary `model_checkpoint.pth` / Kaggle `model_bundle.zip`.
+- Raw Charisis/MushR/M18K datasets.
+- Private camera captures and raw masks beyond application snapshot content.
+- Credentials.
+
+Clean-install requirement:
+The SQLite snapshot has a legacy model row whose checkpoint path points to the original Windows checkout. The binary weights are omitted from this archive. Download the Charisis bundle from Kaggle and import it through **Models** in a clean checkout. Do not rely on the stale absolute checkpoint path.
 
 Validation boundary:
-The application implementation and integration workflow are included. Trained oyster target checkpoints, target-domain evaluation, full-model CPU/AMD execution evidence, tracking ID evaluation, camera calibration validation and a complete review/fine-tune/rollback execution are not included and must not be claimed until run. Members are assigned to verify these external-data and target-hardware dependencies and submit bounded fixes only.
+The project now has successful prior app ingestion evidence, but still needs clean-install bundle import, CPU inference with the actual checkpoint, repeatable target-PC AMD acceptance, manually verified tracking identities, manual growth-error comparison and camera calibration. Do not claim IDF1/HOTA/MOTA without ground-truth IDs or physical size without calibration.
