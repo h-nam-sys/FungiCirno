@@ -1,0 +1,17 @@
+{
+  "algorithm": "from-scratch rectangular Hungarian shortest-augmenting-path solver",
+  "reference": "scipy.optimize.linear_sum_assignment",
+  "seed": 42,
+  "matrices_tested": 508,
+  "categories": {
+    "random_rectangular": 500,
+    "integer_ties": 5,
+    "empty_dimensions": 3
+  },
+  "maximum_absolute_total_cost_difference": 0.0,
+  "empty_dimensions": "PASS",
+  "rectangular_assignments": "PASS",
+  "tie_cases": "objective values compared; pair ordering may differ",
+  "maximum_cardinality_iou_case": "PASS",
+  "result": "PASS"
+}

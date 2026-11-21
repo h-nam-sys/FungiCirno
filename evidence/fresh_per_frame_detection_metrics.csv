@@ -1,0 +1,1923 @@
+MODEL,SPLIT,SEQUENCE_ID,FRAME_ID,FRAME_KEY,TP,FP,FN
+YOLO26-L-seg,val,2,470,seq2_frame00470,7,0,0
+YOLO26-L-seg,val,2,471,seq2_frame00471,7,0,0
+YOLO26-L-seg,val,2,472,seq2_frame00472,7,0,0
+YOLO26-L-seg,val,2,473,seq2_frame00473,7,0,0
+YOLO26-L-seg,val,2,474,seq2_frame00474,7,0,0
+YOLO26-L-seg,val,2,475,seq2_frame00475,7,0,0
+YOLO26-L-seg,val,2,476,seq2_frame00476,7,0,0
+YOLO26-L-seg,val,2,477,seq2_frame00477,7,0,0
+YOLO26-L-seg,val,2,478,seq2_frame00478,7,0,0
+YOLO26-L-seg,val,2,479,seq2_frame00479,7,0,0
+YOLO26-L-seg,val,2,480,seq2_frame00480,7,0,0
+YOLO26-L-seg,val,2,481,seq2_frame00481,7,0,0
+YOLO26-L-seg,val,2,482,seq2_frame00482,7,0,0
+YOLO26-L-seg,val,2,483,seq2_frame00483,7,0,0
+YOLO26-L-seg,val,2,484,seq2_frame00484,7,0,0
+YOLO26-L-seg,val,2,485,seq2_frame00485,7,0,0
+YOLO26-L-seg,val,2,486,seq2_frame00486,7,0,0
+YOLO26-L-seg,val,2,487,seq2_frame00487,6,1,0
+YOLO26-L-seg,val,2,488,seq2_frame00488,7,0,0
+YOLO26-L-seg,val,2,489,seq2_frame00489,7,0,0
+YOLO26-L-seg,val,2,490,seq2_frame00490,7,0,0
+YOLO26-L-seg,val,2,491,seq2_frame00491,7,0,0
+YOLO26-L-seg,val,2,492,seq2_frame00492,7,0,0
+YOLO26-L-seg,val,2,493,seq2_frame00493,7,0,0
+YOLO26-L-seg,val,2,494,seq2_frame00494,7,0,0
+YOLO26-L-seg,val,2,495,seq2_frame00495,7,0,0
+YOLO26-L-seg,val,2,496,seq2_frame00496,7,0,0
+YOLO26-L-seg,val,2,497,seq2_frame00497,7,0,0
+YOLO26-L-seg,val,2,498,seq2_frame00498,7,0,0
+YOLO26-L-seg,val,2,499,seq2_frame00499,7,0,0
+YOLO26-L-seg,val,2,500,seq2_frame00500,7,0,0
+YOLO26-L-seg,val,2,501,seq2_frame00501,7,0,0
+YOLO26-L-seg,val,2,502,seq2_frame00502,7,0,0
+YOLO26-L-seg,val,2,503,seq2_frame00503,7,0,0
+YOLO26-L-seg,val,2,504,seq2_frame00504,7,0,0
+YOLO26-L-seg,val,2,505,seq2_frame00505,7,0,0
+YOLO26-L-seg,val,2,506,seq2_frame00506,7,0,0
+YOLO26-L-seg,val,2,507,seq2_frame00507,7,0,0
+YOLO26-L-seg,val,2,508,seq2_frame00508,7,0,0
+YOLO26-L-seg,val,2,509,seq2_frame00509,7,0,0
+YOLO26-L-seg,val,2,510,seq2_frame00510,7,0,0
+YOLO26-L-seg,val,2,511,seq2_frame00511,7,0,0
+YOLO26-L-seg,val,2,512,seq2_frame00512,7,0,0
+YOLO26-L-seg,val,2,513,seq2_frame00513,7,0,0
+YOLO26-L-seg,val,2,514,seq2_frame00514,6,1,0
+YOLO26-L-seg,val,2,515,seq2_frame00515,7,0,0
+YOLO26-L-seg,val,2,516,seq2_frame00516,7,0,0
+YOLO26-L-seg,val,2,517,seq2_frame00517,7,0,0
+YOLO26-L-seg,val,2,518,seq2_frame00518,7,0,0
+YOLO26-L-seg,val,2,519,seq2_frame00519,7,0,0
+YOLO26-L-seg,val,2,520,seq2_frame00520,7,0,0
+YOLO26-L-seg,val,2,521,seq2_frame00521,7,0,0
+YOLO26-L-seg,val,2,522,seq2_frame00522,7,0,0
+YOLO26-L-seg,val,2,523,seq2_frame00523,7,0,0
+YOLO26-L-seg,val,2,524,seq2_frame00524,7,0,0
+YOLO26-L-seg,val,2,525,seq2_frame00525,7,0,0
+YOLO26-L-seg,val,2,526,seq2_frame00526,7,0,0
+YOLO26-L-seg,val,2,527,seq2_frame00527,7,0,0
+YOLO26-L-seg,val,2,528,seq2_frame00528,7,0,0
+YOLO26-L-seg,val,2,529,seq2_frame00529,7,0,0
+YOLO26-L-seg,val,2,530,seq2_frame00530,7,0,0
+YOLO26-L-seg,val,2,531,seq2_frame00531,7,0,0
+YOLO26-L-seg,val,2,532,seq2_frame00532,7,0,0
+YOLO26-L-seg,val,2,533,seq2_frame00533,7,0,0
+YOLO26-L-seg,val,2,534,seq2_frame00534,7,0,0
+YOLO26-L-seg,val,2,535,seq2_frame00535,7,0,0
+YOLO26-L-seg,val,2,536,seq2_frame00536,7,0,0
+YOLO26-L-seg,val,2,537,seq2_frame00537,7,0,0
+YOLO26-L-seg,val,2,538,seq2_frame00538,7,0,0
+YOLO26-L-seg,val,2,539,seq2_frame00539,7,0,0
+YOLO26-L-seg,val,2,540,seq2_frame00540,7,0,0
+YOLO26-L-seg,val,2,541,seq2_frame00541,7,0,0
+YOLO26-L-seg,val,2,542,seq2_frame00542,7,0,0
+YOLO26-L-seg,val,2,543,seq2_frame00543,7,0,0
+YOLO26-L-seg,val,2,544,seq2_frame00544,7,0,0
+YOLO26-L-seg,val,2,545,seq2_frame00545,7,0,0
+YOLO26-L-seg,val,2,546,seq2_frame00546,7,0,0
+YOLO26-L-seg,val,2,547,seq2_frame00547,7,0,0
+YOLO26-L-seg,val,2,548,seq2_frame00548,7,0,0
+YOLO26-L-seg,val,2,549,seq2_frame00549,7,0,0
+YOLO26-L-seg,val,2,550,seq2_frame00550,7,0,0
+YOLO26-L-seg,val,2,551,seq2_frame00551,7,0,0
+YOLO26-L-seg,val,2,552,seq2_frame00552,7,0,0
+YOLO26-L-seg,val,2,553,seq2_frame00553,6,1,0
+YOLO26-L-seg,val,2,554,seq2_frame00554,7,0,0
+YOLO26-L-seg,val,2,555,seq2_frame00555,7,0,0
+YOLO26-L-seg,val,2,556,seq2_frame00556,7,0,0
+YOLO26-L-seg,val,2,557,seq2_frame00557,7,0,0
+YOLO26-L-seg,val,2,558,seq2_frame00558,7,0,0
+YOLO26-L-seg,val,2,559,seq2_frame00559,7,0,0
+YOLO26-L-seg,val,2,560,seq2_frame00560,7,0,0
+YOLO26-L-seg,val,2,561,seq2_frame00561,7,0,0
+YOLO26-L-seg,val,2,562,seq2_frame00562,7,0,0
+YOLO26-L-seg,val,2,563,seq2_frame00563,7,0,0
+YOLO26-L-seg,val,2,564,seq2_frame00564,7,0,0
+YOLO26-L-seg,val,2,565,seq2_frame00565,7,0,0
+YOLO26-L-seg,val,2,566,seq2_frame00566,7,0,0
+YOLO26-L-seg,val,2,567,seq2_frame00567,7,0,0
+YOLO26-L-seg,val,2,568,seq2_frame00568,7,0,0
+YOLO26-L-seg,val,2,569,seq2_frame00569,7,0,0
+YOLO26-L-seg,val,2,570,seq2_frame00570,7,0,0
+YOLO26-L-seg,val,2,571,seq2_frame00571,7,0,0
+YOLO26-L-seg,val,2,572,seq2_frame00572,7,0,0
+YOLO26-L-seg,val,2,573,seq2_frame00573,7,0,0
+YOLO26-L-seg,val,2,574,seq2_frame00574,7,0,0
+YOLO26-L-seg,val,2,575,seq2_frame00575,7,0,0
+YOLO26-L-seg,val,2,576,seq2_frame00576,7,0,0
+YOLO26-L-seg,val,2,577,seq2_frame00577,7,0,0
+YOLO26-L-seg,val,2,578,seq2_frame00578,7,0,0
+YOLO26-L-seg,val,2,579,seq2_frame00579,6,1,0
+YOLO26-L-seg,val,2,580,seq2_frame00580,7,0,0
+YOLO26-L-seg,val,2,581,seq2_frame00581,7,0,0
+YOLO26-L-seg,val,2,582,seq2_frame00582,7,0,0
+YOLO26-L-seg,val,2,583,seq2_frame00583,7,0,0
+YOLO26-L-seg,val,2,584,seq2_frame00584,7,0,0
+YOLO26-L-seg,val,2,585,seq2_frame00585,7,0,0
+YOLO26-L-seg,val,2,586,seq2_frame00586,7,0,0
+YOLO26-L-seg,val,2,587,seq2_frame00587,7,0,0
+YOLO26-L-seg,val,2,588,seq2_frame00588,7,0,0
+YOLO26-L-seg,val,2,589,seq2_frame00589,7,0,0
+YOLO26-L-seg,val,2,590,seq2_frame00590,7,0,0
+YOLO26-L-seg,val,2,591,seq2_frame00591,7,0,0
+YOLO26-L-seg,val,2,592,seq2_frame00592,7,0,0
+YOLO26-L-seg,val,2,593,seq2_frame00593,7,0,0
+YOLO26-L-seg,val,2,594,seq2_frame00594,7,0,0
+YOLO26-L-seg,val,2,595,seq2_frame00595,7,0,0
+YOLO26-L-seg,val,2,596,seq2_frame00596,7,0,0
+YOLO26-L-seg,val,2,597,seq2_frame00597,7,0,0
+YOLO26-L-seg,val,2,598,seq2_frame00598,7,0,0
+YOLO26-L-seg,val,2,599,seq2_frame00599,7,0,0
+YOLO26-L-seg,val,2,600,seq2_frame00600,7,0,0
+YOLO26-L-seg,val,2,601,seq2_frame00601,7,0,0
+YOLO26-L-seg,val,2,602,seq2_frame00602,6,1,0
+YOLO26-L-seg,val,2,603,seq2_frame00603,7,0,0
+YOLO26-L-seg,val,2,604,seq2_frame00604,7,0,0
+YOLO26-L-seg,val,2,605,seq2_frame00605,7,0,0
+YOLO26-L-seg,val,2,606,seq2_frame00606,7,0,0
+YOLO26-L-seg,val,2,607,seq2_frame00607,7,0,0
+YOLO26-L-seg,val,2,608,seq2_frame00608,7,0,0
+YOLO26-L-seg,val,2,609,seq2_frame00609,7,0,0
+YOLO26-L-seg,val,2,610,seq2_frame00610,7,0,0
+YOLO26-L-seg,val,2,611,seq2_frame00611,7,0,0
+YOLO26-L-seg,val,2,612,seq2_frame00612,7,0,0
+YOLO26-L-seg,val,2,613,seq2_frame00613,7,0,0
+YOLO26-L-seg,val,2,614,seq2_frame00614,7,0,0
+YOLO26-L-seg,val,2,615,seq2_frame00615,7,0,0
+YOLO26-L-seg,val,2,616,seq2_frame00616,7,0,0
+YOLO26-L-seg,val,2,617,seq2_frame00617,7,0,0
+YOLO26-L-seg,val,2,618,seq2_frame00618,7,0,0
+YOLO26-L-seg,val,2,619,seq2_frame00619,7,0,0
+YOLO26-L-seg,val,2,620,seq2_frame00620,7,0,0
+YOLO26-L-seg,val,2,621,seq2_frame00621,7,0,0
+YOLO26-L-seg,val,2,622,seq2_frame00622,7,0,0
+YOLO26-L-seg,val,2,623,seq2_frame00623,7,0,0
+YOLO26-L-seg,val,2,624,seq2_frame00624,7,0,0
+YOLO26-L-seg,val,2,625,seq2_frame00625,7,0,0
+YOLO26-L-seg,val,2,626,seq2_frame00626,7,0,0
+YOLO26-L-seg,val,2,627,seq2_frame00627,7,0,0
+YOLO26-L-seg,val,2,628,seq2_frame00628,7,0,0
+YOLO26-L-seg,val,2,629,seq2_frame00629,7,0,0
+YOLO26-L-seg,val,2,630,seq2_frame00630,7,0,0
+YOLO26-L-seg,val,2,631,seq2_frame00631,7,0,0
+YOLO26-L-seg,val,2,632,seq2_frame00632,7,0,0
+YOLO26-L-seg,val,2,633,seq2_frame00633,7,0,0
+YOLO26-L-seg,val,2,634,seq2_frame00634,7,0,0
+YOLO26-L-seg,val,2,635,seq2_frame00635,7,0,0
+YOLO26-L-seg,val,2,636,seq2_frame00636,7,0,0
+YOLO26-L-seg,val,2,637,seq2_frame00637,7,0,0
+YOLO26-L-seg,val,2,638,seq2_frame00638,7,0,0
+YOLO26-L-seg,val,2,639,seq2_frame00639,7,0,0
+YOLO26-L-seg,val,2,640,seq2_frame00640,7,0,0
+YOLO26-L-seg,val,2,641,seq2_frame00641,7,0,0
+YOLO26-L-seg,val,2,642,seq2_frame00642,7,0,0
+YOLO26-L-seg,val,2,643,seq2_frame00643,7,0,0
+YOLO26-L-seg,val,2,644,seq2_frame00644,7,0,0
+YOLO26-L-seg,val,2,645,seq2_frame00645,7,0,0
+YOLO26-L-seg,val,2,646,seq2_frame00646,7,0,0
+YOLO26-L-seg,val,2,647,seq2_frame00647,7,0,0
+YOLO26-L-seg,val,2,648,seq2_frame00648,7,0,0
+YOLO26-L-seg,val,2,649,seq2_frame00649,7,0,0
+YOLO26-L-seg,val,2,650,seq2_frame00650,7,0,0
+YOLO26-L-seg,val,2,651,seq2_frame00651,7,0,0
+YOLO26-L-seg,val,2,652,seq2_frame00652,7,0,0
+YOLO26-L-seg,val,2,653,seq2_frame00653,6,1,0
+YOLO26-L-seg,val,2,654,seq2_frame00654,7,0,0
+YOLO26-L-seg,val,2,655,seq2_frame00655,7,0,0
+YOLO26-L-seg,val,2,656,seq2_frame00656,7,0,0
+YOLO26-L-seg,val,2,657,seq2_frame00657,7,0,0
+YOLO26-L-seg,val,2,658,seq2_frame00658,7,0,0
+YOLO26-L-seg,val,2,659,seq2_frame00659,7,0,0
+YOLO26-L-seg,val,2,660,seq2_frame00660,7,0,0
+YOLO26-L-seg,val,2,661,seq2_frame00661,7,0,0
+YOLO26-L-seg,val,2,662,seq2_frame00662,7,0,0
+YOLO26-L-seg,val,2,663,seq2_frame00663,7,0,0
+YOLO26-L-seg,val,2,664,seq2_frame00664,7,0,0
+YOLO26-L-seg,val,2,665,seq2_frame00665,7,0,0
+YOLO26-L-seg,val,2,666,seq2_frame00666,7,0,0
+YOLO26-L-seg,val,2,667,seq2_frame00667,7,0,0
+YOLO26-L-seg,val,2,668,seq2_frame00668,7,0,0
+YOLO26-L-seg,val,2,669,seq2_frame00669,7,0,0
+YOLO26-L-seg,val,2,670,seq2_frame00670,7,0,0
+YOLO26-L-seg,val,2,671,seq2_frame00671,7,0,0
+YOLO26-L-seg,val,2,672,seq2_frame00672,7,0,0
+YOLO26-L-seg,val,2,673,seq2_frame00673,7,0,0
+YOLO26-L-seg,val,2,674,seq2_frame00674,7,0,0
+YOLO26-L-seg,val,2,675,seq2_frame00675,7,0,0
+YOLO26-L-seg,val,2,676,seq2_frame00676,7,0,0
+YOLO26-L-seg,val,2,677,seq2_frame00677,7,0,0
+YOLO26-L-seg,val,2,678,seq2_frame00678,7,0,0
+YOLO26-L-seg,val,2,679,seq2_frame00679,7,0,0
+YOLO26-L-seg,val,2,680,seq2_frame00680,7,0,0
+YOLO26-L-seg,val,2,681,seq2_frame00681,7,0,0
+YOLO26-L-seg,val,2,682,seq2_frame00682,7,0,0
+YOLO26-L-seg,val,2,683,seq2_frame00683,7,0,0
+YOLO26-L-seg,val,2,684,seq2_frame00684,7,0,0
+YOLO26-L-seg,val,2,685,seq2_frame00685,7,0,0
+YOLO26-L-seg,val,2,686,seq2_frame00686,7,0,0
+YOLO26-L-seg,val,2,687,seq2_frame00687,7,0,0
+YOLO26-L-seg,val,2,688,seq2_frame00688,7,0,0
+YOLO26-L-seg,val,2,689,seq2_frame00689,7,0,0
+YOLO26-L-seg,val,2,690,seq2_frame00690,7,0,0
+YOLO26-L-seg,val,2,691,seq2_frame00691,7,0,0
+YOLO26-L-seg,val,2,692,seq2_frame00692,7,0,0
+YOLO26-L-seg,val,2,693,seq2_frame00693,7,0,0
+YOLO26-L-seg,val,2,694,seq2_frame00694,7,0,0
+YOLO26-L-seg,val,2,695,seq2_frame00695,7,0,0
+YOLO26-L-seg,val,2,696,seq2_frame00696,7,0,0
+YOLO26-L-seg,val,2,697,seq2_frame00697,6,1,0
+YOLO26-L-seg,val,2,698,seq2_frame00698,7,0,0
+YOLO26-L-seg,val,2,699,seq2_frame00699,7,0,0
+YOLO26-L-seg,val,2,700,seq2_frame00700,7,0,0
+YOLO26-L-seg,val,2,701,seq2_frame00701,7,0,0
+YOLO26-L-seg,val,2,702,seq2_frame00702,7,0,0
+YOLO26-L-seg,val,2,703,seq2_frame00703,7,0,0
+YOLO26-L-seg,val,2,704,seq2_frame00704,7,0,0
+YOLO26-L-seg,val,4,396,seq4_frame00396,9,0,0
+YOLO26-L-seg,val,4,397,seq4_frame00397,9,0,0
+YOLO26-L-seg,val,4,398,seq4_frame00398,9,0,0
+YOLO26-L-seg,val,4,399,seq4_frame00399,9,0,0
+YOLO26-L-seg,val,4,400,seq4_frame00400,9,0,0
+YOLO26-L-seg,val,4,401,seq4_frame00401,9,0,0
+YOLO26-L-seg,val,4,402,seq4_frame00402,9,0,0
+YOLO26-L-seg,val,4,403,seq4_frame00403,9,0,0
+YOLO26-L-seg,val,4,404,seq4_frame00404,9,0,0
+YOLO26-L-seg,val,4,405,seq4_frame00405,9,0,0
+YOLO26-L-seg,val,4,406,seq4_frame00406,9,0,0
+YOLO26-L-seg,val,4,407,seq4_frame00407,9,0,0
+YOLO26-L-seg,val,4,408,seq4_frame00408,9,0,1
+YOLO26-L-seg,val,4,409,seq4_frame00409,9,0,0
+YOLO26-L-seg,val,4,410,seq4_frame00410,9,0,0
+YOLO26-L-seg,val,4,411,seq4_frame00411,9,0,0
+YOLO26-L-seg,val,4,412,seq4_frame00412,9,0,0
+YOLO26-L-seg,val,4,413,seq4_frame00413,9,0,0
+YOLO26-L-seg,val,4,414,seq4_frame00414,9,0,0
+YOLO26-L-seg,val,4,415,seq4_frame00415,9,0,0
+YOLO26-L-seg,val,4,416,seq4_frame00416,9,0,0
+YOLO26-L-seg,val,4,417,seq4_frame00417,9,0,0
+YOLO26-L-seg,val,4,418,seq4_frame00418,9,0,0
+YOLO26-L-seg,val,4,419,seq4_frame00419,9,0,0
+YOLO26-L-seg,val,4,420,seq4_frame00420,9,0,0
+YOLO26-L-seg,val,4,421,seq4_frame00421,9,0,0
+YOLO26-L-seg,val,4,422,seq4_frame00422,9,0,0
+YOLO26-L-seg,val,4,423,seq4_frame00423,9,0,0
+YOLO26-L-seg,val,4,424,seq4_frame00424,9,0,0
+YOLO26-L-seg,val,4,425,seq4_frame00425,9,0,0
+YOLO26-L-seg,val,4,426,seq4_frame00426,9,0,0
+YOLO26-L-seg,val,4,427,seq4_frame00427,9,0,0
+YOLO26-L-seg,val,4,428,seq4_frame00428,9,0,0
+YOLO26-L-seg,val,4,429,seq4_frame00429,9,0,0
+YOLO26-L-seg,val,4,430,seq4_frame00430,9,0,0
+YOLO26-L-seg,val,4,431,seq4_frame00431,9,0,0
+YOLO26-L-seg,val,4,432,seq4_frame00432,9,0,0
+YOLO26-L-seg,val,4,433,seq4_frame00433,9,0,0
+YOLO26-L-seg,val,4,434,seq4_frame00434,9,0,0
+YOLO26-L-seg,val,4,435,seq4_frame00435,9,0,0
+YOLO26-L-seg,val,4,436,seq4_frame00436,9,0,0
+YOLO26-L-seg,val,4,437,seq4_frame00437,9,0,0
+YOLO26-L-seg,val,4,438,seq4_frame00438,9,0,0
+YOLO26-L-seg,val,4,439,seq4_frame00439,9,0,0
+YOLO26-L-seg,val,4,440,seq4_frame00440,9,0,0
+YOLO26-L-seg,val,4,441,seq4_frame00441,9,0,0
+YOLO26-L-seg,val,4,442,seq4_frame00442,9,0,0
+YOLO26-L-seg,val,4,443,seq4_frame00443,9,0,0
+YOLO26-L-seg,val,4,444,seq4_frame00444,9,0,0
+YOLO26-L-seg,val,4,445,seq4_frame00445,9,0,0
+YOLO26-L-seg,val,4,446,seq4_frame00446,9,0,0
+YOLO26-L-seg,val,4,447,seq4_frame00447,9,0,0
+YOLO26-L-seg,val,4,448,seq4_frame00448,9,0,0
+YOLO26-L-seg,val,4,449,seq4_frame00449,9,0,0
+YOLO26-L-seg,val,4,450,seq4_frame00450,9,0,0
+YOLO26-L-seg,val,4,451,seq4_frame00451,9,0,0
+YOLO26-L-seg,val,4,452,seq4_frame00452,9,0,0
+YOLO26-L-seg,val,4,453,seq4_frame00453,9,0,0
+YOLO26-L-seg,val,4,454,seq4_frame00454,9,0,0
+YOLO26-L-seg,val,4,455,seq4_frame00455,9,0,0
+YOLO26-L-seg,val,4,456,seq4_frame00456,9,0,0
+YOLO26-L-seg,val,4,457,seq4_frame00457,9,0,0
+YOLO26-L-seg,val,4,458,seq4_frame00458,9,0,0
+YOLO26-L-seg,val,4,459,seq4_frame00459,9,0,0
+YOLO26-L-seg,val,4,460,seq4_frame00460,9,0,0
+YOLO26-L-seg,val,4,461,seq4_frame00461,9,0,0
+YOLO26-L-seg,val,4,462,seq4_frame00462,9,0,0
+YOLO26-L-seg,val,4,463,seq4_frame00463,9,0,0
+YOLO26-L-seg,val,4,464,seq4_frame00464,9,0,0
+YOLO26-L-seg,val,4,465,seq4_frame00465,9,0,0
+YOLO26-L-seg,val,4,466,seq4_frame00466,9,0,0
+YOLO26-L-seg,val,4,467,seq4_frame00467,9,0,0
+YOLO26-L-seg,val,4,468,seq4_frame00468,9,0,0
+YOLO26-L-seg,val,4,469,seq4_frame00469,9,0,0
+YOLO26-L-seg,val,4,470,seq4_frame00470,9,0,0
+YOLO26-L-seg,val,4,471,seq4_frame00471,9,0,0
+YOLO26-L-seg,val,4,472,seq4_frame00472,9,0,0
+YOLO26-L-seg,val,4,473,seq4_frame00473,9,0,0
+YOLO26-L-seg,val,4,474,seq4_frame00474,9,0,0
+YOLO26-L-seg,val,4,475,seq4_frame00475,9,0,0
+YOLO26-L-seg,val,4,476,seq4_frame00476,9,0,0
+YOLO26-L-seg,val,4,477,seq4_frame00477,9,0,0
+YOLO26-L-seg,val,4,478,seq4_frame00478,9,0,0
+YOLO26-L-seg,val,4,479,seq4_frame00479,9,0,0
+YOLO26-L-seg,val,4,480,seq4_frame00480,9,0,0
+YOLO26-L-seg,val,4,481,seq4_frame00481,9,0,0
+YOLO26-L-seg,val,4,482,seq4_frame00482,9,0,0
+YOLO26-L-seg,val,4,483,seq4_frame00483,9,0,0
+YOLO26-L-seg,val,4,484,seq4_frame00484,9,0,0
+YOLO26-L-seg,val,4,485,seq4_frame00485,9,0,0
+YOLO26-L-seg,val,4,486,seq4_frame00486,9,0,0
+YOLO26-L-seg,val,4,487,seq4_frame00487,9,0,0
+YOLO26-L-seg,val,4,488,seq4_frame00488,9,0,0
+YOLO26-L-seg,val,4,489,seq4_frame00489,9,0,0
+YOLO26-L-seg,val,4,490,seq4_frame00490,9,0,0
+YOLO26-L-seg,val,4,491,seq4_frame00491,9,0,0
+YOLO26-L-seg,val,4,492,seq4_frame00492,9,0,0
+YOLO26-L-seg,val,4,493,seq4_frame00493,9,0,0
+YOLO26-L-seg,val,4,494,seq4_frame00494,9,0,0
+YOLO26-L-seg,val,4,495,seq4_frame00495,9,0,0
+YOLO26-L-seg,val,4,496,seq4_frame00496,9,0,0
+YOLO26-L-seg,val,4,497,seq4_frame00497,9,0,0
+YOLO26-L-seg,val,4,498,seq4_frame00498,9,0,0
+YOLO26-L-seg,val,4,499,seq4_frame00499,9,0,0
+YOLO26-L-seg,val,4,500,seq4_frame00500,9,0,0
+YOLO26-L-seg,val,4,501,seq4_frame00501,9,0,0
+YOLO26-L-seg,val,4,502,seq4_frame00502,9,0,0
+YOLO26-L-seg,val,4,503,seq4_frame00503,9,0,0
+YOLO26-L-seg,val,4,504,seq4_frame00504,9,0,0
+YOLO26-L-seg,val,4,505,seq4_frame00505,9,0,0
+YOLO26-L-seg,val,4,506,seq4_frame00506,9,0,0
+YOLO26-L-seg,val,4,507,seq4_frame00507,9,0,0
+YOLO26-L-seg,val,4,508,seq4_frame00508,9,0,0
+YOLO26-L-seg,val,4,509,seq4_frame00509,9,0,0
+YOLO26-L-seg,val,4,510,seq4_frame00510,9,0,0
+YOLO26-L-seg,val,4,511,seq4_frame00511,9,0,0
+YOLO26-L-seg,val,4,512,seq4_frame00512,9,0,0
+YOLO26-L-seg,val,4,513,seq4_frame00513,9,0,0
+YOLO26-L-seg,val,4,514,seq4_frame00514,9,0,0
+YOLO26-L-seg,val,4,515,seq4_frame00515,9,0,0
+YOLO26-L-seg,val,4,516,seq4_frame00516,9,0,0
+YOLO26-L-seg,val,4,517,seq4_frame00517,9,0,0
+YOLO26-L-seg,val,4,518,seq4_frame00518,9,0,0
+YOLO26-L-seg,val,4,519,seq4_frame00519,9,0,0
+YOLO26-L-seg,val,4,520,seq4_frame00520,9,0,0
+YOLO26-L-seg,val,4,521,seq4_frame00521,9,0,0
+YOLO26-L-seg,val,4,522,seq4_frame00522,9,0,0
+YOLO26-L-seg,val,4,523,seq4_frame00523,9,0,0
+YOLO26-L-seg,val,4,524,seq4_frame00524,9,0,0
+YOLO26-L-seg,val,4,525,seq4_frame00525,9,0,0
+YOLO26-L-seg,val,4,526,seq4_frame00526,9,0,0
+YOLO26-L-seg,val,4,527,seq4_frame00527,9,0,0
+YOLO26-L-seg,val,4,528,seq4_frame00528,9,0,0
+YOLO26-L-seg,val,4,529,seq4_frame00529,9,0,0
+YOLO26-L-seg,val,4,530,seq4_frame00530,9,0,0
+YOLO26-L-seg,val,4,531,seq4_frame00531,9,0,0
+YOLO26-L-seg,val,4,532,seq4_frame00532,9,0,0
+YOLO26-L-seg,val,4,533,seq4_frame00533,9,0,0
+YOLO26-L-seg,val,4,534,seq4_frame00534,9,0,0
+YOLO26-L-seg,val,4,535,seq4_frame00535,9,0,0
+YOLO26-L-seg,val,4,536,seq4_frame00536,9,0,0
+YOLO26-L-seg,val,4,537,seq4_frame00537,9,0,0
+YOLO26-L-seg,val,4,538,seq4_frame00538,9,0,0
+YOLO26-L-seg,val,4,539,seq4_frame00539,9,0,0
+YOLO26-L-seg,val,4,540,seq4_frame00540,9,0,0
+YOLO26-L-seg,val,4,541,seq4_frame00541,9,0,0
+YOLO26-L-seg,val,4,542,seq4_frame00542,9,0,0
+YOLO26-L-seg,val,4,543,seq4_frame00543,9,0,0
+YOLO26-L-seg,val,4,544,seq4_frame00544,9,0,0
+YOLO26-L-seg,val,4,545,seq4_frame00545,9,0,0
+YOLO26-L-seg,val,4,546,seq4_frame00546,9,0,0
+YOLO26-L-seg,val,4,547,seq4_frame00547,9,0,0
+YOLO26-L-seg,val,4,548,seq4_frame00548,9,0,0
+YOLO26-L-seg,val,4,549,seq4_frame00549,9,0,0
+YOLO26-L-seg,val,4,550,seq4_frame00550,9,0,0
+YOLO26-L-seg,val,4,551,seq4_frame00551,9,0,0
+YOLO26-L-seg,val,4,552,seq4_frame00552,9,0,0
+YOLO26-L-seg,val,4,553,seq4_frame00553,9,0,0
+YOLO26-L-seg,val,4,554,seq4_frame00554,9,0,0
+YOLO26-L-seg,val,4,555,seq4_frame00555,9,0,0
+YOLO26-L-seg,val,4,556,seq4_frame00556,9,0,0
+YOLO26-L-seg,val,4,557,seq4_frame00557,9,0,0
+YOLO26-L-seg,val,4,558,seq4_frame00558,9,0,0
+YOLO26-L-seg,val,4,559,seq4_frame00559,9,0,0
+YOLO26-L-seg,val,4,560,seq4_frame00560,9,0,0
+YOLO26-L-seg,val,4,561,seq4_frame00561,9,0,0
+YOLO26-L-seg,val,4,562,seq4_frame00562,9,0,0
+YOLO26-L-seg,val,4,563,seq4_frame00563,9,0,0
+YOLO26-L-seg,val,4,564,seq4_frame00564,9,0,0
+YOLO26-L-seg,val,4,565,seq4_frame00565,9,0,0
+YOLO26-L-seg,val,4,566,seq4_frame00566,9,0,0
+YOLO26-L-seg,val,4,567,seq4_frame00567,9,0,0
+YOLO26-L-seg,val,4,568,seq4_frame00568,9,0,0
+YOLO26-L-seg,val,4,569,seq4_frame00569,9,0,0
+YOLO26-L-seg,val,4,570,seq4_frame00570,9,0,0
+YOLO26-L-seg,val,4,571,seq4_frame00571,9,0,0
+YOLO26-L-seg,val,4,572,seq4_frame00572,9,0,0
+YOLO26-L-seg,val,4,573,seq4_frame00573,9,0,0
+YOLO26-L-seg,val,4,574,seq4_frame00574,9,0,0
+YOLO26-L-seg,val,4,575,seq4_frame00575,9,0,0
+YOLO26-L-seg,val,4,576,seq4_frame00576,9,0,0
+YOLO26-L-seg,val,4,577,seq4_frame00577,9,0,0
+YOLO26-L-seg,val,4,578,seq4_frame00578,9,0,0
+YOLO26-L-seg,val,4,579,seq4_frame00579,9,0,0
+YOLO26-L-seg,val,4,580,seq4_frame00580,9,0,0
+YOLO26-L-seg,val,4,581,seq4_frame00581,9,0,0
+YOLO26-L-seg,val,4,582,seq4_frame00582,9,0,0
+YOLO26-L-seg,val,4,583,seq4_frame00583,9,0,0
+YOLO26-L-seg,val,4,584,seq4_frame00584,9,0,0
+YOLO26-L-seg,val,4,585,seq4_frame00585,9,0,0
+YOLO26-L-seg,val,4,586,seq4_frame00586,9,0,0
+YOLO26-L-seg,val,4,587,seq4_frame00587,9,0,0
+YOLO26-L-seg,val,4,588,seq4_frame00588,9,0,0
+YOLO26-L-seg,val,4,589,seq4_frame00589,9,0,0
+YOLO26-L-seg,val,4,590,seq4_frame00590,9,0,0
+YOLO26-L-seg,val,4,591,seq4_frame00591,9,0,0
+YOLO26-L-seg,val,4,592,seq4_frame00592,9,0,0
+YOLO26-L-seg,val,4,593,seq4_frame00593,9,0,0
+YOLO26-L-seg,test,1,0,seq1_frame00000,0,0,2
+YOLO26-L-seg,test,1,8,seq1_frame00008,0,0,2
+YOLO26-L-seg,test,1,16,seq1_frame00016,0,0,2
+YOLO26-L-seg,test,1,24,seq1_frame00024,0,1,2
+YOLO26-L-seg,test,1,32,seq1_frame00032,0,1,3
+YOLO26-L-seg,test,1,40,seq1_frame00040,1,1,2
+YOLO26-L-seg,test,1,48,seq1_frame00048,1,1,2
+YOLO26-L-seg,test,1,56,seq1_frame00056,1,1,2
+YOLO26-L-seg,test,1,64,seq1_frame00064,2,1,2
+YOLO26-L-seg,test,1,72,seq1_frame00072,4,0,3
+YOLO26-L-seg,test,1,80,seq1_frame00080,5,0,2
+YOLO26-L-seg,test,1,88,seq1_frame00088,5,0,2
+YOLO26-L-seg,test,1,96,seq1_frame00096,6,0,1
+YOLO26-L-seg,test,1,104,seq1_frame00104,7,1,0
+YOLO26-L-seg,test,1,112,seq1_frame00112,7,0,3
+YOLO26-L-seg,test,1,120,seq1_frame00120,7,0,3
+YOLO26-L-seg,test,1,128,seq1_frame00128,7,0,3
+YOLO26-L-seg,test,1,136,seq1_frame00136,8,0,2
+YOLO26-L-seg,test,1,144,seq1_frame00144,8,0,2
+YOLO26-L-seg,test,1,152,seq1_frame00152,8,1,2
+YOLO26-L-seg,test,1,160,seq1_frame00160,8,1,2
+YOLO26-L-seg,test,1,168,seq1_frame00168,9,1,1
+YOLO26-L-seg,test,1,176,seq1_frame00176,9,0,1
+YOLO26-L-seg,test,1,184,seq1_frame00184,10,0,0
+YOLO26-L-seg,test,1,192,seq1_frame00192,9,0,1
+YOLO26-L-seg,test,1,200,seq1_frame00200,10,0,0
+YOLO26-L-seg,test,1,208,seq1_frame00208,10,0,0
+YOLO26-L-seg,test,1,216,seq1_frame00216,10,0,0
+YOLO26-L-seg,test,1,224,seq1_frame00224,10,0,0
+YOLO26-L-seg,test,1,232,seq1_frame00232,10,0,0
+YOLO26-L-seg,test,1,240,seq1_frame00240,10,0,0
+YOLO26-L-seg,test,1,248,seq1_frame00248,10,0,0
+YOLO26-L-seg,test,1,256,seq1_frame00256,10,0,0
+YOLO26-L-seg,test,1,264,seq1_frame00264,10,0,0
+YOLO26-L-seg,test,1,272,seq1_frame00272,10,0,0
+YOLO26-L-seg,test,1,280,seq1_frame00280,10,0,0
+YOLO26-L-seg,test,1,288,seq1_frame00288,9,0,0
+YOLO26-L-seg,test,1,296,seq1_frame00296,9,0,0
+YOLO26-L-seg,test,1,304,seq1_frame00304,9,0,0
+YOLO26-L-seg,test,1,312,seq1_frame00312,9,0,0
+YOLO26-L-seg,test,1,320,seq1_frame00320,9,0,0
+YOLO26-L-seg,test,1,328,seq1_frame00328,9,0,0
+YOLO26-L-seg,test,1,336,seq1_frame00336,9,0,0
+YOLO26-L-seg,test,1,344,seq1_frame00344,9,0,0
+YOLO26-L-seg,test,1,352,seq1_frame00352,9,0,0
+YOLO26-L-seg,test,1,360,seq1_frame00360,9,0,0
+YOLO26-L-seg,test,1,368,seq1_frame00368,3,0,0
+YOLO26-L-seg,test,1,376,seq1_frame00376,3,0,0
+YOLO26-L-seg,test,1,384,seq1_frame00384,3,0,0
+YOLO26-L-seg,test,1,392,seq1_frame00392,3,0,0
+YOLO26-L-seg,test,1,400,seq1_frame00400,3,0,0
+YOLO26-L-seg,test,1,408,seq1_frame00408,3,0,0
+YOLO26-L-seg,test,1,416,seq1_frame00416,3,0,0
+YOLO26-L-seg,test,1,424,seq1_frame00424,3,0,0
+YOLO26-L-seg,test,1,432,seq1_frame00432,3,0,0
+YOLO26-L-seg,test,1,440,seq1_frame00440,3,0,0
+YOLO26-L-seg,test,1,448,seq1_frame00448,3,0,0
+YOLO26-L-seg,test,1,456,seq1_frame00456,3,0,0
+YOLO26-L-seg,test,1,464,seq1_frame00464,3,0,0
+YOLO26-L-seg,test,1,472,seq1_frame00472,3,0,0
+YOLO26-L-seg,test,1,480,seq1_frame00480,3,0,0
+YOLO26-L-seg,test,1,488,seq1_frame00488,3,0,0
+YOLO26-L-seg,test,1,496,seq1_frame00496,3,0,0
+YOLO26-L-seg,test,1,504,seq1_frame00504,3,0,0
+YOLO26-L-seg,test,1,512,seq1_frame00512,3,0,0
+YOLO26-L-seg,test,1,520,seq1_frame00520,3,0,0
+YOLO26-L-seg,test,1,528,seq1_frame00528,3,0,0
+YOLO26-L-seg,test,1,536,seq1_frame00536,3,0,0
+YOLO26-L-seg,test,1,544,seq1_frame00544,3,0,0
+YOLO26-L-seg,test,1,552,seq1_frame00552,3,0,0
+YOLO26-L-seg,test,1,560,seq1_frame00560,3,0,0
+YOLO26-L-seg,test,1,568,seq1_frame00568,3,0,0
+YOLO26-L-seg,test,1,576,seq1_frame00576,3,0,0
+YOLO26-L-seg,test,1,584,seq1_frame00584,3,0,0
+YOLO26-L-seg,test,1,592,seq1_frame00592,3,0,0
+YOLO26-L-seg,test,1,600,seq1_frame00600,3,0,0
+YOLO26-L-seg,test,1,608,seq1_frame00608,3,0,0
+YOLO26-L-seg,test,1,616,seq1_frame00616,3,0,0
+YOLO26-L-seg,test,1,624,seq1_frame00624,3,0,0
+YOLO26-L-seg,test,1,632,seq1_frame00632,3,0,0
+YOLO26-L-seg,test,1,640,seq1_frame00640,3,0,0
+YOLO26-L-seg,test,1,648,seq1_frame00648,3,0,0
+YOLO26-L-seg,test,1,656,seq1_frame00656,3,0,0
+YOLO26-L-seg,test,1,664,seq1_frame00664,3,0,0
+YOLO26-L-seg,test,1,672,seq1_frame00672,3,0,0
+YOLO26-L-seg,test,1,680,seq1_frame00680,3,0,0
+YOLO26-L-seg,test,1,688,seq1_frame00688,3,0,0
+YOLO26-L-seg,test,1,696,seq1_frame00696,3,0,0
+YOLO26-L-seg,test,1,704,seq1_frame00704,3,0,0
+YOLO26-L-seg,test,1,712,seq1_frame00712,3,0,0
+YOLO26-L-seg,test,1,720,seq1_frame00720,3,0,0
+YOLO26-L-seg,test,1,728,seq1_frame00728,3,0,0
+YOLO26-L-seg,test,1,736,seq1_frame00736,3,0,0
+YOLO26-L-seg,test,1,744,seq1_frame00744,3,0,0
+YOLO26-L-seg,test,1,752,seq1_frame00752,3,0,0
+YOLO26-L-seg,test,1,760,seq1_frame00760,3,0,0
+YOLO26-L-seg,test,1,768,seq1_frame00768,2,0,1
+YOLO26-L-seg,test,1,776,seq1_frame00776,3,0,0
+YOLO26-L-seg,test,1,784,seq1_frame00784,3,0,0
+YOLO26-L-seg,test,1,792,seq1_frame00792,3,0,0
+YOLO26-L-seg,test,1,800,seq1_frame00800,3,0,0
+YOLO26-L-seg,test,1,808,seq1_frame00808,3,0,0
+YOLO26-L-seg,test,1,816,seq1_frame00816,2,0,1
+YOLO26-L-seg,test,1,824,seq1_frame00824,3,0,0
+YOLO26-L-seg,test,1,832,seq1_frame00832,3,0,0
+YOLO26-L-seg,test,1,840,seq1_frame00840,3,0,0
+YOLO26-L-seg,test,1,848,seq1_frame00848,3,0,0
+YOLO26-L-seg,test,1,856,seq1_frame00856,2,0,1
+YOLO26-L-seg,test,1,864,seq1_frame00864,2,0,1
+YOLO26-L-seg,test,1,872,seq1_frame00872,3,0,0
+YOLO26-L-seg,test,1,880,seq1_frame00880,3,0,0
+YOLO26-L-seg,test,1,888,seq1_frame00888,3,0,0
+YOLO26-L-seg,test,1,896,seq1_frame00896,2,0,1
+YOLO26-L-seg,test,1,904,seq1_frame00904,3,0,0
+YOLO26-L-seg,test,1,912,seq1_frame00912,3,0,0
+YOLO26-L-seg,test,1,920,seq1_frame00920,3,0,0
+YOLO26-L-seg,test,1,928,seq1_frame00928,3,0,0
+YOLO26-L-seg,test,1,936,seq1_frame00936,3,0,0
+YOLO26-L-seg,test,1,944,seq1_frame00944,3,0,0
+YOLO26-L-seg,test,1,952,seq1_frame00952,3,0,0
+YOLO26-L-seg,test,1,960,seq1_frame00960,3,0,0
+YOLO26-L-seg,test,1,968,seq1_frame00968,3,0,0
+YOLO26-L-seg,test,1,976,seq1_frame00976,3,0,0
+YOLO26-L-seg,test,1,984,seq1_frame00984,3,0,0
+YOLO26-L-seg,test,1,992,seq1_frame00992,3,0,0
+YOLO26-L-seg,test,1,1000,seq1_frame01000,3,0,0
+YOLO26-L-seg,test,1,1008,seq1_frame01008,3,0,0
+YOLO26-L-seg,test,1,1016,seq1_frame01016,3,0,0
+YOLO26-L-seg,test,1,1024,seq1_frame01024,3,0,0
+YOLO26-L-seg,test,1,1032,seq1_frame01032,3,0,0
+YOLO26-L-seg,test,1,1040,seq1_frame01040,3,0,0
+YOLO26-L-seg,test,1,1048,seq1_frame01048,3,0,0
+YOLO26-L-seg,test,1,1056,seq1_frame01056,3,0,0
+YOLO26-L-seg,test,1,1064,seq1_frame01064,3,0,0
+YOLO26-L-seg,test,1,1072,seq1_frame01072,3,0,0
+YOLO26-L-seg,test,1,1080,seq1_frame01080,3,0,0
+YOLO26-L-seg,test,1,1088,seq1_frame01088,3,0,0
+YOLO26-L-seg,test,1,1096,seq1_frame01096,3,0,0
+YOLO26-L-seg,test,1,1104,seq1_frame01104,3,0,0
+YOLO26-L-seg,test,1,1112,seq1_frame01112,3,0,0
+YOLO26-L-seg,test,1,1120,seq1_frame01120,3,0,0
+YOLO26-L-seg,test,1,1128,seq1_frame01128,3,0,0
+YOLO26-L-seg,test,1,1136,seq1_frame01136,3,0,0
+YOLO26-L-seg,test,1,1144,seq1_frame01144,3,0,0
+YOLO26-L-seg,test,1,1152,seq1_frame01152,3,0,0
+YOLO26-L-seg,test,1,1160,seq1_frame01160,3,0,0
+YOLO26-L-seg,test,1,1168,seq1_frame01168,3,0,0
+YOLO26-L-seg,test,1,1176,seq1_frame01176,3,0,0
+YOLO26-L-seg,test,1,1184,seq1_frame01184,3,0,0
+YOLO26-L-seg,test,1,1192,seq1_frame01192,3,0,0
+YOLO26-L-seg,test,1,1200,seq1_frame01200,3,0,0
+YOLO26-L-seg,test,1,1208,seq1_frame01208,2,0,1
+YOLO26-L-seg,test,1,1216,seq1_frame01216,2,0,1
+YOLO26-L-seg,test,1,1224,seq1_frame01224,3,0,0
+YOLO26-L-seg,test,1,1232,seq1_frame01232,3,0,0
+YOLO26-L-seg,test,1,1240,seq1_frame01240,3,0,0
+YOLO26-L-seg,test,1,1248,seq1_frame01248,3,0,0
+YOLO26-L-seg,test,1,1256,seq1_frame01256,3,0,0
+YOLO26-L-seg,test,1,1264,seq1_frame01264,3,0,0
+YOLO26-L-seg,test,1,1272,seq1_frame01272,2,0,1
+YOLO26-L-seg,test,1,1280,seq1_frame01280,3,0,0
+YOLO26-L-seg,test,1,1288,seq1_frame01288,2,0,1
+YOLO26-L-seg,test,1,1296,seq1_frame01296,3,0,0
+YOLO26-L-seg,test,1,1304,seq1_frame01304,2,0,1
+YOLO26-L-seg,test,1,1312,seq1_frame01312,2,0,1
+YOLO26-L-seg,test,1,1320,seq1_frame01320,3,0,0
+YOLO26-L-seg,test,1,1328,seq1_frame01328,3,0,0
+YOLO26-L-seg,test,1,1336,seq1_frame01336,3,0,0
+YOLO26-L-seg,test,1,1344,seq1_frame01344,2,0,1
+YOLO26-L-seg,test,1,1352,seq1_frame01352,3,0,0
+YOLO26-L-seg,test,1,1360,seq1_frame01360,2,0,1
+YOLO26-L-seg,test,1,1368,seq1_frame01368,2,0,1
+YOLO26-L-seg,test,1,1376,seq1_frame01376,2,0,1
+YOLO26-L-seg,test,1,1384,seq1_frame01384,3,0,0
+YOLO26-L-seg,test,1,1392,seq1_frame01392,2,0,1
+YOLO26-L-seg,test,1,1400,seq1_frame01400,3,0,0
+YOLO26-L-seg,test,1,1408,seq1_frame01408,2,0,1
+YOLO26-L-seg,test,1,1416,seq1_frame01416,3,0,0
+YOLO26-L-seg,test,1,1424,seq1_frame01424,3,0,0
+YOLO26-L-seg,test,1,1432,seq1_frame01432,3,0,0
+YOLO26-L-seg,test,1,1440,seq1_frame01440,3,0,0
+YOLO26-L-seg,test,1,1448,seq1_frame01448,3,0,0
+YOLO26-L-seg,test,1,1456,seq1_frame01456,3,0,0
+YOLO26-L-seg,test,1,1464,seq1_frame01464,3,0,0
+YOLO26-L-seg,test,1,1472,seq1_frame01472,2,0,1
+YOLO26-L-seg,test,1,1480,seq1_frame01480,3,0,0
+YOLO26-L-seg,test,1,1488,seq1_frame01488,3,0,0
+YOLO26-L-seg,test,1,1496,seq1_frame01496,3,0,0
+YOLO26-L-seg,test,1,1504,seq1_frame01504,3,0,0
+YOLO26-L-seg,test,1,1512,seq1_frame01512,3,0,0
+YOLO26-L-seg,test,1,1520,seq1_frame01520,2,0,1
+YOLO26-L-seg,test,1,1528,seq1_frame01528,3,0,0
+YOLO26-L-seg,test,1,1536,seq1_frame01536,3,0,0
+YOLO26-L-seg,test,1,1544,seq1_frame01544,3,0,0
+YOLO26-L-seg,test,1,1552,seq1_frame01552,3,0,0
+YOLO26-L-seg,test,1,1560,seq1_frame01560,3,0,0
+YOLO26-L-seg,test,1,1568,seq1_frame01568,3,0,0
+YOLO26-L-seg,test,1,1576,seq1_frame01576,2,0,1
+YOLO26-L-seg,test,1,1584,seq1_frame01584,3,0,0
+YOLO26-L-seg,test,1,1592,seq1_frame01592,3,0,0
+YOLO26-L-seg,test,1,1600,seq1_frame01600,2,0,1
+YOLO26-L-seg,test,1,1608,seq1_frame01608,2,0,1
+YOLO26-L-seg,test,1,1616,seq1_frame01616,3,0,0
+YOLO26-L-seg,test,1,1624,seq1_frame01624,3,0,0
+YOLO26-L-seg,test,1,1632,seq1_frame01632,3,0,0
+YOLO26-L-seg,test,1,1640,seq1_frame01640,3,0,0
+YOLO26-L-seg,test,1,1648,seq1_frame01648,3,0,0
+YOLO26-L-seg,test,1,1656,seq1_frame01656,3,0,0
+YOLO26-L-seg,test,1,1664,seq1_frame01664,2,0,1
+YOLO26-L-seg,test,1,1672,seq1_frame01672,2,0,1
+YOLO26-L-seg,test,1,1680,seq1_frame01680,2,0,1
+YOLO26-L-seg,test,1,1688,seq1_frame01688,2,0,1
+YOLO26-L-seg,test,1,1696,seq1_frame01696,2,0,1
+YOLO26-L-seg,test,1,1704,seq1_frame01704,3,0,0
+YOLO26-L-seg,test,1,1712,seq1_frame01712,2,0,1
+YOLO26-L-seg,test,1,1720,seq1_frame01720,3,0,0
+YOLO26-L-seg,test,1,1728,seq1_frame01728,3,0,0
+YOLO26-L-seg,test,1,1736,seq1_frame01736,3,0,0
+YOLO26-L-seg,test,1,1744,seq1_frame01744,3,0,0
+YOLO26-L-seg,test,1,1752,seq1_frame01752,3,0,0
+YOLO26-L-seg,test,1,1760,seq1_frame01760,3,0,0
+YOLO26-L-seg,test,1,1768,seq1_frame01768,3,0,0
+YOLO26-L-seg,test,1,1776,seq1_frame01776,3,0,0
+YOLO26-L-seg,test,1,1784,seq1_frame01784,2,0,1
+YOLO26-L-seg,test,1,1792,seq1_frame01792,3,0,0
+YOLO26-L-seg,test,1,1800,seq1_frame01800,2,0,1
+YOLO26-L-seg,test,1,1808,seq1_frame01808,3,0,0
+YOLO26-L-seg,test,1,1816,seq1_frame01816,3,0,0
+YOLO26-L-seg,test,1,1824,seq1_frame01824,3,0,0
+YOLO26-L-seg,test,1,1832,seq1_frame01832,3,0,0
+YOLO26-L-seg,test,1,1840,seq1_frame01840,3,0,0
+YOLO26-L-seg,test,1,1848,seq1_frame01848,2,0,1
+YOLO26-L-seg,test,1,1856,seq1_frame01856,2,0,1
+YOLO26-L-seg,test,1,1864,seq1_frame01864,2,0,1
+YOLO26-L-seg,test,1,1872,seq1_frame01872,3,0,0
+YOLO26-L-seg,test,1,1880,seq1_frame01880,3,0,0
+YOLO26-L-seg,test,1,1888,seq1_frame01888,3,0,0
+YOLO26-L-seg,test,1,1896,seq1_frame01896,3,0,0
+YOLO26-L-seg,test,1,1904,seq1_frame01904,3,0,0
+YOLO26-L-seg,test,1,1912,seq1_frame01912,3,0,0
+YOLO26-L-seg,test,1,1920,seq1_frame01920,3,0,0
+YOLO26-L-seg,test,1,1928,seq1_frame01928,3,0,0
+YOLO26-L-seg,test,1,1936,seq1_frame01936,3,0,0
+YOLO26-L-seg,test,1,1944,seq1_frame01944,3,0,0
+YOLO26-L-seg,test,1,1952,seq1_frame01952,3,0,0
+YOLO26-L-seg,test,1,1960,seq1_frame01960,3,0,0
+YOLO26-L-seg,test,1,1968,seq1_frame01968,2,0,1
+YOLO26-L-seg,test,1,1976,seq1_frame01976,3,0,0
+YOLO26-L-seg,test,1,1984,seq1_frame01984,3,0,0
+YOLO26-L-seg,test,1,1992,seq1_frame01992,3,0,0
+YOLO26-L-seg,test,1,2000,seq1_frame02000,3,0,0
+YOLO26-L-seg,test,1,2008,seq1_frame02008,3,0,0
+YOLO26-L-seg,test,1,2016,seq1_frame02016,3,0,0
+YOLO26-L-seg,test,1,2024,seq1_frame02024,3,0,0
+YOLO26-L-seg,test,1,2032,seq1_frame02032,3,0,0
+YOLO26-L-seg,test,1,2040,seq1_frame02040,3,0,0
+YOLO26-L-seg,test,1,2048,seq1_frame02048,3,0,0
+YOLO26-L-seg,test,1,2056,seq1_frame02056,3,0,0
+YOLO26-L-seg,test,1,2064,seq1_frame02064,3,0,0
+YOLO26-L-seg,test,1,2072,seq1_frame02072,3,0,0
+YOLO26-L-seg,test,1,2080,seq1_frame02080,3,0,0
+YOLO26-L-seg,test,3,0,seq3_frame00000,1,0,0
+YOLO26-L-seg,test,3,8,seq3_frame00008,1,0,0
+YOLO26-L-seg,test,3,16,seq3_frame00016,1,0,0
+YOLO26-L-seg,test,3,24,seq3_frame00024,1,0,0
+YOLO26-L-seg,test,3,32,seq3_frame00032,1,0,0
+YOLO26-L-seg,test,3,40,seq3_frame00040,1,0,0
+YOLO26-L-seg,test,3,48,seq3_frame00048,1,0,0
+YOLO26-L-seg,test,3,56,seq3_frame00056,1,0,1
+YOLO26-L-seg,test,3,64,seq3_frame00064,1,0,2
+YOLO26-L-seg,test,3,72,seq3_frame00072,1,0,2
+YOLO26-L-seg,test,3,80,seq3_frame00080,1,0,2
+YOLO26-L-seg,test,3,88,seq3_frame00088,1,0,3
+YOLO26-L-seg,test,3,96,seq3_frame00096,1,0,4
+YOLO26-L-seg,test,3,104,seq3_frame00104,1,0,4
+YOLO26-L-seg,test,3,112,seq3_frame00112,1,0,4
+YOLO26-L-seg,test,3,120,seq3_frame00120,2,0,3
+YOLO26-L-seg,test,3,128,seq3_frame00128,4,0,2
+YOLO26-L-seg,test,3,136,seq3_frame00136,4,0,2
+YOLO26-L-seg,test,3,144,seq3_frame00144,5,0,1
+YOLO26-L-seg,test,3,152,seq3_frame00152,5,0,1
+YOLO26-L-seg,test,3,160,seq3_frame00160,5,1,1
+YOLO26-L-seg,test,3,168,seq3_frame00168,6,0,1
+YOLO26-L-seg,test,3,176,seq3_frame00176,7,0,0
+YOLO26-L-seg,test,3,184,seq3_frame00184,6,0,1
+YOLO26-L-seg,test,3,192,seq3_frame00192,4,0,3
+YOLO26-L-seg,test,3,200,seq3_frame00200,6,0,1
+YOLO26-L-seg,test,3,208,seq3_frame00208,6,0,1
+YOLO26-L-seg,test,3,216,seq3_frame00216,6,0,1
+YOLO26-L-seg,test,3,224,seq3_frame00224,6,0,1
+YOLO26-L-seg,test,3,232,seq3_frame00232,7,0,0
+YOLO26-L-seg,test,3,240,seq3_frame00240,6,0,1
+YOLO26-L-seg,test,3,248,seq3_frame00248,6,0,2
+YOLO26-L-seg,test,3,256,seq3_frame00256,5,0,3
+YOLO26-L-seg,test,3,264,seq3_frame00264,5,0,3
+YOLO26-L-seg,test,3,272,seq3_frame00272,5,0,3
+YOLO26-L-seg,test,3,280,seq3_frame00280,6,0,3
+YOLO26-L-seg,test,3,288,seq3_frame00288,6,0,3
+YOLO26-L-seg,test,3,296,seq3_frame00296,6,0,3
+YOLO26-L-seg,test,3,304,seq3_frame00304,6,0,3
+YOLO26-L-seg,test,3,312,seq3_frame00312,6,0,3
+YOLO26-L-seg,test,3,320,seq3_frame00320,6,0,3
+YOLO26-L-seg,test,3,328,seq3_frame00328,6,0,3
+YOLO26-L-seg,test,3,336,seq3_frame00336,7,0,2
+YOLO26-L-seg,test,3,344,seq3_frame00344,8,0,1
+YOLO26-L-seg,test,3,352,seq3_frame00352,7,0,3
+YOLO26-L-seg,test,3,360,seq3_frame00360,7,0,3
+YOLO26-L-seg,test,3,368,seq3_frame00368,8,0,2
+YOLO26-L-seg,test,3,376,seq3_frame00376,9,0,1
+YOLO26-L-seg,test,3,384,seq3_frame00384,10,0,0
+YOLO26-L-seg,test,3,392,seq3_frame00392,8,0,2
+YOLO26-L-seg,test,3,400,seq3_frame00400,8,0,2
+YOLO26-L-seg,test,3,408,seq3_frame00408,9,0,1
+YOLO26-L-seg,test,3,416,seq3_frame00416,8,0,2
+YOLO26-L-seg,test,3,424,seq3_frame00424,9,0,1
+YOLO26-L-seg,test,3,432,seq3_frame00432,9,0,1
+YOLO26-L-seg,test,3,440,seq3_frame00440,9,0,2
+YOLO26-L-seg,test,3,448,seq3_frame00448,8,0,3
+YOLO26-L-seg,test,3,456,seq3_frame00456,8,0,3
+YOLO26-L-seg,test,3,464,seq3_frame00464,9,0,2
+YOLO26-L-seg,test,3,472,seq3_frame00472,9,0,2
+YOLO26-L-seg,test,3,480,seq3_frame00480,9,0,2
+YOLO26-L-seg,test,3,488,seq3_frame00488,8,0,3
+YOLO26-L-seg,test,3,496,seq3_frame00496,9,0,2
+YOLO26-L-seg,test,3,504,seq3_frame00504,9,0,2
+YOLO26-L-seg,test,3,512,seq3_frame00512,9,0,2
+YOLO26-L-seg,test,3,520,seq3_frame00520,9,0,2
+YOLO26-L-seg,test,3,528,seq3_frame00528,7,0,3
+YOLO26-L-seg,test,3,536,seq3_frame00536,9,0,2
+YOLO26-L-seg,test,3,544,seq3_frame00544,10,0,1
+YOLO26-L-seg,test,3,552,seq3_frame00552,10,0,1
+YOLO26-L-seg,test,3,560,seq3_frame00560,9,0,2
+YOLO26-L-seg,test,3,568,seq3_frame00568,9,0,1
+YOLO26-L-seg,test,3,576,seq3_frame00576,9,0,2
+YOLO26-L-seg,test,3,584,seq3_frame00584,10,0,1
+YOLO26-L-seg,test,3,592,seq3_frame00592,10,0,1
+YOLO26-L-seg,test,3,600,seq3_frame00600,8,0,2
+YOLO26-L-seg,test,3,608,seq3_frame00608,9,0,2
+YOLO26-L-seg,test,3,616,seq3_frame00616,8,0,2
+YOLO26-L-seg,test,3,624,seq3_frame00624,9,0,3
+YOLO26-L-seg,test,3,632,seq3_frame00632,9,0,3
+YOLO26-L-seg,test,3,640,seq3_frame00640,9,0,3
+YOLO26-L-seg,test,3,648,seq3_frame00648,9,0,3
+YOLO26-L-seg,test,3,656,seq3_frame00656,9,0,3
+YOLO26-L-seg,test,3,664,seq3_frame00664,8,0,4
+YOLO26-L-seg,test,3,672,seq3_frame00672,8,0,4
+YOLO26-L-seg,test,3,680,seq3_frame00680,8,0,4
+YOLO26-L-seg,test,3,688,seq3_frame00688,9,0,3
+YOLO26-L-seg,test,3,696,seq3_frame00696,8,0,4
+YOLO26-L-seg,test,3,704,seq3_frame00704,8,0,4
+YOLO26-L-seg,test,3,712,seq3_frame00712,8,0,4
+YOLO26-L-seg,test,3,720,seq3_frame00720,8,0,4
+YOLO26-L-seg,test,3,728,seq3_frame00728,8,0,4
+YOLO26-L-seg,test,3,736,seq3_frame00736,8,0,4
+YOLO26-L-seg,test,3,744,seq3_frame00744,8,0,4
+YOLO26-L-seg,test,3,752,seq3_frame00752,8,0,4
+YOLO26-L-seg,test,3,760,seq3_frame00760,7,0,5
+YOLO26-L-seg,test,3,768,seq3_frame00768,7,0,5
+YOLO26-L-seg,test,3,776,seq3_frame00776,8,0,4
+YOLO26-L-seg,test,3,784,seq3_frame00784,7,0,5
+YOLO26-L-seg,test,3,792,seq3_frame00792,7,0,5
+YOLO26-L-seg,test,3,800,seq3_frame00800,7,0,5
+YOLO26-L-seg,test,3,808,seq3_frame00808,7,0,5
+YOLO26-L-seg,test,3,816,seq3_frame00816,7,0,5
+YOLO26-L-seg,test,3,824,seq3_frame00824,7,0,5
+YOLO26-L-seg,test,3,832,seq3_frame00832,7,0,5
+YOLO26-L-seg,test,3,840,seq3_frame00840,8,0,4
+YOLO26-L-seg,test,3,848,seq3_frame00848,7,0,5
+YOLO26-L-seg,test,3,856,seq3_frame00856,8,0,4
+YOLO26-L-seg,test,3,864,seq3_frame00864,7,0,5
+YOLO26-L-seg,test,3,872,seq3_frame00872,7,0,5
+YOLO26-L-seg,test,3,880,seq3_frame00880,8,0,4
+YOLO26-L-seg,test,3,888,seq3_frame00888,8,0,4
+YOLO26-L-seg,test,3,896,seq3_frame00896,8,0,4
+YOLO26-L-seg,test,3,904,seq3_frame00904,4,0,0
+YOLO26-L-seg,test,3,912,seq3_frame00912,4,0,0
+YOLO26-L-seg,test,3,920,seq3_frame00920,4,0,0
+YOLO26-L-seg,test,3,928,seq3_frame00928,4,0,0
+YOLO26-L-seg,test,3,936,seq3_frame00936,4,0,0
+YOLO26-L-seg,test,3,944,seq3_frame00944,3,0,1
+YOLO26-L-seg,test,3,952,seq3_frame00952,3,0,1
+YOLO26-L-seg,test,3,960,seq3_frame00960,3,0,1
+YOLO26-L-seg,test,3,968,seq3_frame00968,3,0,1
+YOLO26-L-seg,test,3,976,seq3_frame00976,4,0,0
+YOLO26-L-seg,test,3,984,seq3_frame00984,4,0,0
+YOLO26-L-seg,test,3,992,seq3_frame00992,4,0,0
+YOLO26-L-seg,test,3,1000,seq3_frame01000,4,0,0
+YOLO26-L-seg,test,3,1008,seq3_frame01008,4,0,0
+YOLO26-L-seg,test,3,1016,seq3_frame01016,4,0,0
+YOLO26-L-seg,test,3,1024,seq3_frame01024,4,0,0
+YOLO26-L-seg,test,3,1032,seq3_frame01032,4,0,0
+YOLO26-L-seg,test,3,1040,seq3_frame01040,4,1,0
+YOLO26-L-seg,test,3,1048,seq3_frame01048,4,0,0
+YOLO26-L-seg,test,3,1056,seq3_frame01056,4,0,0
+YOLO26-L-seg,test,3,1064,seq3_frame01064,4,1,0
+YOLO26-L-seg,test,3,1072,seq3_frame01072,4,0,0
+YOLO26-L-seg,test,3,1080,seq3_frame01080,4,1,0
+YOLO26-L-seg,test,3,1088,seq3_frame01088,4,0,0
+YOLO26-L-seg,test,3,1096,seq3_frame01096,4,0,0
+YOLO26-L-seg,test,3,1104,seq3_frame01104,4,0,0
+YOLO26-L-seg,test,3,1112,seq3_frame01112,4,0,0
+YOLO26-L-seg,test,3,1120,seq3_frame01120,4,0,0
+YOLO26-L-seg,test,3,1128,seq3_frame01128,4,0,0
+YOLO26-L-seg,test,3,1136,seq3_frame01136,4,0,0
+YOLO26-L-seg,test,3,1144,seq3_frame01144,4,0,0
+YOLO26-L-seg,test,3,1152,seq3_frame01152,4,0,0
+YOLO26-L-seg,test,3,1160,seq3_frame01160,4,0,0
+YOLO26-L-seg,test,3,1168,seq3_frame01168,4,0,0
+YOLO26-L-seg,test,3,1176,seq3_frame01176,4,0,0
+YOLO26-L-seg,test,3,1184,seq3_frame01184,4,0,0
+YOLO26-L-seg,test,3,1192,seq3_frame01192,4,0,0
+YOLO26-L-seg,test,3,1200,seq3_frame01200,4,0,0
+YOLO26-L-seg,test,3,1208,seq3_frame01208,4,0,0
+YOLO26-L-seg,test,3,1216,seq3_frame01216,4,0,0
+YOLO26-L-seg,test,3,1224,seq3_frame01224,4,0,0
+YOLO26-L-seg,test,3,1232,seq3_frame01232,4,0,0
+YOLO26-L-seg,test,3,1240,seq3_frame01240,4,0,0
+YOLO26-L-seg,test,3,1248,seq3_frame01248,4,0,0
+YOLO26-L-seg,test,3,1256,seq3_frame01256,4,0,0
+YOLO26-L-seg,test,3,1264,seq3_frame01264,4,0,0
+YOLO26-L-seg,test,3,1272,seq3_frame01272,4,0,0
+YOLO26-L-seg,test,3,1280,seq3_frame01280,4,0,0
+YOLO26-L-seg,test,3,1288,seq3_frame01288,3,1,0
+YOLO26-L-seg,test,3,1296,seq3_frame01296,4,0,0
+YOLO26-L-seg,test,3,1304,seq3_frame01304,4,0,0
+YOLO26-L-seg,test,3,1312,seq3_frame01312,4,0,0
+YOLO26-L-seg,test,3,1320,seq3_frame01320,4,0,0
+YOLO26-L-seg,test,3,1328,seq3_frame01328,4,0,0
+YOLO26-L-seg,test,3,1336,seq3_frame01336,4,0,0
+YOLO26-L-seg,test,3,1344,seq3_frame01344,4,0,0
+YOLO26-L-seg,test,3,1352,seq3_frame01352,4,0,0
+YOLO26-L-seg,test,3,1360,seq3_frame01360,4,0,0
+YOLO26-L-seg,test,3,1368,seq3_frame01368,4,0,0
+YOLO26-L-seg,test,3,1376,seq3_frame01376,4,0,0
+YOLO26-L-seg,test,3,1384,seq3_frame01384,4,0,0
+YOLO26-L-seg,test,3,1392,seq3_frame01392,4,0,0
+YOLO26-L-seg,test,3,1400,seq3_frame01400,4,0,0
+YOLO26-L-seg,test,3,1408,seq3_frame01408,4,0,0
+YOLO26-L-seg,test,3,1416,seq3_frame01416,4,0,0
+YOLO26-L-seg,test,3,1424,seq3_frame01424,4,0,0
+YOLO26-L-seg,test,3,1432,seq3_frame01432,4,0,0
+YOLO26-L-seg,test,3,1440,seq3_frame01440,4,0,0
+YOLO26-L-seg,test,3,1448,seq3_frame01448,4,0,0
+YOLO26-L-seg,test,3,1456,seq3_frame01456,4,0,0
+YOLO26-L-seg,test,3,1464,seq3_frame01464,4,0,0
+YOLO26-L-seg,test,3,1472,seq3_frame01472,4,0,0
+YOLO26-L-seg,test,3,1480,seq3_frame01480,4,0,0
+YOLO26-L-seg,test,3,1488,seq3_frame01488,4,0,0
+YOLO26-L-seg,test,3,1496,seq3_frame01496,4,0,0
+YOLO26-L-seg,test,3,1504,seq3_frame01504,4,0,0
+YOLO26-L-seg,test,3,1512,seq3_frame01512,4,0,0
+YOLO26-L-seg,test,3,1520,seq3_frame01520,4,0,0
+YOLO26-L-seg,test,3,1528,seq3_frame01528,4,0,0
+YOLO26-L-seg,test,3,1536,seq3_frame01536,4,0,0
+YOLO26-L-seg,test,3,1544,seq3_frame01544,4,0,0
+YOLO26-L-seg,test,3,1552,seq3_frame01552,4,0,0
+YOLO26-L-seg,test,3,1560,seq3_frame01560,4,0,0
+YOLO26-L-seg,test,3,1568,seq3_frame01568,4,1,0
+YOLO26-L-seg,test,3,1576,seq3_frame01576,4,0,0
+YOLO26-L-seg,test,3,1584,seq3_frame01584,4,0,0
+YOLO26-L-seg,test,3,1592,seq3_frame01592,4,0,0
+YOLO26-L-seg,test,3,1600,seq3_frame01600,4,0,0
+YOLO26-L-seg,test,3,1608,seq3_frame01608,4,0,0
+YOLO26-L-seg,test,3,1616,seq3_frame01616,4,0,0
+YOLO26-L-seg,test,3,1624,seq3_frame01624,4,0,0
+YOLO26-L-seg,test,3,1632,seq3_frame01632,4,0,0
+YOLO26-L-seg,test,3,1640,seq3_frame01640,4,0,0
+YOLO26-L-seg,test,3,1648,seq3_frame01648,4,0,0
+YOLO26-L-seg,test,3,1656,seq3_frame01656,4,0,0
+YOLO26-L-seg,test,3,1664,seq3_frame01664,4,0,0
+YOLO26-L-seg,test,3,1672,seq3_frame01672,4,0,0
+YOLO26-L-seg,test,3,1680,seq3_frame01680,4,0,0
+YOLO26-L-seg,test,3,1688,seq3_frame01688,4,0,0
+YOLO26-L-seg,test,3,1696,seq3_frame01696,4,0,0
+YOLO26-L-seg,test,3,1704,seq3_frame01704,4,0,0
+YOLO26-L-seg,test,3,1712,seq3_frame01712,4,0,0
+YOLO26-L-seg,test,3,1720,seq3_frame01720,4,0,0
+YOLO26-L-seg,test,3,1728,seq3_frame01728,4,0,0
+YOLO26-L-seg,test,3,1736,seq3_frame01736,4,0,0
+YOLO26-L-seg,test,3,1744,seq3_frame01744,4,0,0
+YOLO26-L-seg,test,3,1752,seq3_frame01752,4,0,0
+YOLO26-L-seg,test,3,1760,seq3_frame01760,4,0,0
+YOLO26-L-seg,test,3,1768,seq3_frame01768,4,0,0
+YOLO26-L-seg,test,3,1776,seq3_frame01776,4,0,0
+YOLO26-L-seg,test,3,1784,seq3_frame01784,4,0,0
+YOLO26-L-seg,test,3,1792,seq3_frame01792,4,0,0
+YOLO26-L-seg,test,3,1800,seq3_frame01800,4,0,0
+YOLO26-L-seg,test,3,1808,seq3_frame01808,4,0,0
+YOLO26-L-seg,test,3,1816,seq3_frame01816,4,0,0
+YOLO26-L-seg,test,3,1824,seq3_frame01824,4,0,0
+YOLO26-L-seg,test,3,1832,seq3_frame01832,4,0,0
+YOLO26-L-seg,test,3,1840,seq3_frame01840,4,0,0
+YOLO26-L-seg,test,3,1848,seq3_frame01848,4,0,0
+YOLO26-L-seg,test,3,1856,seq3_frame01856,4,0,0
+YOLO26-L-seg,test,3,1864,seq3_frame01864,3,0,1
+YOLO26-L-seg,test,3,1872,seq3_frame01872,3,0,1
+YOLO26-L-seg,test,3,1880,seq3_frame01880,4,0,0
+YOLO26-L-seg,test,3,1888,seq3_frame01888,4,0,0
+YOLO26-L-seg,test,3,1896,seq3_frame01896,4,0,0
+YOLO26-L-seg,test,3,1904,seq3_frame01904,4,0,0
+YOLO26-L-seg,test,3,1912,seq3_frame01912,4,0,0
+YOLO26-L-seg,test,3,1920,seq3_frame01920,4,0,0
+YOLO26-L-seg,test,3,1928,seq3_frame01928,4,0,0
+YOLO26-L-seg,test,3,1936,seq3_frame01936,4,0,0
+YOLO26-L-seg,test,3,1944,seq3_frame01944,4,0,0
+YOLO26-L-seg,test,3,1952,seq3_frame01952,4,0,0
+YOLO26-L-seg,test,3,1960,seq3_frame01960,4,0,0
+YOLO26-L-seg,test,3,1968,seq3_frame01968,4,0,0
+YOLO26-L-seg,test,3,1976,seq3_frame01976,4,0,0
+YOLO26-L-seg,test,3,1984,seq3_frame01984,4,0,0
+YOLO26-L-seg,test,3,1992,seq3_frame01992,4,0,0
+YOLO26-L-seg,test,3,2000,seq3_frame02000,4,0,0
+YOLO26-L-seg,test,3,2008,seq3_frame02008,4,0,0
+YOLO26-L-seg,test,3,2016,seq3_frame02016,4,0,0
+YOLO26-L-seg,test,3,2024,seq3_frame02024,4,0,0
+YOLO26-L-seg,test,3,2032,seq3_frame02032,4,0,0
+YOLO26-L-seg,test,3,2040,seq3_frame02040,4,0,0
+YOLO26-L-seg,test,3,2048,seq3_frame02048,4,0,0
+YOLO26-L-seg,test,3,2056,seq3_frame02056,4,0,0
+YOLO26-L-seg,test,3,2064,seq3_frame02064,4,0,0
+YOLO26-L-seg,test,3,2072,seq3_frame02072,4,0,0
+YOLO26-L-seg,test,3,2080,seq3_frame02080,4,0,0
+YOLO26-L-seg,test,3,2088,seq3_frame02088,4,0,0
+YOLO26-L-seg,test,3,2096,seq3_frame02096,4,0,0
+YOLO26-L-seg,test,3,2104,seq3_frame02104,4,0,0
+YOLO26-L-seg,test,3,2112,seq3_frame02112,4,0,0
+YOLO26-L-seg,test,3,2120,seq3_frame02120,4,0,0
+YOLO26-L-seg,test,3,2128,seq3_frame02128,4,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,470,seq2_frame00470,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,471,seq2_frame00471,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,472,seq2_frame00472,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,473,seq2_frame00473,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,474,seq2_frame00474,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,475,seq2_frame00475,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,476,seq2_frame00476,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,477,seq2_frame00477,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,478,seq2_frame00478,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,479,seq2_frame00479,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,480,seq2_frame00480,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,481,seq2_frame00481,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,482,seq2_frame00482,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,483,seq2_frame00483,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,484,seq2_frame00484,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,485,seq2_frame00485,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,486,seq2_frame00486,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,487,seq2_frame00487,6,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,488,seq2_frame00488,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,489,seq2_frame00489,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,490,seq2_frame00490,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,491,seq2_frame00491,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,492,seq2_frame00492,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,493,seq2_frame00493,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,494,seq2_frame00494,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,495,seq2_frame00495,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,496,seq2_frame00496,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,497,seq2_frame00497,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,498,seq2_frame00498,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,499,seq2_frame00499,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,500,seq2_frame00500,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,501,seq2_frame00501,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,502,seq2_frame00502,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,503,seq2_frame00503,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,504,seq2_frame00504,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,505,seq2_frame00505,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,506,seq2_frame00506,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,507,seq2_frame00507,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,508,seq2_frame00508,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,509,seq2_frame00509,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,510,seq2_frame00510,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,511,seq2_frame00511,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,512,seq2_frame00512,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,513,seq2_frame00513,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,514,seq2_frame00514,6,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,515,seq2_frame00515,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,516,seq2_frame00516,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,517,seq2_frame00517,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,518,seq2_frame00518,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,519,seq2_frame00519,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,520,seq2_frame00520,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,521,seq2_frame00521,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,522,seq2_frame00522,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,523,seq2_frame00523,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,524,seq2_frame00524,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,525,seq2_frame00525,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,526,seq2_frame00526,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,527,seq2_frame00527,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,528,seq2_frame00528,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,529,seq2_frame00529,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,530,seq2_frame00530,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,531,seq2_frame00531,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,532,seq2_frame00532,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,533,seq2_frame00533,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,534,seq2_frame00534,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,535,seq2_frame00535,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,536,seq2_frame00536,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,537,seq2_frame00537,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,538,seq2_frame00538,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,539,seq2_frame00539,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,540,seq2_frame00540,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,541,seq2_frame00541,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,542,seq2_frame00542,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,543,seq2_frame00543,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,544,seq2_frame00544,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,545,seq2_frame00545,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,546,seq2_frame00546,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,547,seq2_frame00547,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,548,seq2_frame00548,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,549,seq2_frame00549,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,550,seq2_frame00550,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,551,seq2_frame00551,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,552,seq2_frame00552,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,553,seq2_frame00553,6,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,554,seq2_frame00554,6,0,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,555,seq2_frame00555,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,556,seq2_frame00556,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,557,seq2_frame00557,6,0,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,558,seq2_frame00558,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,559,seq2_frame00559,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,560,seq2_frame00560,6,0,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,561,seq2_frame00561,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,562,seq2_frame00562,6,0,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,563,seq2_frame00563,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,564,seq2_frame00564,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,565,seq2_frame00565,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,566,seq2_frame00566,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,567,seq2_frame00567,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,568,seq2_frame00568,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,569,seq2_frame00569,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,570,seq2_frame00570,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,571,seq2_frame00571,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,572,seq2_frame00572,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,573,seq2_frame00573,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,574,seq2_frame00574,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,575,seq2_frame00575,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,576,seq2_frame00576,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,577,seq2_frame00577,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,578,seq2_frame00578,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,579,seq2_frame00579,6,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,580,seq2_frame00580,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,581,seq2_frame00581,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,582,seq2_frame00582,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,583,seq2_frame00583,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,584,seq2_frame00584,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,585,seq2_frame00585,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,586,seq2_frame00586,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,587,seq2_frame00587,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,588,seq2_frame00588,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,589,seq2_frame00589,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,590,seq2_frame00590,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,591,seq2_frame00591,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,592,seq2_frame00592,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,593,seq2_frame00593,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,594,seq2_frame00594,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,595,seq2_frame00595,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,596,seq2_frame00596,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,597,seq2_frame00597,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,598,seq2_frame00598,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,599,seq2_frame00599,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,600,seq2_frame00600,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,601,seq2_frame00601,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,602,seq2_frame00602,6,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,603,seq2_frame00603,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,604,seq2_frame00604,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,605,seq2_frame00605,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,606,seq2_frame00606,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,607,seq2_frame00607,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,608,seq2_frame00608,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,609,seq2_frame00609,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,610,seq2_frame00610,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,611,seq2_frame00611,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,612,seq2_frame00612,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,613,seq2_frame00613,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,614,seq2_frame00614,7,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,615,seq2_frame00615,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,616,seq2_frame00616,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,617,seq2_frame00617,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,618,seq2_frame00618,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,619,seq2_frame00619,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,620,seq2_frame00620,7,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,621,seq2_frame00621,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,622,seq2_frame00622,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,623,seq2_frame00623,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,624,seq2_frame00624,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,625,seq2_frame00625,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,626,seq2_frame00626,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,627,seq2_frame00627,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,628,seq2_frame00628,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,629,seq2_frame00629,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,630,seq2_frame00630,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,631,seq2_frame00631,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,632,seq2_frame00632,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,633,seq2_frame00633,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,634,seq2_frame00634,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,635,seq2_frame00635,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,636,seq2_frame00636,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,637,seq2_frame00637,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,638,seq2_frame00638,7,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,639,seq2_frame00639,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,640,seq2_frame00640,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,641,seq2_frame00641,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,642,seq2_frame00642,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,643,seq2_frame00643,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,644,seq2_frame00644,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,645,seq2_frame00645,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,646,seq2_frame00646,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,647,seq2_frame00647,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,648,seq2_frame00648,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,649,seq2_frame00649,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,650,seq2_frame00650,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,651,seq2_frame00651,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,652,seq2_frame00652,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,653,seq2_frame00653,6,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,654,seq2_frame00654,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,655,seq2_frame00655,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,656,seq2_frame00656,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,657,seq2_frame00657,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,658,seq2_frame00658,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,659,seq2_frame00659,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,660,seq2_frame00660,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,661,seq2_frame00661,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,662,seq2_frame00662,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,663,seq2_frame00663,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,664,seq2_frame00664,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,665,seq2_frame00665,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,666,seq2_frame00666,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,667,seq2_frame00667,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,668,seq2_frame00668,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,669,seq2_frame00669,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,670,seq2_frame00670,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,671,seq2_frame00671,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,672,seq2_frame00672,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,673,seq2_frame00673,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,674,seq2_frame00674,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,675,seq2_frame00675,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,676,seq2_frame00676,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,677,seq2_frame00677,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,678,seq2_frame00678,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,679,seq2_frame00679,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,680,seq2_frame00680,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,681,seq2_frame00681,7,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,682,seq2_frame00682,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,683,seq2_frame00683,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,684,seq2_frame00684,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,685,seq2_frame00685,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,686,seq2_frame00686,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,687,seq2_frame00687,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,688,seq2_frame00688,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,689,seq2_frame00689,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,690,seq2_frame00690,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,691,seq2_frame00691,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,692,seq2_frame00692,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,693,seq2_frame00693,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,694,seq2_frame00694,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,695,seq2_frame00695,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,696,seq2_frame00696,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,697,seq2_frame00697,6,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,698,seq2_frame00698,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,699,seq2_frame00699,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,700,seq2_frame00700,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,701,seq2_frame00701,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,702,seq2_frame00702,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,703,seq2_frame00703,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,2,704,seq2_frame00704,7,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,396,seq4_frame00396,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,397,seq4_frame00397,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,398,seq4_frame00398,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,399,seq4_frame00399,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,400,seq4_frame00400,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,401,seq4_frame00401,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,402,seq4_frame00402,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,403,seq4_frame00403,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,404,seq4_frame00404,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,405,seq4_frame00405,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,406,seq4_frame00406,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,407,seq4_frame00407,9,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,408,seq4_frame00408,9,0,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,409,seq4_frame00409,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,410,seq4_frame00410,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,411,seq4_frame00411,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,412,seq4_frame00412,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,413,seq4_frame00413,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,414,seq4_frame00414,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,415,seq4_frame00415,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,416,seq4_frame00416,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,417,seq4_frame00417,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,418,seq4_frame00418,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,419,seq4_frame00419,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,420,seq4_frame00420,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,421,seq4_frame00421,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,422,seq4_frame00422,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,423,seq4_frame00423,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,424,seq4_frame00424,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,425,seq4_frame00425,8,1,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,426,seq4_frame00426,8,0,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,427,seq4_frame00427,8,2,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,428,seq4_frame00428,8,0,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,429,seq4_frame00429,8,0,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,430,seq4_frame00430,8,1,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,431,seq4_frame00431,9,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,432,seq4_frame00432,9,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,433,seq4_frame00433,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,434,seq4_frame00434,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,435,seq4_frame00435,8,0,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,436,seq4_frame00436,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,437,seq4_frame00437,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,438,seq4_frame00438,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,439,seq4_frame00439,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,440,seq4_frame00440,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,441,seq4_frame00441,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,442,seq4_frame00442,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,443,seq4_frame00443,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,444,seq4_frame00444,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,445,seq4_frame00445,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,446,seq4_frame00446,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,447,seq4_frame00447,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,448,seq4_frame00448,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,449,seq4_frame00449,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,450,seq4_frame00450,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,451,seq4_frame00451,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,452,seq4_frame00452,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,453,seq4_frame00453,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,454,seq4_frame00454,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,455,seq4_frame00455,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,456,seq4_frame00456,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,457,seq4_frame00457,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,458,seq4_frame00458,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,459,seq4_frame00459,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,460,seq4_frame00460,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,461,seq4_frame00461,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,462,seq4_frame00462,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,463,seq4_frame00463,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,464,seq4_frame00464,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,465,seq4_frame00465,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,466,seq4_frame00466,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,467,seq4_frame00467,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,468,seq4_frame00468,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,469,seq4_frame00469,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,470,seq4_frame00470,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,471,seq4_frame00471,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,472,seq4_frame00472,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,473,seq4_frame00473,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,474,seq4_frame00474,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,475,seq4_frame00475,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,476,seq4_frame00476,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,477,seq4_frame00477,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,478,seq4_frame00478,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,479,seq4_frame00479,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,480,seq4_frame00480,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,481,seq4_frame00481,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,482,seq4_frame00482,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,483,seq4_frame00483,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,484,seq4_frame00484,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,485,seq4_frame00485,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,486,seq4_frame00486,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,487,seq4_frame00487,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,488,seq4_frame00488,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,489,seq4_frame00489,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,490,seq4_frame00490,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,491,seq4_frame00491,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,492,seq4_frame00492,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,493,seq4_frame00493,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,494,seq4_frame00494,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,495,seq4_frame00495,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,496,seq4_frame00496,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,497,seq4_frame00497,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,498,seq4_frame00498,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,499,seq4_frame00499,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,500,seq4_frame00500,9,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,501,seq4_frame00501,9,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,502,seq4_frame00502,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,503,seq4_frame00503,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,504,seq4_frame00504,9,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,505,seq4_frame00505,9,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,506,seq4_frame00506,9,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,507,seq4_frame00507,9,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,508,seq4_frame00508,9,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,509,seq4_frame00509,9,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,510,seq4_frame00510,9,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,511,seq4_frame00511,9,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,512,seq4_frame00512,9,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,513,seq4_frame00513,9,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,514,seq4_frame00514,9,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,515,seq4_frame00515,9,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,516,seq4_frame00516,9,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,517,seq4_frame00517,9,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,518,seq4_frame00518,8,3,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,519,seq4_frame00519,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,520,seq4_frame00520,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,521,seq4_frame00521,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,522,seq4_frame00522,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,523,seq4_frame00523,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,524,seq4_frame00524,8,0,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,525,seq4_frame00525,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,526,seq4_frame00526,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,527,seq4_frame00527,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,528,seq4_frame00528,8,1,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,529,seq4_frame00529,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,530,seq4_frame00530,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,531,seq4_frame00531,8,0,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,532,seq4_frame00532,9,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,533,seq4_frame00533,9,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,534,seq4_frame00534,9,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,535,seq4_frame00535,9,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,536,seq4_frame00536,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,537,seq4_frame00537,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,538,seq4_frame00538,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,539,seq4_frame00539,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,540,seq4_frame00540,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,541,seq4_frame00541,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,542,seq4_frame00542,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,543,seq4_frame00543,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,544,seq4_frame00544,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,545,seq4_frame00545,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,546,seq4_frame00546,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,547,seq4_frame00547,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,548,seq4_frame00548,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,549,seq4_frame00549,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,550,seq4_frame00550,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,551,seq4_frame00551,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,552,seq4_frame00552,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,553,seq4_frame00553,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,554,seq4_frame00554,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,555,seq4_frame00555,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,556,seq4_frame00556,9,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,557,seq4_frame00557,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,558,seq4_frame00558,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,559,seq4_frame00559,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,560,seq4_frame00560,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,561,seq4_frame00561,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,562,seq4_frame00562,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,563,seq4_frame00563,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,564,seq4_frame00564,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,565,seq4_frame00565,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,566,seq4_frame00566,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,567,seq4_frame00567,9,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,568,seq4_frame00568,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,569,seq4_frame00569,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,570,seq4_frame00570,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,571,seq4_frame00571,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,572,seq4_frame00572,8,1,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,573,seq4_frame00573,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,574,seq4_frame00574,8,1,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,575,seq4_frame00575,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,576,seq4_frame00576,8,0,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,577,seq4_frame00577,8,1,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,578,seq4_frame00578,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,579,seq4_frame00579,8,1,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,580,seq4_frame00580,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,581,seq4_frame00581,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,582,seq4_frame00582,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,583,seq4_frame00583,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,584,seq4_frame00584,8,1,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,585,seq4_frame00585,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,586,seq4_frame00586,8,1,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,587,seq4_frame00587,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,588,seq4_frame00588,8,1,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,589,seq4_frame00589,8,1,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,590,seq4_frame00590,9,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,591,seq4_frame00591,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,592,seq4_frame00592,8,1,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,val,4,593,seq4_frame00593,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,0,seq1_frame00000,0,3,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,8,seq1_frame00008,1,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,16,seq1_frame00016,1,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,24,seq1_frame00024,1,3,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,32,seq1_frame00032,2,5,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,40,seq1_frame00040,2,3,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,48,seq1_frame00048,2,5,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,56,seq1_frame00056,2,7,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,64,seq1_frame00064,3,5,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,72,seq1_frame00072,5,4,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,80,seq1_frame00080,6,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,88,seq1_frame00088,6,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,96,seq1_frame00096,7,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,104,seq1_frame00104,6,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,112,seq1_frame00112,9,1,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,120,seq1_frame00120,10,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,128,seq1_frame00128,10,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,136,seq1_frame00136,9,1,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,144,seq1_frame00144,9,1,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,152,seq1_frame00152,10,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,160,seq1_frame00160,10,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,168,seq1_frame00168,9,1,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,176,seq1_frame00176,9,1,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,184,seq1_frame00184,9,1,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,192,seq1_frame00192,9,1,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,200,seq1_frame00200,10,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,208,seq1_frame00208,10,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,216,seq1_frame00216,10,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,224,seq1_frame00224,9,1,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,232,seq1_frame00232,10,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,240,seq1_frame00240,10,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,248,seq1_frame00248,10,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,256,seq1_frame00256,10,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,264,seq1_frame00264,10,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,272,seq1_frame00272,10,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,280,seq1_frame00280,9,3,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,288,seq1_frame00288,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,296,seq1_frame00296,9,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,304,seq1_frame00304,9,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,312,seq1_frame00312,9,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,320,seq1_frame00320,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,328,seq1_frame00328,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,336,seq1_frame00336,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,344,seq1_frame00344,9,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,352,seq1_frame00352,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,360,seq1_frame00360,9,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,368,seq1_frame00368,3,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,376,seq1_frame00376,3,5,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,384,seq1_frame00384,3,5,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,392,seq1_frame00392,3,5,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,400,seq1_frame00400,3,5,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,408,seq1_frame00408,3,5,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,416,seq1_frame00416,3,5,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,424,seq1_frame00424,2,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,432,seq1_frame00432,1,4,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,440,seq1_frame00440,2,5,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,448,seq1_frame00448,2,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,456,seq1_frame00456,2,3,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,464,seq1_frame00464,2,5,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,472,seq1_frame00472,2,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,480,seq1_frame00480,3,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,488,seq1_frame00488,3,5,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,496,seq1_frame00496,3,5,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,504,seq1_frame00504,3,5,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,512,seq1_frame00512,3,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,520,seq1_frame00520,3,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,528,seq1_frame00528,3,5,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,536,seq1_frame00536,3,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,544,seq1_frame00544,3,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,552,seq1_frame00552,3,5,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,560,seq1_frame00560,3,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,568,seq1_frame00568,3,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,576,seq1_frame00576,3,5,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,584,seq1_frame00584,3,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,592,seq1_frame00592,3,5,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,600,seq1_frame00600,3,5,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,608,seq1_frame00608,3,5,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,616,seq1_frame00616,3,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,624,seq1_frame00624,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,632,seq1_frame00632,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,640,seq1_frame00640,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,648,seq1_frame00648,3,5,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,656,seq1_frame00656,3,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,664,seq1_frame00664,3,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,672,seq1_frame00672,2,1,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,680,seq1_frame00680,3,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,688,seq1_frame00688,3,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,696,seq1_frame00696,3,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,704,seq1_frame00704,3,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,712,seq1_frame00712,3,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,720,seq1_frame00720,3,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,728,seq1_frame00728,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,736,seq1_frame00736,2,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,744,seq1_frame00744,2,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,752,seq1_frame00752,2,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,760,seq1_frame00760,1,4,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,768,seq1_frame00768,2,1,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,776,seq1_frame00776,2,3,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,784,seq1_frame00784,2,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,792,seq1_frame00792,2,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,800,seq1_frame00800,2,2,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,808,seq1_frame00808,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,816,seq1_frame00816,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,824,seq1_frame00824,3,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,832,seq1_frame00832,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,840,seq1_frame00840,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,848,seq1_frame00848,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,856,seq1_frame00856,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,864,seq1_frame00864,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,872,seq1_frame00872,3,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,880,seq1_frame00880,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,888,seq1_frame00888,3,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,896,seq1_frame00896,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,904,seq1_frame00904,3,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,912,seq1_frame00912,3,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,920,seq1_frame00920,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,928,seq1_frame00928,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,936,seq1_frame00936,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,944,seq1_frame00944,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,952,seq1_frame00952,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,960,seq1_frame00960,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,968,seq1_frame00968,3,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,976,seq1_frame00976,3,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,984,seq1_frame00984,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,992,seq1_frame00992,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1000,seq1_frame01000,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1008,seq1_frame01008,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1016,seq1_frame01016,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1024,seq1_frame01024,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1032,seq1_frame01032,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1040,seq1_frame01040,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1048,seq1_frame01048,3,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1056,seq1_frame01056,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1064,seq1_frame01064,3,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1072,seq1_frame01072,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1080,seq1_frame01080,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1088,seq1_frame01088,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1096,seq1_frame01096,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1104,seq1_frame01104,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1112,seq1_frame01112,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1120,seq1_frame01120,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1128,seq1_frame01128,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1136,seq1_frame01136,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1144,seq1_frame01144,3,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1152,seq1_frame01152,3,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1160,seq1_frame01160,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1168,seq1_frame01168,3,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1176,seq1_frame01176,3,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1184,seq1_frame01184,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1192,seq1_frame01192,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1200,seq1_frame01200,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1208,seq1_frame01208,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1216,seq1_frame01216,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1224,seq1_frame01224,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1232,seq1_frame01232,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1240,seq1_frame01240,3,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1248,seq1_frame01248,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1256,seq1_frame01256,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1264,seq1_frame01264,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1272,seq1_frame01272,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1280,seq1_frame01280,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1288,seq1_frame01288,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1296,seq1_frame01296,3,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1304,seq1_frame01304,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1312,seq1_frame01312,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1320,seq1_frame01320,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1328,seq1_frame01328,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1336,seq1_frame01336,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1344,seq1_frame01344,3,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1352,seq1_frame01352,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1360,seq1_frame01360,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1368,seq1_frame01368,3,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1376,seq1_frame01376,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1384,seq1_frame01384,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1392,seq1_frame01392,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1400,seq1_frame01400,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1408,seq1_frame01408,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1416,seq1_frame01416,3,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1424,seq1_frame01424,3,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1432,seq1_frame01432,3,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1440,seq1_frame01440,3,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1448,seq1_frame01448,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1456,seq1_frame01456,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1464,seq1_frame01464,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1472,seq1_frame01472,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1480,seq1_frame01480,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1488,seq1_frame01488,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1496,seq1_frame01496,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1504,seq1_frame01504,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1512,seq1_frame01512,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1520,seq1_frame01520,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1528,seq1_frame01528,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1536,seq1_frame01536,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1544,seq1_frame01544,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1552,seq1_frame01552,3,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1560,seq1_frame01560,3,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1568,seq1_frame01568,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1576,seq1_frame01576,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1584,seq1_frame01584,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1592,seq1_frame01592,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1600,seq1_frame01600,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1608,seq1_frame01608,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1616,seq1_frame01616,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1624,seq1_frame01624,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1632,seq1_frame01632,3,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1640,seq1_frame01640,3,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1648,seq1_frame01648,3,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1656,seq1_frame01656,3,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1664,seq1_frame01664,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1672,seq1_frame01672,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1680,seq1_frame01680,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1688,seq1_frame01688,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1696,seq1_frame01696,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1704,seq1_frame01704,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1712,seq1_frame01712,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1720,seq1_frame01720,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1728,seq1_frame01728,3,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1736,seq1_frame01736,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1744,seq1_frame01744,3,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1752,seq1_frame01752,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1760,seq1_frame01760,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1768,seq1_frame01768,3,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1776,seq1_frame01776,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1784,seq1_frame01784,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1792,seq1_frame01792,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1800,seq1_frame01800,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1808,seq1_frame01808,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1816,seq1_frame01816,3,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1824,seq1_frame01824,3,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1832,seq1_frame01832,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1840,seq1_frame01840,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1848,seq1_frame01848,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1856,seq1_frame01856,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1864,seq1_frame01864,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1872,seq1_frame01872,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1880,seq1_frame01880,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1888,seq1_frame01888,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1896,seq1_frame01896,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1904,seq1_frame01904,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1912,seq1_frame01912,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1920,seq1_frame01920,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1928,seq1_frame01928,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1936,seq1_frame01936,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1944,seq1_frame01944,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1952,seq1_frame01952,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1960,seq1_frame01960,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1968,seq1_frame01968,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1976,seq1_frame01976,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1984,seq1_frame01984,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,1992,seq1_frame01992,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,2000,seq1_frame02000,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,2008,seq1_frame02008,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,2016,seq1_frame02016,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,2024,seq1_frame02024,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,2032,seq1_frame02032,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,2040,seq1_frame02040,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,2048,seq1_frame02048,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,2056,seq1_frame02056,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,2064,seq1_frame02064,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,2072,seq1_frame02072,3,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,1,2080,seq1_frame02080,3,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,0,seq3_frame00000,1,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,8,seq3_frame00008,1,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,16,seq3_frame00016,1,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,24,seq3_frame00024,1,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,32,seq3_frame00032,1,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,40,seq3_frame00040,1,5,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,48,seq3_frame00048,1,5,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,56,seq3_frame00056,1,6,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,64,seq3_frame00064,3,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,72,seq3_frame00072,3,6,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,80,seq3_frame00080,3,5,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,88,seq3_frame00088,4,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,96,seq3_frame00096,5,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,104,seq3_frame00104,5,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,112,seq3_frame00112,5,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,120,seq3_frame00120,5,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,128,seq3_frame00128,6,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,136,seq3_frame00136,6,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,144,seq3_frame00144,6,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,152,seq3_frame00152,6,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,160,seq3_frame00160,6,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,168,seq3_frame00168,7,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,176,seq3_frame00176,7,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,184,seq3_frame00184,7,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,192,seq3_frame00192,7,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,200,seq3_frame00200,7,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,208,seq3_frame00208,7,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,216,seq3_frame00216,7,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,224,seq3_frame00224,7,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,232,seq3_frame00232,7,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,240,seq3_frame00240,7,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,248,seq3_frame00248,8,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,256,seq3_frame00256,7,0,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,264,seq3_frame00264,7,0,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,272,seq3_frame00272,8,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,280,seq3_frame00280,8,1,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,288,seq3_frame00288,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,296,seq3_frame00296,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,304,seq3_frame00304,9,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,312,seq3_frame00312,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,320,seq3_frame00320,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,328,seq3_frame00328,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,336,seq3_frame00336,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,344,seq3_frame00344,9,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,352,seq3_frame00352,10,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,360,seq3_frame00360,10,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,368,seq3_frame00368,9,0,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,376,seq3_frame00376,10,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,384,seq3_frame00384,10,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,392,seq3_frame00392,10,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,400,seq3_frame00400,10,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,408,seq3_frame00408,10,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,416,seq3_frame00416,10,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,424,seq3_frame00424,10,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,432,seq3_frame00432,10,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,440,seq3_frame00440,11,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,448,seq3_frame00448,11,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,456,seq3_frame00456,11,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,464,seq3_frame00464,11,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,472,seq3_frame00472,11,0,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,480,seq3_frame00480,11,1,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,488,seq3_frame00488,11,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,496,seq3_frame00496,11,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,504,seq3_frame00504,11,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,512,seq3_frame00512,11,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,520,seq3_frame00520,9,2,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,528,seq3_frame00528,8,7,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,536,seq3_frame00536,11,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,544,seq3_frame00544,11,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,552,seq3_frame00552,11,2,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,560,seq3_frame00560,10,2,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,568,seq3_frame00568,9,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,576,seq3_frame00576,10,3,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,584,seq3_frame00584,10,2,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,592,seq3_frame00592,10,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,600,seq3_frame00600,9,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,608,seq3_frame00608,10,5,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,616,seq3_frame00616,8,4,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,624,seq3_frame00624,10,5,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,632,seq3_frame00632,11,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,640,seq3_frame00640,10,4,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,648,seq3_frame00648,10,4,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,656,seq3_frame00656,10,5,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,664,seq3_frame00664,10,4,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,672,seq3_frame00672,10,4,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,680,seq3_frame00680,10,5,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,688,seq3_frame00688,9,5,3
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,696,seq3_frame00696,10,6,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,704,seq3_frame00704,9,6,3
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,712,seq3_frame00712,10,8,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,720,seq3_frame00720,10,8,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,728,seq3_frame00728,10,4,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,736,seq3_frame00736,10,3,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,744,seq3_frame00744,10,3,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,752,seq3_frame00752,10,6,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,760,seq3_frame00760,9,6,3
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,768,seq3_frame00768,10,8,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,776,seq3_frame00776,10,5,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,784,seq3_frame00784,10,6,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,792,seq3_frame00792,10,4,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,800,seq3_frame00800,10,8,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,808,seq3_frame00808,9,5,3
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,816,seq3_frame00816,10,6,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,824,seq3_frame00824,10,8,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,832,seq3_frame00832,10,4,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,840,seq3_frame00840,10,5,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,848,seq3_frame00848,10,5,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,856,seq3_frame00856,10,4,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,864,seq3_frame00864,10,3,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,872,seq3_frame00872,10,3,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,880,seq3_frame00880,10,3,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,888,seq3_frame00888,10,2,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,896,seq3_frame00896,10,3,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,904,seq3_frame00904,4,8,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,912,seq3_frame00912,4,7,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,920,seq3_frame00920,4,7,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,928,seq3_frame00928,4,6,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,936,seq3_frame00936,4,7,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,944,seq3_frame00944,4,7,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,952,seq3_frame00952,4,7,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,960,seq3_frame00960,4,6,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,968,seq3_frame00968,4,6,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,976,seq3_frame00976,4,7,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,984,seq3_frame00984,4,7,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,992,seq3_frame00992,4,6,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1000,seq3_frame01000,4,6,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1008,seq3_frame01008,4,7,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1016,seq3_frame01016,4,7,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1024,seq3_frame01024,4,6,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1032,seq3_frame01032,4,6,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1040,seq3_frame01040,4,8,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1048,seq3_frame01048,4,6,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1056,seq3_frame01056,4,8,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1064,seq3_frame01064,4,7,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1072,seq3_frame01072,4,8,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1080,seq3_frame01080,4,8,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1088,seq3_frame01088,4,8,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1096,seq3_frame01096,4,8,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1104,seq3_frame01104,4,7,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1112,seq3_frame01112,4,8,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1120,seq3_frame01120,4,7,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1128,seq3_frame01128,4,8,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1136,seq3_frame01136,4,8,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1144,seq3_frame01144,4,8,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1152,seq3_frame01152,4,9,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1160,seq3_frame01160,4,7,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1168,seq3_frame01168,4,7,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1176,seq3_frame01176,4,7,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1184,seq3_frame01184,4,7,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1192,seq3_frame01192,4,7,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1200,seq3_frame01200,4,7,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1208,seq3_frame01208,4,7,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1216,seq3_frame01216,4,7,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1224,seq3_frame01224,4,7,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1232,seq3_frame01232,4,7,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1240,seq3_frame01240,4,8,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1248,seq3_frame01248,4,7,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1256,seq3_frame01256,4,7,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1264,seq3_frame01264,4,8,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1272,seq3_frame01272,4,7,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1280,seq3_frame01280,4,8,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1288,seq3_frame01288,3,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1296,seq3_frame01296,4,8,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1304,seq3_frame01304,4,8,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1312,seq3_frame01312,4,6,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1320,seq3_frame01320,4,7,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1328,seq3_frame01328,4,8,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1336,seq3_frame01336,4,7,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1344,seq3_frame01344,3,5,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1352,seq3_frame01352,3,5,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1360,seq3_frame01360,4,6,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1368,seq3_frame01368,4,7,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1376,seq3_frame01376,4,8,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1384,seq3_frame01384,4,6,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1392,seq3_frame01392,4,8,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1400,seq3_frame01400,4,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1408,seq3_frame01408,4,5,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1416,seq3_frame01416,4,6,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1424,seq3_frame01424,4,6,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1432,seq3_frame01432,4,5,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1440,seq3_frame01440,4,5,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1448,seq3_frame01448,4,6,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1456,seq3_frame01456,4,5,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1464,seq3_frame01464,4,6,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1472,seq3_frame01472,4,5,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1480,seq3_frame01480,4,6,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1488,seq3_frame01488,4,6,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1496,seq3_frame01496,4,6,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1504,seq3_frame01504,4,5,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1512,seq3_frame01512,4,5,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1520,seq3_frame01520,4,6,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1528,seq3_frame01528,4,7,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1536,seq3_frame01536,4,6,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1544,seq3_frame01544,4,7,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1552,seq3_frame01552,4,6,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1560,seq3_frame01560,4,7,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1568,seq3_frame01568,4,5,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1576,seq3_frame01576,4,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1584,seq3_frame01584,4,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1592,seq3_frame01592,4,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1600,seq3_frame01600,4,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1608,seq3_frame01608,4,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1616,seq3_frame01616,4,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1624,seq3_frame01624,4,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1632,seq3_frame01632,4,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1640,seq3_frame01640,4,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1648,seq3_frame01648,4,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1656,seq3_frame01656,4,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1664,seq3_frame01664,4,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1672,seq3_frame01672,4,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1680,seq3_frame01680,3,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1688,seq3_frame01688,3,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1696,seq3_frame01696,3,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1704,seq3_frame01704,3,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1712,seq3_frame01712,3,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1720,seq3_frame01720,3,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1728,seq3_frame01728,3,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1736,seq3_frame01736,3,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1744,seq3_frame01744,3,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1752,seq3_frame01752,3,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1760,seq3_frame01760,3,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1768,seq3_frame01768,3,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1776,seq3_frame01776,3,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1784,seq3_frame01784,3,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1792,seq3_frame01792,3,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1800,seq3_frame01800,4,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1808,seq3_frame01808,3,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1816,seq3_frame01816,3,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1824,seq3_frame01824,3,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1832,seq3_frame01832,3,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1840,seq3_frame01840,3,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1848,seq3_frame01848,3,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1856,seq3_frame01856,3,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1864,seq3_frame01864,3,1,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1872,seq3_frame01872,4,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1880,seq3_frame01880,4,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1888,seq3_frame01888,3,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1896,seq3_frame01896,3,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1904,seq3_frame01904,4,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1912,seq3_frame01912,4,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1920,seq3_frame01920,4,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1928,seq3_frame01928,4,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1936,seq3_frame01936,4,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1944,seq3_frame01944,4,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1952,seq3_frame01952,4,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1960,seq3_frame01960,4,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1968,seq3_frame01968,4,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1976,seq3_frame01976,4,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1984,seq3_frame01984,4,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,1992,seq3_frame01992,4,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,2000,seq3_frame02000,4,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,2008,seq3_frame02008,4,3,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,2016,seq3_frame02016,4,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,2024,seq3_frame02024,3,3,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,2032,seq3_frame02032,3,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,2040,seq3_frame02040,4,4,0
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,2048,seq3_frame02048,3,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,2056,seq3_frame02056,3,4,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,2064,seq3_frame02064,3,3,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,2072,seq3_frame02072,2,3,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,2080,seq3_frame02080,1,3,3
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,2088,seq3_frame02088,3,3,1
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,2096,seq3_frame02096,2,4,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,2104,seq3_frame02104,1,4,3
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,2112,seq3_frame02112,1,4,3
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,2120,seq3_frame02120,2,3,2
+Mask R-CNN + ConvNeXt-Tiny-FPN,test,3,2128,seq3_frame02128,2,4,2

@@ -18,7 +18,7 @@ The dataset contains the inference artifacts used by the reproducibility noteboo
 
 ## Run inference and evaluation
 
-Use [`FungiCirno_Real_Inference_Reproducibility.ipynb`](notebooks/FungiCirno_Real_Inference_Reproducibility.ipynb) in a Kaggle notebook with a GPU accelerator.
+Use [`cirno-full.ipynb`](notebooks/cirno-full.ipynb) in a Kaggle notebook with a GPU accelerator.
 
 You must attach both:
 
@@ -33,9 +33,9 @@ The notebook performs fresh inference, segmentation evaluation, geometric measur
 
 The complete evidence archive is published separately to keep this repository compact:
 
-**[Download the full evidence archive — add GitHub Release URL](ADD_GITHUB_RELEASE_URL)**
+**[Full evidence](evidence/)**
 
-The archive contains prediction records, evaluation tables, tracking and growth-history outputs, figures, provenance records, and integrity checks. It is separate from the pretrained model dataset.
+The folder contains prediction records, evaluation tables, tracking and growth-history outputs, figures, provenance records, and integrity checks. It is separate from the pretrained model dataset.
 
 ## Scope and limitations
 
@@ -51,4 +51,25 @@ See [`CITATION.cff`](CITATION.cff) or [`CITATION.bib`](CITATION.bib). GitHub use
 
 ## Licence
 
-No code or model-weight licence has been selected in this repository yet. Until a licence is added, do not assume that public availability grants permission to reuse, modify, or redistribute the code or weights. See [`RELEASE_CHECKLIST.md`](RELEASE_CHECKLIST.md) before making the repository public.
+MIT License
+
+Copyright (c) [2026] [FungiCirno]
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+

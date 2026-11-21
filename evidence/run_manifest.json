@@ -1,0 +1,123 @@
+{
+  "created_utc": "2026-11-21T03:38:17.016641+00:00",
+  "notebook": "FungiCirno_Real_Inference_Reproducibility.ipynb",
+  "inference_source": "fresh model forward passes in this execution",
+  "fresh_inference_performed_this_execution": true,
+  "completed_fresh_prediction_records_reused": false,
+  "maskrcnn_mask_pasting": "TorchVision paste_masks_in_image applied one ROI at a time on CPU; model ROI inference and source-coordinate box resizing unchanged",
+  "maskrcnn_cpu_paste_parity_test": "PASS",
+  "yolo_inference_implementation": "Supplied fungicirno-yolo26-validation-test-inference-cache.ipynb settings: imgsz=1024, conf=0.001, iou=0.70, nms=None, max_det=1000, retina_masks=True, batch=1",
+  "manifest_path": "/kaggle/input/datasets/hnamedu/charisis-full/FungiCirno_YOLO26_Charisis_Full_Results/yolo26_charisis_artifacts/split_manifest.csv",
+  "manifest_sha256": "42e18712fdff1c2fb263de7006fdfdf5a62a2d981764a823ca707c3897d44cd6",
+  "yolo_checkpoint_path": "/kaggle/input/datasets/hnamedu/charisis-full/FungiCirno_YOLO26_Charisis_Full_Results/yolo26_charisis_artifacts/selected_yolo26l_charisis.pt",
+  "yolo_checkpoint_sha256": "7964816abe44fd635725fa0997aaf161ce8d7429c7f265116bf8e53c966cbb8b",
+  "maskrcnn_checkpoint_path": "/kaggle/input/datasets/hnamedu/charisis-full/model_bundle/model_checkpoint.pth",
+  "maskrcnn_checkpoint_sha256": "3aabb8c4a9ed6016c29b80008afe6dc1d4a1c454392bebaac3fc110c0c79f2d8",
+  "maskrcnn_model_config_path": "/kaggle/input/datasets/hnamedu/charisis-full/model_bundle/model_config.json",
+  "maskrcnn_class_mapping_path": "/kaggle/input/datasets/hnamedu/charisis-full/model_bundle/class_mapping.json",
+  "maskrcnn_model_config_sha256": "24777588414212e6933394585efc6cefca5a313d47816679546cb458da8aeba8",
+  "maskrcnn_class_mapping_sha256": "e0f343e45a874482894f3cdcfd57e3d75873bafffbede557369a30c27c824930",
+  "source_annotation_files": {
+    "1": "/kaggle/input/datasets/hnamedu/charisis-full/1st_timelapse/1st_timelapse/annotations/1st_timelapse_annotations_tracked.json",
+    "2": "/kaggle/input/datasets/hnamedu/charisis-full/2nd_timelapse/2nd_timelapse/annotations/2nd_timelapse_annotations_tracked.json",
+    "3": "/kaggle/input/datasets/hnamedu/charisis-full/3rd_timelapse/3rd_timelapse/annotations/3rd_timelapse_annotations_tracked.json",
+    "4": "/kaggle/input/datasets/hnamedu/charisis-full/4th_timelapse/4th_timelapse/annotations/4th_timelapse_annotations_tracked.json"
+  },
+  "source_annotation_sha256": {
+    "1": "abdd9b97c5f0bdb70a0e68e2ddda1e346aaca22633257d183bdf68700661b734",
+    "2": "adf42735fdc2d4715cfd4b566a5c5c4393072aa73cece052b4ac0bf094aed2d7",
+    "3": "716885e3d3e9509d53d157e93d3e4bee6284fd50ed90befb409b896f70ed120f",
+    "4": "cb2d4d30d45ed174e7682b37d4d62b09532de85a78aff5b30cb12abfa982ae91"
+  },
+  "source_image_hashes_csv": "fresh_frame_integrity.csv (one SHA-256 per evaluated source image)",
+  "source_track_id_scope_audit_csv": "source_tracking_id_scope_audit.csv (full-source versus eval-subset identity counts)",
+  "source_archive_sha256": {
+    "1": null,
+    "2": null,
+    "3": null,
+    "4": null
+  },
+  "model_settings": {
+    "yolo_imgsz": 1024,
+    "yolo_confidence_floor": 0.001,
+    "yolo_nms_iou": 0.7,
+    "yolo_nms_mode": null,
+    "yolo_max_det": 1000,
+    "yolo_retina_masks": true,
+    "maskrcnn_score_floor": 0.001,
+    "maskrcnn_max_det": 100,
+    "maskrcnn_mask_threshold": 0.5,
+    "maskrcnn_full_resolution_pasting": "CPU per-instance via torchvision paste_masks_in_image"
+  },
+  "selected_validation_thresholds": {
+    "YOLO26-L-seg": 0.8710562586784363,
+    "Mask R-CNN + ConvNeXt-Tiny-FPN": 0.7575349807739258
+  },
+  "tracker": {
+    "association_iou": 0.1,
+    "low_confidence_min": 0.6,
+    "max_gap": 0,
+    "selected_history_variant": "C_iou_plus_lowconf",
+    "spatial_distance_px": 47.0,
+    "high_confidence_threshold": 0.8710562586784363,
+    "validation_stride_offsets": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "reference_size_area_px2": 669444.1598811293,
+  "environment": {
+    "python": "3.13.16 (main, Oct  1 2026, 15:40:24) [GCC 13.3.0]",
+    "platform": "Linux-6.18.55+-x86_64-with-glibc2.39",
+    "torch": "2.11.0+cu130",
+    "torchvision": "0.26.0+cu130",
+    "cuda": "13.0",
+    "gpu": "Tesla T4",
+    "ultralytics": "8.4.214",
+    "numpy": "2.1.3",
+    "pandas": "2.3.3",
+    "opencv": "4.14.0"
+  },
+  "runtime": {
+    "combined_run_cuda_peak_allocated_gib": 1.0344605445861816,
+    "combined_run_cuda_peak_reserved_gib": 1.248046875,
+    "gpu_peak_scope": "whole two-model run including warm-up; not per-model"
+  },
+  "timing_boundaries": {
+    "yolo": "synchronized yolo_model.predict call, including Ultralytics preprocessing/postprocessing and mask generation",
+    "mask_rcnn": "synchronized model forward plus TorchVision ROI/box postprocess; image decode, RGB conversion, tensor creation and device transfer are outside the timer",
+    "mask_export": "per-instance full-resolution CPU mask paste (Mask R-CNN), geometry and RLE export; not identical postprocessing work across models",
+    "comparability": "descriptive timing evidence only; not a controlled model-speed comparison"
+  },
+  "frame_counts": {
+    "train": 1728,
+    "val": 433,
+    "test": 528,
+    "fresh_inference_frames_per_model": 961
+  },
+  "track_identity_scope": {
+    "full_source_unique_ids_by_sequence": {
+      "1": 12,
+      "2": 8,
+      "3": 12,
+      "4": 11
+    },
+    "eval_subset_unique_ids_by_sequence": {
+      "1": 11,
+      "2": 7,
+      "3": 12,
+      "4": 10
+    }
+  },
+  "fresh_cache_files": [
+    "fresh_prediction_records/fresh_yolo26_frame_predictions.jsonl.gz",
+    "fresh_prediction_records/fresh_maskrcnn_frame_predictions.jsonl.gz"
+  ],
+  "integrity_status": "PASS"
+}

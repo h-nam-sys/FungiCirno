@@ -1,0 +1,39 @@
+{
+  "created_utc": "2026-11-21T03:38:17.015713+00:00",
+  "checks": {
+    "manifest_sha256_matches_expected": true,
+    "yolo_checkpoint_sha256_matches_expected": true,
+    "maskrcnn_checkpoint_sha256_matches_expected": true,
+    "ultralytics_version_matches": true,
+    "fresh_yolo_frame_count_961": true,
+    "fresh_maskrcnn_frame_count_961": true,
+    "fresh_record_split_labels_match_manifest": true,
+    "tracking_ablation_has_eight_unique_variant_split_rows": true,
+    "selected_tracker_history_export_exists": true,
+    "source_image_integrity_rows_961": true,
+    "source_image_hashes_valid": true,
+    "runtime_rows_1922": true,
+    "runtime_frames_per_model_961": true,
+    "fresh_record_image_hashes_match_source_ledger": true,
+    "evaluation_identity_rows_6084": true,
+    "all_gt_track_ids_present": true,
+    "full_source_ids_per_sequence_match_prior_audit": true,
+    "eval_subset_ids_per_sequence_match_manifest": true,
+    "eval_ids_are_subset_of_full_source_ids": true,
+    "training_reference_count_matches": true,
+    "training_reference_mean_matches": true,
+    "hungarian_verification_passes": true,
+    "fresh_rle_geometry_checks_passed": true,
+    "maskrcnn_cpu_paste_matches_torchvision": true,
+    "historical_segmentation_and_geometry_metrics_within_tolerance": true,
+    "historical_tracking_metrics_within_tolerance": true
+  },
+  "overall_status": "PASS",
+  "notes": [
+    "Fresh inference was executed from both exact checkpoints in this notebook execution.",
+    "The test split was inspected in earlier development. Fresh recomputation does not make test results untouched or independent.",
+    "Custom MOTA is the project's frame-matching measure, not standard CLEAR-MOTA/TrackEval.",
+    "Raw timestamps are reported only when present in source annotation metadata; otherwise time is nominal.",
+    "The notebook is the reproducible execution artifact; no separate application demo is claimed."
+  ]
+}

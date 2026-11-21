@@ -1,0 +1,12 @@
+{
+  "reference_source_category_raw": "mature_cluster",
+  "reference_paper_label": "well-defined",
+  "reference_area_px2_mean": 669444.1598811293,
+  "reference_area_px2_median": 526274.0,
+  "reference_annotation_observations": 3365,
+  "reference_frames": 644,
+  "reference_split": "train only",
+  "definition": "SIZE_INDEX_PCT = AREA_PX / training mean area for source category mature_cluster * 100",
+  "interpretation": "relative image-space size index, not maturity probability/classification; values above 100 are valid",
+  "sampling_unit_caveat": "annotation observations, not unique physical clusters"
+}

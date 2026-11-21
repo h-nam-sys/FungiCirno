@@ -1,0 +1,6 @@
+SEQUENCE_ID,GT_TRACK_ID,OBSERVATIONS,PRED_TRACKS,FIGURE
+1,3,252,1,growth_seq1_gt3.png
+1,10,241,1,growth_seq1_gt10.png
+3,9,219,1,growth_seq3_gt9.png
+1,11,215,1,growth_seq1_gt11.png
+1,3,252,1,tracking_identity_progression_seq1_gt3.png
