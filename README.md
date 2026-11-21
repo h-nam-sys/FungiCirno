@@ -31,8 +31,6 @@ The notebook performs fresh inference, segmentation evaluation, geometric measur
 
 ## Experimental evidence
 
-The complete evidence archive is published separately to keep this repository compact:
-
 **[Full evidence](evidence/)**
 
 The folder contains prediction records, evaluation tables, tracking and growth-history outputs, figures, provenance records, and integrity checks. It is separate from the pretrained model dataset.
@@ -47,7 +45,7 @@ The folder contains prediction records, evaluation tables, tracking and growth-h
 
 ## Citation
 
-See [`CITATION.cff`](CITATION.cff) or [`CITATION.bib`](CITATION.bib). GitHub uses `CITATION.cff` to display a suggested citation for the repository.
+See [`CITATION.bib`](CITATION.bib).
 
 ## Licence
 

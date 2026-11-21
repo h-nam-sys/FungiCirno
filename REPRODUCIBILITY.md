@@ -4,12 +4,12 @@
 
 1. The [FungiCirno Kaggle model dataset](https://www.kaggle.com/datasets/hnamedu/fungicirno-models), containing the selected checkpoints and canonical split manifest.
 2. The original [Charisis oyster-mushroom dataset](https://doi.org/10.5281/zenodo.15041243), obtained separately. It is not redistributed here.
-3. [`notebooks/FungiCirno_Real_Inference_Reproducibility.ipynb`](notebooks/FungiCirno_Real_Inference_Reproducibility.ipynb).
+3. [`notebooks/cirno-full.ipynb`](notebooks/cirno-full.ipynb).
 4. A Kaggle notebook session with a GPU accelerator. The notebook intentionally requires CUDA for the full-resolution inference run.
 
 ## Execution
 
-1. Create a Kaggle notebook and import `FungiCirno_Real_Inference_Reproducibility.ipynb`.
+1. Create a Kaggle notebook and import `cirno-full.ipynb`.
 2. Attach the FungiCirno model-artifact dataset.
 3. Obtain and attach the original source dataset separately, or provide its extracted root through `SOURCE_DATA_ROOT` in the notebook configuration cell.
 4. If automatic artifact discovery is ambiguous, set `YOLO_CHECKPOINT_PATH`, `MASKRCNN_MODEL_ROOT`, and `SPLIT_MANIFEST_PATH` explicitly in the configuration cell.
