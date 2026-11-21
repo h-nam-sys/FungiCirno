@@ -1,0 +1,2 @@
+After uploading the full evidence archive as a GitHub Release asset, replace
+ADD_GITHUB_RELEASE_URL in README.md with the direct release URL.

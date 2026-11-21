@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "If you use the FungiCirno code or model artifacts, please cite the project report below and cite the original Charisis dataset separately."
+title: "FungiCirno: Instance Segmentation and Cluster-Level Growth Monitoring of Oyster Mushrooms"
+abstract: >-
+  FungiCirno evaluates instance segmentation for oyster mushroom cluster
+  delineation, image-space geometric measurement, temporal identity association,
+  and cluster-level growth-history analysis. The project compares a fine-tuned
+  YOLO26-L-seg model with a Mask R-CNN implementation using a ConvNeXt-Tiny-FPN
+  backbone and provides a reproducibility notebook and pretrained model artifacts.
+authors:
+  - family-names: Nguyen
+    given-names: Hai Nam
+  - family-names: Nguyen
+    given-names: Minh Thinh
+  - family-names: Le
+    given-names: Thien Khang
+url: "https://github.com/h-nam-sys/FungiCirno"
+preferred-citation:
+  type: report
+  title: "FungiCirno: Instance Segmentation and Cluster-Level Growth Monitoring of Oyster Mushrooms"
+  authors:
+    - family-names: Nguyen
+      given-names: Hai Nam
+    - family-names: Nguyen
+      given-names: Minh Thinh
+    - family-names: Le
+      given-names: Thien Khang
+  year: 2026
