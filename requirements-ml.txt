@@ -1,4 +1,0 @@
-# Native Windows, CPython 3.12. torch-directml currently pins this compatible pair.
--r requirements.txt
-# Install torch-directml first if setting up a new environment; it installs torch/torchvision.
-torch-directml==0.2.5.dev240914
