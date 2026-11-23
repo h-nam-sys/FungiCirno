@@ -3,7 +3,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{newtxtext,newtxmath}
 \usepackage[a4paper,margin=24mm]{geometry}
-\usepackage{cite,amsmath,graphicx,array,tabularx,booktabs,listings,xcolor,url,xurl,hyperref,microtype,enumitem,placeins,caption,float,needspace}
+\usepackage{cite,amsmath,graphicx,array,tabularx,booktabs,listings,xcolor,url,xurl,hyperref,microtype,enumitem,placeins,caption,float}
 \hypersetup{colorlinks=true,linkcolor=black,citecolor=black,urlcolor=blue,breaklinks=true,
  pdftitle={YOLO26-L-seg for Oyster Mushroom Cluster Segmentation and Growth Monitoring},
  pdfauthor={Nguyen Hai Nam; Nguyen Minh Thinh; Le Thien Khang}}
@@ -21,7 +21,7 @@
 \lstset{basicstyle=\ttfamily\small,columns=fullflexible,breaklines=true,keepspaces=true,showstringspaces=false,frame=single,rulecolor=\color{black!25},backgroundcolor=\color{black!2}}
 \title{YOLO26-L-seg for Oyster Mushroom Cluster Segmentation and Growth Monitoring}
 \author{Nguyen Hai Nam, Nguyen Minh Thinh, and Le Thien Khang\\
-\small Project repository: \url{https://github.com/h-nam-sys/Oyster-Mushroom-Cluster-Monitoring}}
+\small Project code and artifacts: \href{https://github.com/h-nam-sys/Oyster-Mushroom-Cluster-Monitoring}{Oyster Mushroom Cluster Monitoring}}
 \date{}
 \begin{document}
 \maketitle
@@ -74,13 +74,13 @@ The present study compares an available TorchVision ConvNeXt-Tiny-FPN Mask R-CNN
 
 \subsection{Dataset and Split}
 
-The dataset contains 6,382 RGB images of oyster mushroom clusters at a reported resolution of 6,080 by 3,420 pixels, collected in four time-lapse experiments. The source annotations contain 37,004 cluster instances and three maturity labels: \texttt{immature}, \texttt{well-defined}, and \texttt{overstayed} \cite{dataset,charisis}. Images were originally captured every 15 minutes. The source dataset, titled \emph{Oyster mushroom clusters growth monitoring timelapses}, is available from its Zenodo record (DOI: 10.5281/zenodo.15041243). The project does not redistribute the dataset; users must obtain it from the source record and follow the reuse terms stated there.
+The dataset contains 6,382 RGB images of oyster mushroom clusters at a reported resolution of 6,080 by 3,420 pixels, collected in four time-lapse experiments. The source annotations contain 37,004 cluster instances and three maturity labels: \texttt{immature}, \texttt{well-defined}, and \texttt{overstayed} \cite{dataset,charisis}. Images were originally captured every 15 minutes. The source dataset is available from its Zenodo record (DOI: 10.5281/zenodo.15041243). The project does not redistribute the dataset; users must obtain it from the source record and follow the reuse terms stated there.
 
 The canonical manifest contains 2,689 of the 6,382 source images. The split is sequence-based: sequences 2 and 4 provide training and validation data, while sequences 1 and 3 are reserved for testing. In sequence 2, the validation interval is the contiguous frame-index range 470--704; in sequence 4, it is 396--593. The immediately adjacent frames (469 and 705 in sequence 2; 395 and 594 in sequence 4) are omitted as guard frames. All other indexed frames in sequences 2 and 4 are assigned to training. The manifest therefore assigns 938 frames from sequence 2 and 790 from sequence 4 to training, and 235 and 198 frames, respectively, to validation.
 
 For testing, the manifest selects every eighth source-frame index, starting at zero, from each held-out sequence. This gives 261 frames from sequence 1 (indices 0--2,080) and 267 from sequence 3 (indices 0--2,128). The remaining frames in those sequences are not used in model development or evaluation; this sampling preserves a nominal two-hour interval from the source capture cadence of 15 minutes. In total, 3,693 source images are absent from the canonical split: 3,689 unsampled frames from the two test sequences and the four guard frames around the validation intervals. These are the exclusions encoded by the manifest, rather than an additional image-quality filter. The resulting split counts are listed in Table~\ref{tab:split}.
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering\small
 \caption{Sequence-level split used for the reported experiments.}
 \label{tab:split}
@@ -124,7 +124,7 @@ For two binary masks $M_i$ and $M_j$, association similarity is measured by inte
 \begin{equation}
 \operatorname{IoU}(M_i,M_j)=\frac{|M_i\cap M_j|}{|M_i\cup M_j|}.
 \end{equation}
-At each sampled frame, the tracker compares the most recently observed mask of every active track with the current YOLO26-L-seg detections. A global one-to-one assignment is solved using SciPy's \texttt{linear\_sum\_assignment}; assigned pairs with mask IoU below 0.10 are rejected. The assignment implementation uses dummy columns for unmatched tracks and prioritizes the number of valid matches before the overlap score. SciPy's routine uses a modified Jonker--Volgenant algorithm for the linear assignment problem; this is a standard assignment procedure, not a newly proposed tracking algorithm \cite{scipy,crouse}.
+At each sampled frame, the tracker compares the most recently observed mask of every active track with the current YOLO26-L-seg detections. A global one-to-one assignment is solved using SciPy's \texttt{linear\_sum\_assignment}; assigned pairs with mask IoU below 0.10 are rejected. The assignment implementation uses dummy columns for unmatched tracks and prioritizes the number of valid matches before the overlap score. It is a standard assignment procedure, not a newly proposed tracking algorithm \cite{kuhn,scipy}.
 
 The frozen configuration uses a confidence threshold of 0.871056 for detections eligible to initialize tracks. If an active track is not matched at this stage, detections with confidence at least 0.60 can be considered for recovery; these lower-confidence detections can update an existing track but cannot create a new one. The maximum gap is zero sampled observations: if a track receives no match in a sampled frame, it is closed rather than retained for later reassociation. Track IDs are sequence-scoped and are not recycled within a sequence.
 
@@ -191,7 +191,7 @@ Both segmentation models underwent fresh forward-pass inference on all 433 valid
 
 Table~\ref{tab:segmentation} reports the principal segmentation results. YOLO26-L-seg achieved higher AP at both individual thresholds and across the COCO IoU range. Its precision at the validation-selected operating threshold was also substantially higher. Mask R-CNN achieved higher recall at its own selected threshold, but this came with many more false positives. The comparison is between the available project checkpoints, not a controlled comparison of training budgets or identical class objectives.
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering\scriptsize
 \caption{Test segmentation metrics and published Charisis reference. The harmonic mAP--mAR value is distinct from fixed-threshold operating-point F1.}
 \label{tab:segmentation}
@@ -210,16 +210,16 @@ Charisis et al. (published) & 87.60 & -- & -- & 85.80 & 86.70 & -- & -- & -- \\
 
 The published ConvNeXt result from Charisis et al. is close to YOLO26-L-seg in mAP and lower in mAR under the summary values available in the paper. This is a contextual comparison, not evidence that the proposed pipeline reproduces or exceeds the original system. In particular, the present mAR is COCO AR@100; the cited Charisis metric description specifies averaging over IoU thresholds but does not state the same maximum-detection setting. Their MMDetection implementation and filtering pipeline are also not reproduced here. The harmonic value in the table is $2\,\mathrm{mAP}\,\mathrm{mAR}/(\mathrm{mAP}+\mathrm{mAR})$, following the mAP--mAR construction used for the Charisis F1; it should not be confused with the conventional precision--recall F1 at a selected confidence threshold.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
-\includegraphics[width=0.76\linewidth]{figures/qualitative_hard_test.pdf}
+\includegraphics[width=0.99\linewidth]{figures/qualitative_hard_test.pdf}
 \caption{Difficult test example (sequence 3, frame 624). The six panels show the original frame, source masks, both model predictions, and TP/FP/FN error maps. YOLO26-L-seg produced 9 TP, 0 FP, and 3 FN; Mask R-CNN produced 10 TP, 5 FP, and 2 FN at their respective validation-selected thresholds.}
 \label{fig:qualitative-hard}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
-\includegraphics[width=0.76\linewidth]{figures/qualitative_clean_validation.pdf}
+\includegraphics[width=0.99\linewidth]{figures/qualitative_clean_validation.pdf}
 \caption{Clean validation example (sequence 2, frame 497). Both models matched the seven annotated clusters without false positives or missed instances at their respective selected thresholds.}
 \label{fig:qualitative-clean}
 \end{figure}
@@ -234,7 +234,7 @@ Segmentation quality matters here because mask errors propagate directly into ar
 \end{equation}
 where $\hat{m}_{i}$ is the predicted value and $m_i$ is the corresponding ground-truth value. The table reports errors only for matched pairs; detection recall remains necessary to understand how many clusters were missed. YOLO26-L-seg had lower mean relative absolute error for all three measurements. Its area RAE was \textbf{4.21\%}, compared with 6.96\% for Mask R-CNN, while the width and height errors were also smaller.
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering\small
 \caption{Per-instance measurement errors on matched test instances. MAE is in image-space pixels or pixels squared; RAE is the mean per-instance relative absolute error.}
 \label{tab:measurement}
@@ -252,7 +252,7 @@ Height (px) & Mask R-CNN & 2,479 & 47.67 & 7.42\% \\
 \end{tabular}
 \end{table}
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.95\linewidth]{figures/measurement_agreement.pdf}
 \caption{Ground-truth versus predicted area, width, and height for matched test instances. The diagonal represents perfect agreement.}
@@ -271,7 +271,7 @@ On the accepted histories, pooled RAE was \textbf{4.36\%} for area, \textbf{1.54
 
 The geometric errors in Table~\ref{tab:growth-summary} use only source-consistent matches and therefore differ from the matched-instance population in Table~\ref{tab:measurement}.
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering\small
 \caption{Tracking and source-identity-aware growth-history results for the frozen tracker on the test sequences.}
 \label{tab:growth-summary}
@@ -296,7 +296,7 @@ Eligible adjacent transitions / identities & 2,140 / 22 \\
 \end{tabular}
 \end{table}
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \begin{minipage}[t]{0.48\linewidth}
 \centering
@@ -312,14 +312,14 @@ Eligible adjacent transitions / identities & 2,140 / 22 \\
 \label{fig:tracking-sequence}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.98\linewidth]{figures/fig_strict_history_coverage_by_identity.png}
 \caption{Strict source-consistent observation coverage for each ground-truth identity. The 90\% criterion is applied to complete predicted-track purity before per-identity coverage is calculated; it is not a threshold on the bars in this figure. The horizontal axis labels identify the sequence and source tracking ID.}
 \label{fig:history-coverage}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \begin{minipage}[t]{0.58\linewidth}
 \centering
@@ -335,15 +335,16 @@ Eligible adjacent transitions / identities & 2,140 / 22 \\
 \label{fig:adjacent-change}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.95\linewidth]{figures/fig_representative_growth_trajectories.png}
 \caption{Representative source-consistent area histories from test sequences 1 and 3. Predicted and annotated mask areas are shown over nominal elapsed time; the examples illustrate accepted histories and are not intended to represent every cluster.}
 \label{fig:representative-trajectories}
 \end{figure}
 
-% Keep the two supporting figures in the same reading sequence, immediately
-% after the representative growth histories; do not force a new page here.
+% Keep the two supporting figures in a fixed vertical sequence at the top of
+% the page. They are deliberately not side-by-side and are not free-floating.
+\clearpage
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.52\linewidth]{figures/fig_mixed_identity_track_failure.png}
@@ -403,7 +404,7 @@ Third / sequence 3 & 1,649 & 85.87\% & 92.70\% \\
 
 Both segmentation models were evaluated on an NVIDIA Tesla T4. Table~\ref{tab:runtime} summarizes model inference and mask-export times and peak host memory. The timers have different boundaries: the YOLO timer includes the synchronized Ultralytics prediction call, while the Mask R-CNN timer covers its model forward and ROI/box post-processing; the mask-export stages also perform different work. Across the combined inference run, peak CUDA allocation was 1.03 GiB and peak reserved memory was 1.25 GiB. The separate cached tracking evaluation processed 528 frames in 2.40 s (4.54 ms per frame); this excludes model inference. These measurements describe the recorded implementation and should not be interpreted as a controlled end-to-end speed ranking.
 
-\begin{table}[H]
+\begin{table}[!htbp]
 \centering\small
 \caption{Runtime and memory measurements from the fresh Tesla T4 evaluation. Timing boundaries differ by model.}
 \label{tab:runtime}
@@ -443,44 +444,37 @@ Test frames are sampled every two hours, although the source camera captured ima
 
 The most direct improvement is to evaluate identity persistence across missed observations on a new, untouched cultivation sequence, with any gap policy selected using validation data. Broader testing across cultivation rooms, camera positions, and mushroom batches is also needed. A verified substrate reference and camera calibration could support physical-size estimates, while biological maturity prediction would require explicit validation against expert labels and fruitbody characteristics rather than size alone.
 
-\Needspace{8\baselineskip}
 \section{Conclusions}
 
 This study evaluated instance segmentation and cluster-level growth monitoring on a four-sequence oyster mushroom time-lapse dataset. YOLO26-L-seg achieved higher mask AP than the available Mask R-CNN--ConvNeXt baseline and lower matched-instance errors for area, width, and height. Its frozen mask-IoU tracker obtained \textbf{89.19\% MOTA} and \textbf{85.56\% IDF1} on the 528 test frames. Under a 90\% whole-track purity rule, 2,169 of 2,663 annotated observations were retained for source-consistent growth histories, giving \textbf{82.45\% macro coverage}. Across 2,140 eligible adjacent transitions, macro growth-direction agreement was \textbf{89.75\%}, and pooled adjacent relative-area-change MAE was \textbf{1.52 percentage points}. The results support mask-based image-space growth monitoring, while showing that identity continuity, missed detections, and sequence-dependent performance remain important limitations.
 
-\begingroup\small
 \begin{thebibliography}{00}
-\setlength{\itemsep}{0.12em}
-\bibitem{charisis} C. Charisis, S. Nuwayhid, and D. Argyropoulos, ``A novel Mask R-CNN-based tracking pipeline for oyster mushroom cluster growth monitoring in time-lapse image datasets,'' \emph{Computers and Electronics in Agriculture}, vol. 237, Part A, Art. no. 110590, 2025, doi: 10.1016/j.compag.2025.110590.
-\bibitem{otsu} N. Otsu, ``A threshold selection method from gray-level histograms,'' \emph{IEEE Trans. Systems, Man, and Cybernetics}, vol. 9, no. 1, pp. 62--66, 1979, doi: 10.1109/TSMC.1979.4310076.
-\bibitem{watershed} L. Vincent and P. Soille, ``Watersheds in digital spaces: An efficient algorithm based on immersion simulations,'' \emph{IEEE Trans. Pattern Analysis and Machine Intelligence}, vol. 13, no. 6, pp. 583--598, 1991, doi: 10.1109/34.87344.
+\bibitem{charisis} C. Charisis, S. Nuwayhid, and D. Argyropoulos, ``A novel Mask R-CNN-based tracking pipeline for oyster mushroom cluster growth monitoring in time-lapse image datasets,'' \emph{Computers and Electronics in Agriculture}, vol. 237, Art. no. 110590, 2025, doi: 10.1016/j.compag.2025.110590.
+\bibitem{dataset} C. Charisis, S. Nuwayhid, and D. Argyropoulos, ``Oyster mushroom clusters growth monitoring timelapses,'' Zenodo, 2025, doi: 10.5281/zenodo.15041243.
 \bibitem{maskrcnn} K. He, G. Gkioxari, P. Doll\'ar, and R. Girshick, ``Mask R-CNN,'' in \emph{Proc. IEEE Int. Conf. Computer Vision (ICCV)}, 2017, pp. 2961--2969, doi: 10.1109/ICCV.2017.322.
 \bibitem{convnext} Z. Liu, H. Mao, C.-Y. Wu, C. Feichtenhofer, T. Darrell, and S. Xie, ``A ConvNet for the 2020s,'' in \emph{Proc. IEEE/CVF Conf. Computer Vision and Pattern Recognition (CVPR)}, 2022, pp. 11976--11986, doi: 10.1109/CVPR52688.2022.01167.
-\bibitem{yolo26docs} Ultralytics, ``YOLO26,'' Ultralytics Documentation. [Online]. Available: \url{https://docs.ultralytics.com/models/yolo26}. Accessed: Nov. 23, 2026.
-\bibitem{dataset} C. Charisis, S. Nuwayhid, and D. Argyropoulos, ``Oyster mushroom clusters growth monitoring timelapses,'' Zenodo, 2025, doi: 10.5281/zenodo.15041243.
-\bibitem{pytorch} A. Paszke et al., ``PyTorch: An imperative style, high-performance deep learning library,'' in \emph{Advances in Neural Information Processing Systems}, vol. 32, pp. 8026--8037, 2019.
-\bibitem{torchvision} TorchVision maintainers and contributors, ``TorchVision: PyTorch's Computer Vision library,'' GitHub repository, released Nov. 6, 2016. [Online]. Available: \url{https://github.com/pytorch/vision}. Accessed: Nov. 23, 2026.
-\bibitem{scipy} P. Virtanen et al., ``SciPy 1.0: Fundamental algorithms for scientific computing in Python,'' \emph{Nature Methods}, vol. 17, pp. 261--272, 2020, doi: 10.1038/s41592-019-0686-2.
-\bibitem{crouse} D. F. Crouse, ``On implementing 2D rectangular assignment algorithms,'' \emph{IEEE Trans. Aerospace and Electronic Systems}, vol. 52, no. 4, pp. 1679--1696, 2016, doi: 10.1109/TAES.2016.140952.
 \bibitem{coco} T.-Y. Lin et al., ``Microsoft COCO: Common Objects in Context,'' in \emph{Proc. European Conf. Computer Vision (ECCV)}, 2014, pp. 740--755, doi: 10.1007/978-3-319-10602-1\_48.
-\bibitem{opencv} G. Bradski, ``The OpenCV Library,'' \emph{Dr. Dobb's Journal of Software Tools}, 2000.
+\bibitem{yolo26docs} Ultralytics, ``YOLO26,'' Ultralytics Documentation. [Online]. Available: \url{https://docs.ultralytics.com/models/yolo26}. Accessed: Nov. 20, 2026.
+\bibitem{otsu} N. Otsu, ``A threshold selection method from gray-level histograms,'' \emph{IEEE Trans. Systems, Man, and Cybernetics}, vol. 9, no. 1, pp. 62--66, 1979, doi: 10.1109/TSMC.1979.4310076.
+\bibitem{watershed} L. Vincent and P. Soille, ``Watersheds in digital spaces: An efficient algorithm based on immersion simulations,'' \emph{IEEE Trans. Pattern Analysis and Machine Intelligence}, vol. 13, no. 6, pp. 583--598, 1991, doi: 10.1109/34.87344.
+\bibitem{kuhn} H. W. Kuhn, ``The Hungarian method for the assignment problem,'' \emph{Naval Research Logistics Quarterly}, vol. 2, nos. 1--2, pp. 83--97, 1955, doi: 10.1002/nav.3800020109.
+\bibitem{pytorch} A. Paszke et al., ``PyTorch: An imperative style, high-performance deep learning library,'' in \emph{Advances in Neural Information Processing Systems}, vol. 32, 2019.
+\bibitem{torchvision} TorchVision Contributors, ``TorchVision: Datasets, transforms, and models for computer vision,'' [Online]. Available: \url{https://pytorch.org/vision/stable/index.html}. Accessed: Nov. 20, 2026.
+\bibitem{scipy} P. Virtanen et al., ``SciPy 1.0: Fundamental algorithms for scientific computing in Python,'' \emph{Nature Methods}, vol. 17, pp. 261--272, 2020, doi: 10.1038/s41592-019-0686-2.
+\bibitem{opencv} G. Bradski, ``The OpenCV library,'' \emph{Dr. Dobb's Journal of Software Tools}, 2000.
 \end{thebibliography}
-\endgroup
 
 \appendix
-\begingroup\small
-\setlength{\parskip}{0.12em}
 \section{How to Run the Code}
 
-The project repository is available at \url{https://github.com/h-nam-sys/Oyster-Mushroom-Cluster-Monitoring}. The workflow uses two complementary notebooks. \texttt{full-inference.ipynb} performs model inference and exports the cached prediction and provenance bundle. \texttt{tracking-and-growth-history.ipynb} consumes that bundle to evaluate temporal association, source-identity consistency, and growth histories; it does not repeat segmentation inference. In Kaggle, attach the \href{https://www.kaggle.com/datasets/hnamedu/fungicirno-models}{Oyster Mushroom Cluster Monitoring Models dataset}, which provides the selected YOLO26-L-seg and Mask R-CNN checkpoints and canonical split manifest, and obtain the original four-sequence image dataset separately from the Charisis Zenodo record (\url{https://doi.org/10.5281/zenodo.15041243}). The source images are not redistributed with this report or repository.
+The project repository is available at \href{https://github.com/h-nam-sys/Oyster-Mushroom-Cluster-Monitoring}{Oyster Mushroom Cluster Monitoring}. The workflow uses two complementary notebooks. \texttt{full-inference.ipynb} performs model inference and exports the cached prediction and provenance bundle. \texttt{tracking-and-growth-history.ipynb} consumes that bundle to evaluate temporal association, source-identity consistency, and growth histories; it does not repeat segmentation inference. In Kaggle, attach the \href{https://www.kaggle.com/datasets/hnamedu/fungicirno-models}{Oyster Mushroom Cluster Monitoring Models}, which provides the selected YOLO26-L-seg and Mask R-CNN checkpoints and canonical split manifest, and obtain the original four-sequence image dataset separately from the Charisis Zenodo record (\url{https://doi.org/10.5281/zenodo.15041243}). The source images are not redistributed with this report or repository.
 
 For fresh inference, select a Kaggle GPU accelerator, open \texttt{full-inference.ipynb}, and run all cells from top to bottom. It searches recursively under \texttt{/kaggle/input} and \texttt{/kaggle/working} for model artifacts, the split manifest, and source sequences; the source archives can also be retrieved through the notebook's configured Drive fallback when they are not attached. It verifies the manifest and checkpoint hashes, performs inference on all 961 validation and test frames, and packages the predictions, segmentation metrics, figures, provenance records, and integrity report. For the downstream evaluation, attach the resulting evidence bundle and run \texttt{tracking-and-growth-history.ipynb}. That notebook verifies the cached prediction records and frozen tracker configuration, then exports tracking and growth-history metrics, figures, and an integrity report without rerunning either segmentation model.
 
-The recorded inference environment used Python 3.13.16, PyTorch 2.11.0+cu130, TorchVision 0.26.0+cu130, CUDA 13.0, Ultralytics 8.4.214, NumPy 2.1.3, pandas 2.3.3, and OpenCV 4.14.0 \cite{opencv} on an NVIDIA Tesla T4. The inference settings and memory-safe CPU mask-pasting procedure are described in the Methodology section. The tracking evaluation uses the same cached YOLO predictions and SciPy assignment implementation; its runtime is reported separately from model inference.
+The recorded inference environment used Python 3.13.16, PyTorch 2.11.0+cu130, TorchVision 0.26.0+cu130, CUDA 13.0, Ultralytics 8.4.214, NumPy 2.1.3, pandas 2.3.3, and OpenCV 4.14.0 on an NVIDIA Tesla T4. The inference settings and memory-safe CPU mask-pasting procedure are described in the Methodology section. The tracking evaluation uses the same cached YOLO predictions and SciPy assignment implementation; its runtime is reported separately from model inference.
 
 \section{Declaration of AI Tool Usage}
 
 The team used ChatGPT (OpenAI, GPT-6) for technical discussion, code and notebook development/debugging, review and interpretation of experiment artifacts, and restructuring and editing of the report. ChatGPT did not perform the reported model training or inference. The team executed the experiments, reviewed the generated outputs, and is responsible for the methods, results, figures, and final submitted text.
 
-\endgroup
 \end{document}

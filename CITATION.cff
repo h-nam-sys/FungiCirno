@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this project in academic work, please cite the research report and the software record provided below. Cite the original dataset separately."
+title: "Oyster Mushroom Cluster Monitoring"
+authors:
+  - family-names: Nguyen
+    given-names: Hai Nam
+  - family-names: Nguyen
+    given-names: Minh Thinh
+  - family-names: Le
+    given-names: Thien Khang
+repository-code: "https://github.com/h-nam-sys/Oyster-Mushroom-Cluster-Monitoring"
+license: MIT
+preferred-citation:
+  type: report
+  title: "YOLO26-L-seg for Oyster Mushroom Cluster Segmentation and Growth Monitoring"
+  authors:
+    - family-names: Nguyen
+      given-names: Hai Nam
+    - family-names: Nguyen
+      given-names: Minh Thinh
+    - family-names: Le
+      given-names: Thien Khang
+  year: 2026

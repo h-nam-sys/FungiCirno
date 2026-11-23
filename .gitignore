@@ -10,6 +10,9 @@ kaggle.json
 working/
 output/
 outputs/
+Oyster_Mushroom_Cluster_Monitoring_Independent_Evidence/
+Oyster_Mushroom_Cluster_Monitoring_Independent_Evidence_Bundle*.zip
+# Legacy output paths retained by older notebook/evidence versions
 FungiCirno_Independent_Evidence/
 FungiCirno_Independent_Evidence_Bundle*.zip
 
@@ -33,3 +36,12 @@ data/
 Thumbs.db
 .vscode/
 .idea/
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz

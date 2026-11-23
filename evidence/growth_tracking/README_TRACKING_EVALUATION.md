@@ -1,10 +1,10 @@
-# Tracking and growth-history evaluation
+# Oyster Mushroom Cluster Monitoring: tracking and growth-history evaluation
 
 **Paper:** *YOLO26-L-seg for Oyster Mushroom Cluster Segmentation and Growth Monitoring*
 
 ## Evaluation scope
 
-This is the downstream tracking/measurement notebook. It consumes the cached YOLO26-L-seg prediction records from `full-inference.ipynb` and does not rerun model inference or repeat segmentation evaluation.
+This is the downstream tracking/measurement stage of the proposed pipeline. It consumes the cached YOLO26-L-seg prediction records from `full-inference.ipynb` and does not rerun model inference or repeat segmentation evaluation.
 
 - Test frames: **528** (sequence 1: 261; sequence 3: 267).
 - Ground-truth observations: **2663**.
@@ -44,7 +44,7 @@ The normalized relative-area trajectory MAE is a separate **unitless trajectory-
 
 ## Provenance
 
-The source inference manifest records notebook filename `FungiCirno_Real_Inference_Reproducibility.ipynb`. The current project filename supplied for the inference stage is `full-inference.ipynb`. Both are retained explicitly in `tracking_evaluation_run_manifest.json`; the original manifest is not rewritten. Raw source manifest and prediction-cache hashes are recorded alongside the frozen tracker configuration hash.
+The source inference manifest records notebook filename `Oyster Mushroom Cluster Monitoring_Real_Inference_Reproducibility.ipynb`. The current project filename supplied for the inference stage is `full-inference.ipynb`. Both are retained explicitly in `tracking_evaluation_run_manifest.json`; the original manifest is not rewritten. Raw source manifest and prediction-cache hashes are recorded alongside the frozen tracker configuration hash.
 
 Charisis et al. values are contextual published references only. The models, datasets, filtering and evaluation protocols differ, so this archive does not claim a controlled head-to-head comparison.
 
