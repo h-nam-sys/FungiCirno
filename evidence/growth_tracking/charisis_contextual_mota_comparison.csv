@@ -1,0 +1,5 @@
+METHOD,SEQUENCE_ID,MOTA,NOTE
+Charisis et al. (2025),1,0.967,"Published result; contextual reference, not a controlled comparison."
+Charisis et al. (2025),3,0.927,"Published result; contextual reference, not a controlled comparison."
+FungiCirno YOLO26-L-seg + frozen tracker,1,0.945759368836292,Current test evaluation; model and evaluation protocol differ.
+FungiCirno YOLO26-L-seg + frozen tracker,3,0.8587022437841116,Current test evaluation; model and evaluation protocol differ.

@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "checks": {
+    "test_frame_count_528": true,
+    "test_sequence_counts_are_1_261_and_3_267": true,
+    "all_records_test_split": true,
+    "all_test_ground_truth_instances_have_track_ids": true,
+    "all_prediction_rle_dimensions_and_areas_validated": true,
+    "all_gt_rle_dimensions_and_areas_validated": true,
+    "frozen_tracker_configuration_hash_verified": true,
+    "source_manifest_raw_hash_present": true,
+    "source_yolo_cache_raw_hash_present": true,
+    "no_model_inference_executed": true,
+    "no_test_parameter_tuning_executed": true,
+    "mota_recomputed_from_counts": true,
+    "idf1_recomputed_from_id_counts": true,
+    "strict_growth_observation_count_consistent": true,
+    "adjacent_area_change_transition_count_consistent": true,
+    "image_space_measurement_limitation_recorded": true,
+    "strict_coverage_figure_has_no_misapplied_track_purity_threshold_line": true
+  },
+  "figure_correction_note": "The 90% purity criterion is documented only for predicted-track purity. The per-GT-identity strict-coverage figure contains no 90% reference line."
+}
